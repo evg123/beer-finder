@@ -1,0 +1,21 @@
+<div class="container-fluid row">
+  <div>
+    <h2>Beer Search</h2>
+    <form #f="ngForm">
+
+      <div class="form-group">
+        <label for="query">Query</label>
+        <input name="query"
+               [(ngModel)]="query"
+               id="query"
+               placeholder="query string"
+               type="text"
+               required
+               class="form-control"/>
+      </div>
+
+      <a class="btn btn-primary btn-block" (click)="search()">Search</a>
+    </form>
+  </div>
+</div>
+<app-beer-list [beerList]="beerList"></app-beer-list>

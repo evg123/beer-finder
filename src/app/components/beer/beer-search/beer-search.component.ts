@@ -3,17 +3,18 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BeerService} from '../../../services/beer.service.client';
 
 @Component({
-  selector: 'app-beer-detail',
-  templateUrl: './beer-detail.component.html',
-  styleUrls: ['./beer-detail.component.css']
+  selector: 'app-beer-search',
+  templateUrl: './beer-search.component.html',
+  styleUrls: ['./beer-search.component.css']
 })
-export class BeerDetailComponent implements OnInit {
+export class BeerSearchComponent implements OnInit {
 
   errorFlag = false;
   errorMsg = '';
 
-  bid: number;
-  beerData: any;
+  results: any;
+  beerList: any[];
+  query: string;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -23,17 +24,19 @@ export class BeerDetailComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.bid = params['bid'];
         }
       );
+  }
 
-    this.beerSvc.findBeerById(this.bid)
+  search() {
+    this.beerSvc.findBeersByName(this.query)
       .subscribe(
         (data: any) => {
-          this.beerData = data;
+          this.results = data;
+          this.beerList = this.results.beers.items;
         },
         (error: any) => {
-          this.errorMsg = 'Failed to find beer';
+          this.errorMsg = 'Search failed';
           this.errorFlag = true;
         }
       );

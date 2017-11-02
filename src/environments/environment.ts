@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  serverBaseUrl: 'http://localhost:3100',
+  untappdBaseUrl: 'https://api.untappd.com/v4',
 };

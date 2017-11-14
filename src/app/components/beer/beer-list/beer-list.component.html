@@ -1,14 +1,12 @@
 <div>
   <ul class="list-group">
 
-    <div *ngFor="let beer of beerList">
+    <div *ngFor="let beerRecord of beerList">
       <li class="list-group-item">
         <div class="row">
-          <div class="col-xs-9">
-            <a routerLink="/beer/{{beer.bid}}">
-              {{beer.beer_name}}
-            </a>
-          </div>
+          <a routerLink="/beer/{{beerRecord.beer.bid}}">
+            {{beerRecord.beer.beer_name}}
+          </a>
         </div>
       </li>
     </div>

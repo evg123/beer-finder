@@ -33,7 +33,7 @@ export class BeerSearchComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.results = data;
-          this.beerList = this.results.beers.items;
+          this.beerList = this.results.response.beers.items;
         },
         (error: any) => {
           this.errorMsg = 'Search failed';

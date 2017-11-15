@@ -1,7 +1,7 @@
 
 module.exports = function (app) {
 
-  var BeerModel = require("../model/beer/beer.model.server");
+  const BeerModel = require("../model/beer/beer.model.server");
 
   app.post('/api/beer', createBeer);
   app.get('/api/beer/:beerId', findBeerById);
@@ -9,7 +9,7 @@ module.exports = function (app) {
   app.delete('/api/beer/:beerId', deleteBeer);
 
   function createBeer(req, res) {
-    var obj = req.body;
+    const obj = req.body;
     BeerModel.createBeer(obj)
       .then(function (data) {
         res.json(data);
@@ -27,7 +27,7 @@ module.exports = function (app) {
 
   function updateBeer(req, res) {
     const objId = req.params.beerId;
-    var obj = req.body;
+    const obj = req.body;
 
     BeerModel.updateBeer(objId, obj)
       .then(function (data) {

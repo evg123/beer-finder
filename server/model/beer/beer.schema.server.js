@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const BeerSchema = mongoose.Schema({
   name: String,
+  untappdId: Number,
   dateCreated: Date
-}, {collection: 'user'});
+}, {collection: 'beer'});
 
 module.exports = BeerSchema;

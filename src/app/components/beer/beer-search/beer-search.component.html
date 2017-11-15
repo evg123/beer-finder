@@ -1,7 +1,7 @@
 <div class="container-fluid row">
   <div>
     <h2>Beer Search</h2>
-    <form #f="ngForm">
+    <form #f="ngForm" (ngSubmit)="search()">
 
       <div class="form-group">
         <label for="query">Query</label>
@@ -14,7 +14,7 @@
                class="form-control"/>
       </div>
 
-      <a class="btn btn-primary btn-block" (click)="search()">Search</a>
+      <button class="btn btn-primary btn-block" type=submit>Search</button>
     </form>
   </div>
 </div>

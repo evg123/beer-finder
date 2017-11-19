@@ -15,17 +15,27 @@ import { RegisterComponent } from './components/user/register/register.component
 import { LoginComponent } from './components/user/login/login.component';
 import { BeerSearchComponent } from './components/beer/beer-search/beer-search.component';
 import { BeerListComponent } from './components/beer/beer-list/beer-list.component';
+import {AuthGuard} from './services/auth-guard.service';
+import {SharedService} from './services/shared.service';
+import { HomeComponent } from './components/home/home.component';
+import { ReportBeerComponent } from './components/beer/report-beer/report-beer.component';
+import { LocationSearchComponent } from './components/location/location-search/location-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AuthGuard,
+    SharedService,
     BeerDetailComponent,
     LocationDetailComponent,
     ProfileComponent,
     RegisterComponent,
     LoginComponent,
     BeerSearchComponent,
-    BeerListComponent
+    BeerListComponent,
+    HomeComponent,
+    ReportBeerComponent,
+    LocationSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +43,7 @@ import { BeerListComponent } from './components/beer/beer-list/beer-list.compone
     FormsModule,
     Routing,
   ],
-  providers: [BeerService, LocationService, UserService],
+  providers: [SharedService, AuthGuard, BeerService, LocationService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,15 +7,21 @@ import {RegisterComponent} from './components/user/register/register.component';
 import {BeerDetailComponent} from './components/beer/beer-detail/beer-detail.component';
 import {LocationDetailComponent} from './components/location/location-detail/location-detail.component';
 import {BeerSearchComponent} from './components/beer/beer-search/beer-search.component';
+import {AuthGuard} from './services/auth-guard.service';
+import {HomeComponent} from './components/home/home.component';
+import {LocationSearchComponent} from './components/location/location-search/location-search.component';
+import {ReportBeerComponent} from './components/beer/report-beer/report-beer.component';
 
 
 const APP_ROUTES: Routes = [
-  {path: '', component : LoginComponent},
+  {path: '', component : HomeComponent},
   {path: 'login', component : LoginComponent},
   {path: 'register', component : RegisterComponent},
-  {path: 'user/:uid', component : ProfileComponent},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'beer/search', component : BeerSearchComponent},
+  {path: 'beer/report', component : ReportBeerComponent},
   {path: 'beer/:bid', component : BeerDetailComponent},
+  {path: 'location/search', component : LocationSearchComponent},
   {path: 'location/:lid', component : LocationDetailComponent},
 ];
 

@@ -1,16 +1,98 @@
 
 module.exports = function (app) {
 
-  const UserModel = require("../model/user/user.model.server");
+  var UserModel = require("../model/user/user.model.server");
+  var passport = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
+  var bcrypt = require("bcrypt-nodejs");
+
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+  passport.use(new LocalStrategy(localStrategy));
 
   app.post('/api/user', createUser);
   app.get('/api/user', findUserCredRouter);
   app.get('/api/user/:userId', findUserById);
   app.put('/api/user/:userId', updateUser);
   app.delete('/api/user/:userId', deleteUser);
+  app.post('/api/login', passport.authenticate('local'), login);
+  app.post('/api/logout', logout);
+  app.post('/api/register', register);
+  app.post('/api/loggedIn', loggedIn);
+
+  function serializeUser(user, done) {
+    done(null, user);
+  }
+
+  function deserializeUser(user, done) {
+    UserModel
+      .findUserById(user._id)
+      .then(
+        function(user){
+          done(null, user);
+        },
+        function(err){
+          done(err, null);
+        }
+      );
+  }
+
+  function localStrategy(username, password, done) {
+    UserModel
+      .findUserByUsername(username)
+      .then(
+        function(user) {
+          if(user && user.username === username && bcrypt.compareSync(password, user.password)) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        },
+        function(err) {
+          if (err) {
+            return done(err, false);
+          }
+        }
+      );
+  }
+
+  function loggedIn(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
+  }
+
+  function login(req, res) {
+    var user = req.user;
+    res.json(user);
+  }
+
+  function logout(req, res) {
+    req.logOut();
+    res.send(200);
+  }
+
+  function register (req, res) {
+    var user = req.body;
+    user.password = bcrypt.hashSync(user.password);
+
+    UserModel
+      .createUser(user)
+      .then(
+        function(user){
+          if(user){
+            req.login(user, function(err) {
+              if(err) {
+                res.status(400).send(err);
+              } else {
+                res.json(user);
+              }
+            });
+          }
+        }
+      );
+  }
 
   function createUser(req, res) {
-    const user = req.body;
+    var user = req.body;
     UserModel.createUser(user)
       .then(function (data) {
         res.json(data);
@@ -29,7 +111,7 @@ module.exports = function (app) {
     UserModel.findUserByUsername(username)
       .then(function (data) {
         res.json(data);
-    });
+      });
   }
 
   function findUserByCredentials(req, res) {
@@ -53,7 +135,7 @@ module.exports = function (app) {
 
   function updateUser(req, res) {
     const userId = req.params.userId;
-    const user = req.body;
+    var user = req.body;
 
     UserModel.updateUser(userId, user)
       .then(function (data) {

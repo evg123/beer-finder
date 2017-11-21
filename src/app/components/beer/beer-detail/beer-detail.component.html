@@ -3,3 +3,25 @@
   <h3> by {{brewery}}</h3>
   <h3>is a {{style}}</h3>
 </div>
+
+<Button class="btn btn-block btn-primary"
+        routerLink="/beer/{{bid}}/report">Report this beer at a location</Button>
+
+<div>
+  <ul class="list-group">
+
+    <div *ngFor="let stock of stockList">
+      <li class="list-group-item">
+        <div class="row">
+          <a routerLink="/location/{{stock.location.locId}}">
+            {{stock.location.name}}
+          </a>
+          <span>
+            {{stock.count}}
+          </span>
+        </div>
+      </li>
+    </div>
+
+  </ul>
+</div>

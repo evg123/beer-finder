@@ -19,10 +19,11 @@ const APP_ROUTES: Routes = [
   {path: 'register', component : RegisterComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'beer/search', component : BeerSearchComponent},
-  {path: 'beer/report', component : ReportBeerComponent},
   {path: 'beer/:bid', component : BeerDetailComponent},
+  {path: 'beer/:bid/report', component : ReportBeerComponent},
   {path: 'location/search', component : LocationSearchComponent},
   {path: 'location/:lid', component : LocationDetailComponent},
+  {path: 'location/:lid/report', component : ReportBeerComponent},
 ];
 
 // Export the routes as module providers

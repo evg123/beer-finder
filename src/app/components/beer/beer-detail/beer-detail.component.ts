@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BeerService} from '../../../services/beer.service.client';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-beer-detail',
@@ -17,6 +18,7 @@ export class BeerDetailComponent implements OnInit {
   beerName: string;
   brewery: string;
   style: string;
+  stockList: any;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -43,6 +45,16 @@ export class BeerDetailComponent implements OnInit {
           this.errorFlag = true;
         }
       );
-  }
 
+    this.beerSvc.findStockByBeer(this.bid)
+      .subscribe(
+        (data: any) => {
+          this.stockList = data;
+        },
+        (error: any) => {
+          this.errorMsg = 'Failed to find beer stock';
+          this.errorFlag = true;
+        }
+      );
+  }
 }

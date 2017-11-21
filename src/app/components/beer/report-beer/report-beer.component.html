@@ -1,3 +1,52 @@
-<p>
-  report-beer works!
-</p>
+<div class="container-fluid">
+
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
+
+  <h1>Report a Beer in Stock</h1>
+
+  <form (ngSubmit) = "report()" #form="ngForm">
+
+    <input   placeholder="Beer"
+             name="beer"
+             type="text"
+             class="form-control"
+             ngModel
+             required
+             #beer="ngModel"/>
+    <span class="help-block alert-danger" *ngIf="!beer.valid && beer.touched">
+      Please select a beer
+    </span>
+
+    <input   placeholder="Location"
+             name="location"
+             type="text"
+             class="form-control"
+             ngModel
+             required
+             #location="ngModel"/>
+    <span class="help-block alert-danger" *ngIf="!location.valid && location.touched">
+      Please select a location
+    </span>
+
+    <input   placeholder="Count available at this location"
+             name="count"
+             type="text"
+             class="form-control"
+             ngModel
+             required
+             #count="ngModel"/>
+    <span class="help-block alert-danger" *ngIf="!count.valid && count.touched">
+      Please enter the count available at this location
+    </span>
+
+    <button class="btn btn-primary btn-block"
+            type="submit"
+            [disabled]="!f.valid">Report</button>
+
+    <button class="btn btn-danger btn-block"
+            (click)="goBack()">Cancel</button>
+  </form>
+</div>

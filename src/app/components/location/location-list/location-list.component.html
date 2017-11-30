@@ -1,0 +1,15 @@
+<div>
+  <ul class="list-group">
+
+    <div *ngFor="let location of locationList">
+      <li class="list-group-item">
+        <div class="row">
+          <a routerLink="/location/{{location.lid}}">
+            {{location.name}}
+          </a>
+        </div>
+      </li>
+    </div>
+
+  </ul>
+</div>

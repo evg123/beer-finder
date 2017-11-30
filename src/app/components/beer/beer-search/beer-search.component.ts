@@ -29,7 +29,7 @@ export class BeerSearchComponent implements OnInit {
   }
 
   search() {
-    this.beerSvc.findBeersByName(this.query)
+    this.beerSvc.findUntappdBeersByName(this.query)
       .subscribe(
         (data: any) => {
           this.results = data;

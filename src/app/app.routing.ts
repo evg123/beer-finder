@@ -11,6 +11,7 @@ import {AuthGuard} from './services/auth-guard.service';
 import {HomeComponent} from './components/home/home.component';
 import {LocationSearchComponent} from './components/location/location-search/location-search.component';
 import {ReportBeerComponent} from './components/beer/report-beer/report-beer.component';
+import {ManageLocationsComponent} from './components/location/manage-locations/manage-locations.component';
 
 
 const APP_ROUTES: Routes = [
@@ -18,6 +19,7 @@ const APP_ROUTES: Routes = [
   {path: 'login', component : LoginComponent},
   {path: 'register', component : RegisterComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'locations', component: ManageLocationsComponent, canActivate: [AuthGuard]},
   {path: 'beer/search', component : BeerSearchComponent},
   {path: 'beer/:bid', component : BeerDetailComponent},
   {path: 'beer/:bid/report', component : ReportBeerComponent},

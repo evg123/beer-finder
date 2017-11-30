@@ -4,6 +4,7 @@ const LocationModel = mongoose.model("LocationModel", LocationSchema);
 
 LocationModel.createLocation = createLocation;
 LocationModel.findLocationById = findLocationById;
+LocationModel.findLocationsByName = findLocationsByName;
 LocationModel.updateLocation = updateLocation;
 LocationModel.deleteLocation = deleteLocation;
 
@@ -15,6 +16,10 @@ function createLocation(obj) {
 
 function findLocationById(locId) {
   return LocationModel.findById(locId);
+}
+
+function findLocationsByName(query) {
+  return LocationModel.find({name: query});
 }
 
 function updateLocation(locId, obj) {

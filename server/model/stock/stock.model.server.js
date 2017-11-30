@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const BeerSchema = require("./beer.schema.server");
+const StockSchema = require("./stock.schema.server");
 const StockModel = mongoose.model("StockModel", StockSchema);
 
 StockModel.createStock = createStock;

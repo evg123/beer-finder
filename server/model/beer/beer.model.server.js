@@ -4,6 +4,7 @@ const BeerModel = mongoose.model("BeerModel", BeerSchema);
 
 BeerModel.createBeer = createBeer;
 BeerModel.findBeerById = findBeerById;
+BeerModel.findBeersByName = findBeersByName;
 BeerModel.updateBeer = updateBeer;
 BeerModel.deleteBeer = deleteBeer;
 
@@ -15,6 +16,10 @@ function createBeer(obj) {
 
 function findBeerById(locId) {
   return BeerModel.findById(locId);
+}
+
+function findBeersByName(query) {
+  return BeerModel.find({name: query});
 }
 
 function updateBeer(locId, obj) {

@@ -10,30 +10,36 @@
   <form (ngSubmit) = "report()" #form="ngForm">
 
     <input   placeholder="Beer"
-             name="beer"
+             name="beerQuery"
              type="text"
              class="form-control"
              ngModel
              required
-             #beer="ngModel"/>
-    <span class="help-block alert-danger" *ngIf="!beer.valid && beer.touched">
+             #beerQuery="ngModel"/>
+    <a (click)="searchBeers()" class="navbar-link">
+      <span class="glyphicon glyphicon-search"></span>
+    </a>
+    <span class="help-block alert-danger" *ngIf="!beerQuery.valid && beerQuery.touched">
       Please select a beer
     </span>
 
     <input   placeholder="Location"
-             name="location"
+             name="locationQuery"
              type="text"
              class="form-control"
              ngModel
              required
-             #location="ngModel"/>
-    <span class="help-block alert-danger" *ngIf="!location.valid && location.touched">
+             #locationQuery="ngModel"/>
+    <a (click)="searchLocations()" class="navbar-link">
+      <span class="glyphicon glyphicon-search"></span>
+    </a>
+    <span class="help-block alert-danger" *ngIf="!locationQuery.valid && locationQuery.touched">
       Please select a location
     </span>
 
     <input   placeholder="Count available at this location"
              name="count"
-             type="text"
+             type="number"
              class="form-control"
              ngModel
              required
@@ -44,9 +50,12 @@
 
     <button class="btn btn-primary btn-block"
             type="submit"
-            [disabled]="!f.valid">Report</button>
+            [disabled]="!repForm.valid || !bid || !lid">Report</button>
 
     <button class="btn btn-danger btn-block"
             (click)="goBack()">Cancel</button>
   </form>
 </div>
+
+<app-beer-list [beerList]="beerList"></app-beer-list>
+<app-location-list [locationList]="locationList"></app-location-list>

@@ -32,7 +32,7 @@ export class BeerDetailComponent implements OnInit {
         }
       );
 
-    this.beerSvc.findBeerById(this.bid)
+    this.beerSvc.findUntappdBeerById(this.bid)
       .subscribe(
         (data: any) => {
           this.beerData = data.response.beer;

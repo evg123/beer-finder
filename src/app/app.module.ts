@@ -20,12 +20,12 @@ import {SharedService} from './services/shared.service';
 import { HomeComponent } from './components/home/home.component';
 import { ReportBeerComponent } from './components/beer/report-beer/report-beer.component';
 import { LocationSearchComponent } from './components/location/location-search/location-search.component';
+import { ManageLocationsComponent } from './components/location/manage-locations/manage-locations.component';
+import { LocationListComponent } from './components/location/location-list/location-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthGuard,
-    SharedService,
     BeerDetailComponent,
     LocationDetailComponent,
     ProfileComponent,
@@ -35,13 +35,15 @@ import { LocationSearchComponent } from './components/location/location-search/l
     BeerListComponent,
     HomeComponent,
     ReportBeerComponent,
-    LocationSearchComponent
+    LocationSearchComponent,
+    ManageLocationsComponent,
+    LocationListComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
-    Routing,
+    Routing
   ],
   providers: [SharedService, AuthGuard, BeerService, LocationService, UserService],
   bootstrap: [AppComponent]

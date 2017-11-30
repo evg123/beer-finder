@@ -1,15 +1,17 @@
 
 module.exports = function (app) {
 
-  var LocationModel = require("../model/location/location.model.server");
+  const LocationModel = require("../model/location/location.model.server");
+  const StockModel = require("../model/stock/stock.model.server");
 
   app.post('/api/loc', createLocation);
+  app.get('/api/loc', findLocationsByName);
   app.get('/api/loc/:locId', findLocationById);
   app.put('/api/loc/:locId', updateLocation);
   app.delete('/api/loc/:locId', deleteLocation);
 
   function createLocation(req, res) {
-    var obj = req.body;
+    const obj = req.body;
     LocationModel.createLocation(obj)
       .then(function (data) {
         res.json(data);
@@ -25,9 +27,18 @@ module.exports = function (app) {
       });
   }
 
+  function findLocationsByName(req, res) {
+    const nameQuery = req.query.nameQuery;
+
+    LocationModel.findLocationsByName(nameQuery)
+      .then(function (data) {
+        res.json(data);
+      });
+  }
+
   function updateLocation(req, res) {
     const objId = req.params.locId;
-    var obj = req.body;
+    const obj = req.body;
 
     LocationModel.updateLocation(objId, obj)
       .then(function (data) {
@@ -39,6 +50,15 @@ module.exports = function (app) {
     const objId = req.params.locId;
 
     LocationModel.deleteLocation(objId)
+      .then(function (data) {
+        res.json(data);
+      });
+  }
+
+  function findStockByLocation(req, res) {
+    const objId = req.params.beerId;
+
+    StockModel.findStockByLocation(objId)
       .then(function (data) {
         res.json(data);
       });

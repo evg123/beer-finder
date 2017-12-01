@@ -15,9 +15,13 @@
              class="form-control"
              ngModel
              required
+             [disabled]="bid"
              #beerQuery="ngModel"/>
     <a (click)="searchBeers()" class="navbar-link">
       <span class="glyphicon glyphicon-search"></span>
+    </a>
+    <a (click)="clearBeer()" class="navbar-link">
+      <span class="glyphicon glyphicon-remove"></span>
     </a>
     <span class="help-block alert-danger" *ngIf="!beerQuery.valid && beerQuery.touched">
       Please select a beer
@@ -29,9 +33,13 @@
              class="form-control"
              ngModel
              required
+             [disabled]="lid"
              #locationQuery="ngModel"/>
     <a (click)="searchLocations()" class="navbar-link">
       <span class="glyphicon glyphicon-search"></span>
+    </a>
+    <a (click)="clearLocation()" class="navbar-link">
+      <span class="glyphicon glyphicon-remove"></span>
     </a>
     <span class="help-block alert-danger" *ngIf="!locationQuery.valid && locationQuery.touched">
       Please select a location
@@ -57,5 +65,34 @@
   </form>
 </div>
 
-<app-beer-list [beerList]="beerList"></app-beer-list>
-<app-location-list [locationList]="locationList"></app-location-list>
+<div>
+  <ul class="list-group">
+
+    <div *ngFor="let beerRecord of beerList">
+      <li class="list-group-item">
+        <div class="row">
+          <a (click)="setBeer(beerRecord.beer.bid)">
+            {{beerRecord.beer.beer_name}}
+          </a>
+        </div>
+      </li>
+    </div>
+
+  </ul>
+</div>
+
+<div>
+  <ul class="list-group">
+
+    <div *ngFor="let location of locationList">
+      <li class="list-group-item">
+        <div class="row">
+          <a (click)="setLocation(location._id)">
+            {{location.name}}
+          </a>
+        </div>
+      </li>
+    </div>
+
+  </ul>
+</div>

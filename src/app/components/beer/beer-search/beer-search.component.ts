@@ -12,7 +12,6 @@ export class BeerSearchComponent implements OnInit {
   errorFlag = false;
   errorMsg = '';
 
-  results: any;
   beerList: any[];
   query: string;
 
@@ -29,11 +28,10 @@ export class BeerSearchComponent implements OnInit {
   }
 
   search() {
-    this.beerSvc.findUntappdBeersByName(this.query)
+    this.beerSvc.findBeersByName(this.query)
       .subscribe(
         (data: any) => {
-          this.results = data;
-          this.beerList = this.results.response.beers.items;
+          this.beerList = data.response.beers.items;
         },
         (error: any) => {
           this.errorMsg = 'Search failed';

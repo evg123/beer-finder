@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
 const StockSchema = mongoose.Schema({
-  beer: {type: mongoose.Schema.Types.ObjectId, ref: 'BeerModel'},
+  bid: Number,
+  beerName: String,
+  beerStyle: String,
   location: {type: mongoose.Schema.Types.ObjectId, ref: 'LocationModel'},
   count: Number,
-  asOf: Date,
+  asOf: {type: Date, default: Date.now}
 }, {collection: 'stock'});
 
 module.exports = StockSchema;

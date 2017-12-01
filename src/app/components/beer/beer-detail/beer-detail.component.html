@@ -13,7 +13,7 @@
     <div *ngFor="let stock of stockList">
       <li class="list-group-item">
         <div class="row">
-          <a routerLink="/location/{{stock.location.locId}}">
+          <a routerLink="/location/{{stock.location._id}}">
             {{stock.location.name}}
           </a>
           <span>

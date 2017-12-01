@@ -22,6 +22,7 @@ import { ReportBeerComponent } from './components/beer/report-beer/report-beer.c
 import { LocationSearchComponent } from './components/location/location-search/location-search.component';
 import { ManageLocationsComponent } from './components/location/manage-locations/manage-locations.component';
 import { LocationListComponent } from './components/location/location-list/location-list.component';
+import { NewLocationComponent } from './components/location/new-location/new-location.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LocationListComponent } from './components/location/location-list/locat
     ReportBeerComponent,
     LocationSearchComponent,
     ManageLocationsComponent,
-    LocationListComponent
+    LocationListComponent,
+    NewLocationComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ import {HomeComponent} from './components/home/home.component';
 import {LocationSearchComponent} from './components/location/location-search/location-search.component';
 import {ReportBeerComponent} from './components/beer/report-beer/report-beer.component';
 import {ManageLocationsComponent} from './components/location/manage-locations/manage-locations.component';
+import {NewLocationComponent} from './components/location/new-location/new-location.component';
 
 
 const APP_ROUTES: Routes = [
@@ -24,6 +25,7 @@ const APP_ROUTES: Routes = [
   {path: 'beer/:bid', component : BeerDetailComponent},
   {path: 'beer/:bid/report', component : ReportBeerComponent},
   {path: 'location/search', component : LocationSearchComponent},
+  {path: 'location/new', component : NewLocationComponent},
   {path: 'location/:lid', component : LocationDetailComponent},
   {path: 'location/:lid/report', component : ReportBeerComponent},
 ];

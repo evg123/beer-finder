@@ -9,9 +9,11 @@ module.exports = function (app) {
   app.get('/api/loc/:locId', findLocationById);
   app.put('/api/loc/:locId', updateLocation);
   app.delete('/api/loc/:locId', deleteLocation);
+  app.get('/api/loc/:locId/stock', findStockByLocation);
 
   function createLocation(req, res) {
     const obj = req.body;
+
     LocationModel.createLocation(obj)
       .then(function (data) {
         res.json(data);
@@ -28,9 +30,9 @@ module.exports = function (app) {
   }
 
   function findLocationsByName(req, res) {
-    const nameQuery = req.query.nameQuery;
+    const nameQuery = req.query.query;
 
-    LocationModel.findLocationsByName(nameQuery)
+    LocationModel.find({$text: {$search: nameQuery}})
       .then(function (data) {
         res.json(data);
       });
@@ -56,11 +58,12 @@ module.exports = function (app) {
   }
 
   function findStockByLocation(req, res) {
-    const objId = req.params.beerId;
+    const objId = req.params.locId;
 
     StockModel.findStockByLocation(objId)
       .then(function (data) {
         res.json(data);
       });
   }
+
 };

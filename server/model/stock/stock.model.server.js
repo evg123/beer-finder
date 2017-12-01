@@ -11,19 +11,18 @@ StockModel.deleteStock = deleteStock;
 module.exports = StockModel;
 
 function createStock(obj) {
+  obj.location = obj.lid;
   return StockModel.create(obj);
 }
 
 function findStockByBeer(beerId) {
-  return StockModel.find({beer: beerId})
-    .populate('beer')
+  return StockModel.find({bid: beerId})
     .populate('location')
     .exec();
 }
 
 function findStockByLocation(locId) {
   return StockModel.find({location: locId})
-    .populate('beer')
     .populate('location')
     .exec();
 }

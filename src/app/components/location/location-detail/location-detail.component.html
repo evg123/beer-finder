@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <h1>{{name}}</h1>
+  <h3>{{description}}</h3>
+</div>
+
+<Button class="btn btn-block btn-primary"
+        routerLink="/location/{{lid}}/report">Report a beer at this location</Button>
+
+<div>
+  <ul class="list-group">
+
+    <div *ngFor="let stock of stockList">
+      <li class="list-group-item">
+        <div class="row">
+          <a routerLink="/beer/{{stock.bid}}">
+            {{stock.beerName}}
+          </a>
+          <span>
+            {{stock.count}}
+          </span>
+        </div>
+      </li>
+    </div>
+
+  </ul>
+</div>

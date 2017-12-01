@@ -1,16 +1,23 @@
 
 module.exports = function (app) {
 
+  const axios = require('axios');
+  const querystring = require('querystring');
   const BeerModel = require("../model/beer/beer.model.server");
   const StockModel = require("../model/stock/stock.model.server");
   const LocationModel = require("../model/location/location.model.server");
 
-  app.post('/api/beer', createBeer);
+  const untappdSecret = process.env.UNTAPPD_SECRET;
+  const untappdId = process.env.UNTAPPD_ID;
+
+  const baseUntappdUrl = 'https://api.untappd.com/v4';
+
+  app.get('/api/beer', findBeersByName);
   app.get('/api/beer/:beerId', findBeerById);
   app.put('/api/beer/:beerId', updateBeer);
   app.delete('/api/beer/:beerId', deleteBeer);
   app.post('/api/beer/:beerId/report', reportBeer);
-  app.post('/api/beer/:beerId/stock', findStockByBeer);
+  app.get('/api/beer/:beerId/stock', findStockByBeer);
 
   function createBeer(req, res) {
     const obj = req.body;
@@ -22,19 +29,36 @@ module.exports = function (app) {
 
   function findBeerById(req, res) {
     const objId = req.params.beerId;
+    const url = baseUntappdUrl + '/beer/info/' + objId;
+    const qs = querystring.stringify({
+      'client_id': untappdId,
+      'client_secret': untappdSecret
+    });
 
-    BeerModel.findBeerById(objId)
-      .then(function (data) {
-        res.json(data);
+    axios.get(url + '?' + qs)
+      .then(function (response) {
+        res.json(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   }
 
   function findBeersByName(req, res) {
-    const nameQuery = req.query.nameQuery;
+    const nameQuery = req.query.query;
+    const url = baseUntappdUrl + '/search/beer';
+    const qs = querystring.stringify({
+      'client_id': untappdId,
+      'client_secret': untappdSecret,
+      'q': nameQuery
+    });
 
-    BeerModel.findBeersByName(nameQuery)
-      .then(function (data) {
-        res.json(data);
+    axios.get(url + '?' + qs)
+      .then(function (response) {
+        res.json(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   }
 
@@ -68,16 +92,27 @@ module.exports = function (app) {
         if (!data) {
           res.status(400).send("Location not found!");
         }
-        BeerModel.findBeerById(bid)
+
+        // query the beer to fill in some info
+        const url = baseUntappdUrl + '/beer/info/' + bid;
+        const qs = querystring.stringify({
+          'client_id': untappdId,
+          'client_secret': untappdSecret
+        });
+        return axios.get(url + '?' + qs);
       })
       .then(function (data) {
-        if (!data) {
-          res.status(400).send("Beer not found!");
-        }
+        // fill in
+        obj.beerName = data.data.response.beer.beer_name;
+        obj.beerStyle = data.data.response.beer.beer_style;
+
         return StockModel.createStock(obj);
       })
       .then(function (data) {
         res.json(data);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   }
 

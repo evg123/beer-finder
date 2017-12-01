@@ -5,6 +5,5 @@
 
 export const environment = {
   production: false,
-  serverBaseUrl: 'http://localhost:3100',
-  untappdBaseUrl: 'https://api.untappd.com/v4',
+  serverBaseUrl: 'http://localhost:3100'
 };

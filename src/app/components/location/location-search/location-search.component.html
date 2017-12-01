@@ -1,3 +1,24 @@
-<p>
-  location-search works!
-</p>
+
+<button routerLink="/location/new" class="btn btn-primary btn-block">Register New Location</button>
+
+<div class="container-fluid row">
+  <div>
+    <h2>Location Search</h2>
+    <form #f="ngForm" (ngSubmit)="search()">
+
+      <div class="form-group">
+        <label for="query">Query</label>
+        <input name="query"
+               [(ngModel)]="query"
+               id="query"
+               placeholder="query string"
+               type="text"
+               required
+               class="form-control"/>
+      </div>
+
+      <button class="btn btn-primary btn-block" type=submit>Search</button>
+    </form>
+  </div>
+</div>
+<app-location-list [locationList]="locationList"></app-location-list>

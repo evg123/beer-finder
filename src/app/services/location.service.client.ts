@@ -10,7 +10,7 @@ export class LocationService {
   baseUrl = environment.serverBaseUrl;
 
   createLocation(location: any) {
-    return this._http.post(this.baseUrl + '/api/loc', +location)
+    return this._http.post(this.baseUrl + '/api/loc', location)
       .map(
         (res: Response) => {
           const data = res.json();
@@ -36,8 +36,8 @@ export class LocationService {
       );
   }
 
-  findLocationById(locationId: string) {
-    return this._http.get(this.baseUrl + '/api/location/' + locationId)
+  findLocationById(locationId: number) {
+    return this._http.get(this.baseUrl + '/api/loc/' + locationId)
       .map(
         (res: Response) => {
           const data = res.json();
@@ -46,8 +46,8 @@ export class LocationService {
       );
   }
 
-  updateLocation(locationId: string, location: any) {
-    return this._http.put(this.baseUrl + '/api/location/' + locationId, location)
+  updateLocation(locationId: number, location: any) {
+    return this._http.put(this.baseUrl + '/api/loc/' + locationId, location)
       .map(
         (res: Response) => {
           const data = res.json();
@@ -56,8 +56,8 @@ export class LocationService {
       );
   }
 
-  deleteLocation(locationId: string) {
-    return this._http.delete(this.baseUrl + '/api/location/' + locationId)
+  deleteLocation(locationId: number) {
+    return this._http.delete(this.baseUrl + '/api/loc/' + locationId)
       .map(
         (res: Response) => {
           const data = res.json();
@@ -66,8 +66,8 @@ export class LocationService {
       );
   }
 
-  findStockByLocation(lid: number) {
-    return this._http.get(this.baseUrl + '/api/location/' + lid + '/stock')
+  findStockByLocation(locationId: number) {
+    return this._http.get(this.baseUrl + '/api/loc/' + locationId + '/stock')
       .map(
         (res: Response) => {
           const data = res.json();

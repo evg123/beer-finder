@@ -16,8 +16,8 @@ export class ReportBeerComponent implements OnInit {
   errorFlag = false;
   errorMsg = '';
 
-  bid: number;
-  lid: number;
+  bid: number = null;
+  lid: number = null;
   backRoute: string;
   beerList: any[] = [];
   locationList: any[] = [];
@@ -48,8 +48,8 @@ export class ReportBeerComponent implements OnInit {
 
   report() {
     const stock: any = {};
-    stock.bid = this.repForm.value.bid;
-    stock.lid = this.repForm.value.lid;
+    stock.lid = this.lid;
+    stock.bid = this.bid;
     stock.count = this.repForm.value.count;
 
     this.beerSvc.reportBeer(stock)
@@ -65,10 +65,12 @@ export class ReportBeerComponent implements OnInit {
   }
 
   searchBeers() {
+    this.beerList = [];
+    this.locationList = [];
     this.beerSvc.findBeersByName(this.repForm.value.beerQuery)
       .subscribe(
         (data: any) => {
-          this.beerList = data;
+          this.beerList = data.response.beers.items;
         },
         (error: any) => {
           this.errorMsg = 'Search failed';
@@ -78,6 +80,8 @@ export class ReportBeerComponent implements OnInit {
   }
 
   searchLocations() {
+    this.beerList = [];
+    this.locationList = [];
     this.locSvc.findLocationsByName(this.repForm.value.locationQuery)
       .subscribe(
         (data: any) => {
@@ -88,6 +92,22 @@ export class ReportBeerComponent implements OnInit {
           this.errorFlag = true;
         }
       );
+  }
+
+  setBeer(bid: number) {
+    this.bid = bid;
+  }
+
+  setLocation(lid: number) {
+    this.lid = lid;
+  }
+
+  clearBeer() {
+    this.bid = null;
+  }
+
+  clearLocation() {
+    this.lid = null;
   }
 
   goBack() {

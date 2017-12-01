@@ -328,7 +328,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/beer-list/beer-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a routerLink=\"/beer/{{beerRecord.beer.lid}}\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a routerLink=\"/beer/{{beerRecord.beer.bid}}\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
 
 /***/ }),
 

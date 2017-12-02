@@ -22,15 +22,17 @@ export class UserService {
     'findUserById' : this.findUserById,
     'findUserByUsername' : this.findUserByUsername,
     'findUserByCredentials' : this.findUserByCredentials,
+    'searchUsers' : this.searchUsers,
     'updateUser' : this.updateUser,
     'deleteUser' : this.deleteUser,
-    'loggedIn' : this.loggedIn,
+    'canAccessUser' : this.canAccessUser,
+    'canAccessLocation' : this.canAccessLocation,
     'login' : this.login,
     'logout' : this.logout,
     'register' : this.register,
   };
 
-  loggedIn() {
+  canAccessUser(userId: number) {
     this.options.withCredentials = true;
     return this._http.post(this.baseUrl + '/api/loggedIn', '', this.options)
       .map(
@@ -38,6 +40,25 @@ export class UserService {
           const user = res.json();
           if (user !== 0) {
             this.sharedService.user = user; // setting user so as to share with all components
+          } else if (user.admin || user._id === userId) {
+            return true;
+          } else {
+            this.router.navigate(['/login']);
+            return false;
+          }
+        }
+      );
+  }
+
+  canAccessLocation(locId: number) {
+    this.options.withCredentials = true;
+    return this._http.post(this.baseUrl + '/api/loggedIn', '', this.options)
+      .map(
+        (res: Response) => {
+          const user = res.json();
+          if (user !== 0) {
+            this.sharedService.user = user; // setting user so as to share with all components
+          } else if (user.admin || locId in user.locations) {
             return true;
           } else {
             this.router.navigate(['/login']);
@@ -119,6 +140,23 @@ export class UserService {
       );
   }
 
+  searchUsers(userQuery: string) {
+    const params: URLSearchParams = new URLSearchParams();
+    params.set('query', userQuery);
+
+    const requestOpts: RequestOptions = new RequestOptions ({
+      search: params
+    });
+
+    return this._http.get(this.baseUrl + '/api/user/search', requestOpts)
+      .map(
+        (res: Response) => {
+          const data = res.json();
+          return data;
+        }
+      );
+  }
+
   findUserByCredentials(username: string, password: string) {
     const params: URLSearchParams = new URLSearchParams();
     params.set('username', username);
@@ -136,7 +174,7 @@ export class UserService {
       );
   }
 
-  findUserById(userId: string) {
+  findUserById(userId: number) {
     return this._http.get(this.baseUrl + '/api/user/' + userId)
       .map(
         (res: Response) => {
@@ -146,7 +184,7 @@ export class UserService {
       );
   }
 
-  updateUser(userId: string , user: any) {
+  updateUser(userId: number , user: any) {
     return this._http.put(this.baseUrl + '/api/user/' + userId, user)
       .map(
         (res: Response) => {
@@ -156,7 +194,7 @@ export class UserService {
       );
   }
 
-  deleteUser(userId: string) {
+  deleteUser(userId: number) {
     return this._http.delete(this.baseUrl + '/api/user/' + userId)
       .map(
         (res: Response) => {

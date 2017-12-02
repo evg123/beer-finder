@@ -1,25 +1,5 @@
 
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-
-    <!--heading on the nav bar-->
-    <p class="navbar-header pull-left">
-      <a class="navbar-brand thick">
-        <b>Profile</b>
-      </a>
-    </p>
-
-    <p class="navbar-text pull-right">
-      <button (click)="update()"
-              [disabled]="!f.valid"
-              class="navbar-link icon-button">
-        <span class="glyphicon glyphicon-ok"></span>
-      </button>
-    </p>
-
-  </div>
-</nav>
-
+<app-site-header [showProfile]=true></app-site-header>
 
 <div class="container">
 
@@ -90,14 +70,3 @@
   </div>
 </div>
 
-<!-- Footer -->
-<nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container-fluid">
-    <p class="navbar-text pull-right">
-      <a routerLink="/profile">
-        <span class="glyphicon glyphicon-user"></span>
-      </a>
-    </p>
-
-  </div>
-</nav>

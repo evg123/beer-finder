@@ -1,8 +1,9 @@
+
 <app-site-header [showProfile]=true></app-site-header>
 
 <div class="container-fluid row">
   <div>
-    <h2>Beer Search</h2>
+    <h2>User Search</h2>
     <form #f="ngForm" (ngSubmit)="search()">
 
       <div class="form-group">
@@ -20,4 +21,21 @@
     </form>
   </div>
 </div>
-<app-beer-list [beerList]="beerList"></app-beer-list>
+
+<div *ngIf="userList">
+  <div>
+    <ul class="list-group">
+
+      <div *ngFor="let user of userList">
+        <li class="list-group-item">
+          <div class="row">
+            <a routerLink="/user/{{user._id}}">
+              {{user.username}}
+            </a>
+          </div>
+        </li>
+      </div>
+
+    </ul>
+  </div>
+</div>

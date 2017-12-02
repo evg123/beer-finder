@@ -12,6 +12,7 @@ module.exports = function (app) {
 
   app.post('/api/user', createUser);
   app.get('/api/user', findUserCredRouter);
+  app.get('/api/user/search', searchUsers);
   app.get('/api/user/:userId', findUserById);
   app.put('/api/user/:userId', updateUser);
   app.delete('/api/user/:userId', deleteUser);
@@ -109,6 +110,14 @@ module.exports = function (app) {
   function findUserByUsername(req, res) {
     const username = req.query.username;
     UserModel.findUserByUsername(username)
+      .then(function (data) {
+        res.json(data);
+      });
+  }
+
+  function searchUsers(req, res) {
+    const query = req.query.query;
+    UserModel.find({$text: {$search: query}})
       .then(function (data) {
         res.json(data);
       });

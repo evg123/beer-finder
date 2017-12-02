@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           }
           this.sharedService.user = data;
           this.user = this.sharedService.user;
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/user/' + this.user._id]);
         },
         (error: any) => {
           this.errorMsg = 'Login failed';

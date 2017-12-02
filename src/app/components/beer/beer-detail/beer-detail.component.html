@@ -1,27 +1,33 @@
-<div class="container-fluid">
-  <h1>{{beerName}}</h1>
-  <h3> by {{brewery}}</h3>
-  <h3>is a {{style}}</h3>
+<app-site-header [showProfile]=true></app-site-header>
+
+<div *ngIf="beer">
+  <div class="container-fluid">
+    <h1>{{beer.beer_name}}</h1>
+    <h3> by {{beer.brewery.brewery_name}}</h3>
+    <h3>is a {{beer.beer_style}}</h3>
+  </div>
 </div>
 
 <Button class="btn btn-block btn-primary"
         routerLink="/beer/{{bid}}/report">Report this beer at a location</Button>
 
-<div>
-  <ul class="list-group">
+<div *ngIf="stockList">
+  <div>
+    <ul class="list-group">
 
-    <div *ngFor="let stock of stockList">
-      <li class="list-group-item">
-        <div class="row">
-          <a routerLink="/location/{{stock.location._id}}">
-            {{stock.location.name}}
-          </a>
-          <span>
-            {{stock.count}}
-          </span>
-        </div>
-      </li>
-    </div>
+      <div *ngFor="let stock of stockList">
+        <li class="list-group-item">
+          <div class="row">
+            <a routerLink="/location/{{stock.location._id}}">
+              {{stock.location.name}}
+            </a>
+            <span>
+              {{stock.count}}
+            </span>
+          </div>
+        </li>
+      </div>
 
-  </ul>
+    </ul>
+  </div>
 </div>

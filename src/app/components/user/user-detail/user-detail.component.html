@@ -1,0 +1,12 @@
+
+<app-site-header [showProfile]=true></app-site-header>
+
+<div *ngIf="user">
+  <h1>{{user.username}}</h1>
+  <h3>{{user.firstName}}</h3>
+  <h3>{{user.lastName}}</h3>
+  <h3>{{user.email}}</h3>
+
+  <app-location-list [locationList]="user.locations"></app-location-list>
+
+</div>

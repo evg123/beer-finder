@@ -1,22 +1,22 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../services/user.service.client';
+import {SharedService} from '../../../services/shared.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {SharedService} from '../../../services/shared.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class UserEditComponent implements OnInit {
 
   @ViewChild('f') loginForm: NgForm;
 
   // properties
   errorFlag = false;
   errorMsg: string;
-  userId: string;
+  userId: number;
   user: any;
   username: string;
   email: string;
@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
     this.userService.updateUser(this.userId, updatedUser)
       .subscribe(
         (data: any) => {
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/user/' + this.userId]);
           this.updated = true;
         },
         (error: any) => {
@@ -68,4 +68,5 @@ export class ProfileComponent implements OnInit {
   setUpdated(value: boolean) {
     this.updated = value;
   }
+
 }

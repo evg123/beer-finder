@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../services/user.service.client';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {SharedService} from '../../../services/shared.service';
+import {sharedStylesheetJitUrl} from '@angular/compiler';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +20,7 @@ export class RegisterComponent implements OnInit {
   user: any;
 
   constructor(private userService: UserService,
+              private sharedService: SharedService,
               private router: Router) { }
 
   ngOnInit() { }
@@ -54,7 +57,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(username, password)
       .subscribe(
         (data: any) => {
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/user/' + this.sharedService.user._id]);
         },
         (error: any) => {
           this.errorMsg = 'Failed to create new user';

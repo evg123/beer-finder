@@ -12,11 +12,10 @@ export class BeerListComponent implements OnInit {
   errorFlag = false;
   errorMsg = '';
 
-  @Input() beerList: any[]; // TODO should be an actual type
+  @Input() beerList: any[];
 
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private beerSvc: BeerService) { }
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params

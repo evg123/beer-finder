@@ -14,10 +14,7 @@ export class BeerDetailComponent implements OnInit {
   errorMsg = '';
 
   bid: number;
-  beerData: any;
-  beerName: string;
-  brewery: string;
-  style: string;
+  beer: any;
   stockList: any;
 
   constructor(private router: Router,
@@ -35,10 +32,7 @@ export class BeerDetailComponent implements OnInit {
     this.beerSvc.findBeerById(this.bid)
       .subscribe(
         (data: any) => {
-          this.beerData = data.response.beer;
-          this.beerName = this.beerData.beer_name;
-          this.brewery = this.beerData.brewery.brewery_name;
-          this.style = this.beerData.beer_style;
+          this.beer = data.response.beer;
         },
         (error: any) => {
           this.errorMsg = 'Failed to find beer';

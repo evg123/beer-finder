@@ -1,0 +1,25 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+
+    <!--heading on the nav bar-->
+    <p class="navbar-header pull-left">
+      <a routerLink="/" class="navbar-brand thick">
+        <b>Beer Finder</b>
+      </a>
+    </p>
+
+    <p class="navbar-header pull-right">
+      <a class="navbar-brand thin">
+        {{tags}}
+      </a>
+    </p>
+
+    <p class="navbar-text pull-right">
+      <button [routerLink]=profileLink
+              class="navbar-link icon-button">
+        <span class="glyphicon glyphicon-user"></span>
+      </button>
+    </p>
+
+  </div>
+</nav>

@@ -13,8 +13,7 @@ export class LocationDetailComponent implements OnInit {
   errorMsg = '';
 
   lid: number;
-  name: string;
-  description: string;
+  location: any;
   stockList: any;
 
   constructor(private router: Router,
@@ -32,8 +31,7 @@ export class LocationDetailComponent implements OnInit {
     this.locationSvc.findLocationById(this.lid)
       .subscribe(
         (data: any) => {
-          this.name = data.name;
-          this.description = data.description;
+          this.location = data;
         },
         (error: any) => {
           this.errorMsg = 'Failed to find location';

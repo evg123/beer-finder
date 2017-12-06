@@ -64,8 +64,11 @@
             type="button"
             routerLink="/locations">Manage Locations</button>
 
-    <a class="btn btn-danger btn-block "
+    <a class="btn btn-danger btn-block"
        (click)="logout()">Logout</a>
+
+    <a class="btn btn-danger btn-block "
+       (click)="deleteUser()">Delete User Profile</a>
   </form>
 
   <div *ngIf="updated"

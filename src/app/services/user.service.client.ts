@@ -101,6 +101,7 @@ export class UserService {
       .map(
         (res: Response) => {
           const data = res;
+          return data;
         }
       );
   }
@@ -168,7 +169,7 @@ export class UserService {
   }
 
   getAllUsers() {
-    return this._http.get(this.baseUrl + '/api/user')
+    return this._http.get(this.baseUrl + '/api/user/search')
       .map(
         (res: Response) => {
           const data = res.json();

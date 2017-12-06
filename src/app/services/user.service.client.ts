@@ -39,9 +39,13 @@ export class UserService {
         (res: Response) => {
           const user = res.json();
           if (user !== 0) {
-            this.sharedService.user = user; // setting user so as to share with all components
-          } else if (user.admin || user._id === userId) {
-            return true;
+            this.sharedService.user = user;
+            if (user.admin || user._id === userId) {
+              return true;
+            } else {
+              this.router.navigate(['/']);
+              return false;
+            }
           } else {
             this.router.navigate(['/login']);
             return false;
@@ -57,9 +61,13 @@ export class UserService {
         (res: Response) => {
           const user = res.json();
           if (user !== 0) {
-            this.sharedService.user = user; // setting user so as to share with all components
-          } else if (user.admin || locId in user.locations) {
-            return true;
+            this.sharedService.user = user;
+            if (user.admin || user.locations.indexOf(locId) !== -1) {
+              return true;
+            } else {
+              this.router.navigate(['/']);
+              return false;
+            }
           } else {
             this.router.navigate(['/login']);
             return false;
@@ -79,8 +87,9 @@ export class UserService {
     return this._http.post(this.baseUrl + '/api/login', body, this.options)
       .map(
         (res: Response) => {
-          const data = res.json();
-          return data;
+          const user = res.json();
+          this.sharedService.user = user;
+          return user;
         }
       );
   }
@@ -99,16 +108,17 @@ export class UserService {
   register(username: String, password: String) {
     this.options.withCredentials = true;
 
-    const user = {
+    const userCred = {
       username : username,
       password : password
     };
 
-    return this._http.post(this.baseUrl + '/api/register', user, this.options)
+    return this._http.post(this.baseUrl + '/api/register', userCred, this.options)
       .map(
         (res: Response) => {
-          const data = res.json();
-          return data;
+          const user = res.json();
+          this.sharedService.user = user;
+          return user;
         }
       );
   }
@@ -149,6 +159,16 @@ export class UserService {
     });
 
     return this._http.get(this.baseUrl + '/api/user/search', requestOpts)
+      .map(
+        (res: Response) => {
+          const data = res.json();
+          return data;
+        }
+      );
+  }
+
+  getAllUsers() {
+    return this._http.get(this.baseUrl + '/api/user')
       .map(
         (res: Response) => {
           const data = res.json();

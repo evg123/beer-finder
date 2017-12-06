@@ -116,6 +116,12 @@ module.exports = function (app) {
   }
 
   function searchUsers(req, res) {
+    if (req.query.query === undefined) {
+      UserModel.find({})
+        .then(function (data) {
+          res.json(data);
+        });
+    }
     const query = req.query.query;
     UserModel.find({$text: {$search: query}})
       .then(function (data) {

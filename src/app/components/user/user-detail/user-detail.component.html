@@ -10,3 +10,15 @@
   <app-location-list [locationList]="user.locations"></app-location-list>
 
 </div>
+
+<div *ngIf="editPermission">
+  <button class="btn btn-danger btn-block"
+          type="button"
+          [routerLink]="['/user/' + userId + '/edit']">Edit User Profile</button>
+</div>
+
+<div *ngIf="canLogout">
+  <button class="btn btn-danger btn-block"
+          type="button"
+          (click)="logout()">Logout</button>
+</div>

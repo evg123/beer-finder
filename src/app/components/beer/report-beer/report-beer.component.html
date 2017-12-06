@@ -11,12 +11,15 @@
 
   <form (ngSubmit) = "report()" #form="ngForm">
 
+    <label for="beerQuery">Beer</label>
     <input   placeholder="Beer"
+             id="beerQuery"
              name="beerQuery"
              type="text"
              class="form-control"
              ngModel
              required
+             [value]="beerName"
              [disabled]="bid"
              #beerQuery="ngModel"/>
     <a (click)="searchBeers()" class="navbar-link">
@@ -29,12 +32,15 @@
       Please select a beer
     </span>
 
+    <label for="locationQuery">Location</label>
     <input   placeholder="Location"
+             id="locationQuery"
              name="locationQuery"
              type="text"
              class="form-control"
              ngModel
              required
+             [value]="locationName"
              [disabled]="lid"
              #locationQuery="ngModel"/>
     <a (click)="searchLocations()" class="navbar-link">

@@ -17,7 +17,11 @@ export class ReportBeerComponent implements OnInit {
   errorMsg = '';
 
   bid: number = null;
+  beerData: any = null;
+  beerName = '';
   lid: number = null;
+  locationData: any = null;
+  locationName = '';
   backRoute: string;
   beerList: any[] = [];
   locationList: any[] = [];
@@ -37,8 +41,31 @@ export class ReportBeerComponent implements OnInit {
           // remember where we should return to after we are done
           if (this.bid) {
             this.backRoute = '/beer/' + this.bid;
+            this.beerSvc.findBeerById(this.bid)
+              .subscribe(
+                (data: any) => {
+                  this.beerData = data;
+                  console.log(data);
+                  this.beerName = this.beerData.beer_name;
+                },
+                (error: any) => {
+                  this.errorMsg = 'Failed to find beer';
+                  this.errorFlag = true;
+                }
+              );
           } else if (this.lid) {
             this.backRoute = '/location/' + this.lid;
+            this.locSvc.findLocationById(this.lid)
+              .subscribe(
+                (data: any) => {
+                  this.locationData = data;
+                  this.locationName = this.locationData.name;
+                },
+                (error: any) => {
+                  this.errorMsg = 'Failed to find location';
+                  this.errorFlag = true;
+                }
+              );
           } else {
             this.backRoute = '/';
           }
@@ -96,18 +123,36 @@ export class ReportBeerComponent implements OnInit {
 
   setBeer(bid: number) {
     this.bid = bid;
+    for (let idx = 0; idx < this.beerList.length; idx++) {
+      if (this.beerList[idx]._id === this.bid) {
+        this.beerData = this.beerList[idx];
+        this.beerName = this.beerData.beer_name;
+        break;
+      }
+    }
   }
 
   setLocation(lid: number) {
     this.lid = lid;
+    for (let idx = 0; idx < this.locationList.length; idx++) {
+      if (this.locationList[idx]._id === this.lid) {
+        this.locationData = this.locationList[idx];
+        this.locationName = this.locationData.name;
+        break;
+      }
+    }
   }
 
   clearBeer() {
     this.bid = null;
+    this.beerData = null;
+    this.beerName = '';
   }
 
   clearLocation() {
     this.lid = null;
+    this.locationData = null;
+    this.locationName = '';
   }
 
   goBack() {

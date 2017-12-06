@@ -33,13 +33,13 @@ export class SiteHeaderComponent implements OnInit {
       );
 
     const user = this.sharedService.user;
-    console.log(user);
     if (user) {
       this.profileLink = '/user/' + user._id;
       if (user.admin) {
         this.tags += '*ADMIN*';
       }
     } else {
+      // not logged in
       this.profileLink = '/login';
     }
   }

@@ -37,7 +37,7 @@ module.exports = function (app) {
 
     axios.get(url + '?' + qs)
       .then(function (response) {
-        res.json(response.data);
+        res.json(response.data.response.beer);
       })
       .catch(function (error) {
         console.log(error);

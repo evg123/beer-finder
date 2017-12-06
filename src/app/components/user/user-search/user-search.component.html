@@ -22,6 +22,10 @@
   </div>
 </div>
 
+<div *ngIf="admin">
+  <button class="btn btn-danger btn-block" type=button (click)="listAll()">List All Users</button>
+</div>
+
 <div *ngIf="userList">
   <div>
     <ul class="list-group">

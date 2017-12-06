@@ -7,6 +7,8 @@ const UserSchema = mongoose.Schema({
   firstName: String,
   lastName: String,
   email: String,
+  thanks: Number,
+  reportCount: Number,
   locations: [{type: mongoose.Schema.Types.ObjectId, ref: 'LocationModel'}],
   dateCreated: {type: Date, default: Date.now}
 }, {collection: 'user'});

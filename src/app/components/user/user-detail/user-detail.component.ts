@@ -17,6 +17,9 @@ export class UserDetailComponent implements OnInit {
   user: any;
   editPermission = false;
   canLogout = false;
+  canThank = false;
+  showThankers = false;
+  isOwner = false;
 
   constructor(private router: Router,
               private sharedSvc: SharedService,
@@ -35,9 +38,19 @@ export class UserDetailComponent implements OnInit {
           if (this.sharedSvc.user.admin) {
             this.editPermission = true;
           }
+          if (this.sharedSvc.user._id && this.sharedSvc.user._id !== this.userId) {
+            this.canThank = true;
+          }
+          if (this.sharedSvc.user.locations) {
+            this.isOwner = true;
+          }
+
+          this.readUserData();
         }
       );
+  }
 
+  readUserData() {
     this.userSvc.findUserById(this.userId)
       .subscribe(
         (data: any) => {
@@ -55,5 +68,16 @@ export class UserDetailComponent implements OnInit {
       .subscribe(
         (data: any) => this.router.navigate(['/login'])
       );
+  }
+
+  thank() {
+    this.userSvc.thank(this.sharedSvc.user._id, this.userId)
+      .subscribe(
+        (data: any) => this.readUserData()
+      );
+  }
+
+  toggleThankers() {
+    this.showThankers = !this.showThankers;
   }
 }

@@ -8,18 +8,23 @@
       </a>
     </p>
 
+    <div *ngIf="showProfile">
+      <p class="navbar-text pull-right">
+        <button [routerLink]=profileLink
+                class="navbar-link icon-button">
+          <span class="glyphicon glyphicon-user"></span>
+        </button>
+      </p>
+    </div>
+
+    <div class="container-fluid">
     <p class="navbar-header pull-right">
       <a class="navbar-brand thin">
         {{tags}}
       </a>
     </p>
+    </div>
 
-    <p class="navbar-text pull-right">
-      <button [routerLink]=profileLink
-              class="navbar-link icon-button">
-        <span class="glyphicon glyphicon-user"></span>
-      </button>
-    </p>
 
   </div>
 </nav>

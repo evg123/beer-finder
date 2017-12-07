@@ -32,6 +32,20 @@ export class UserService {
     'register' : this.register,
   };
 
+  checkLogin() {
+    this.options.withCredentials = true;
+    return this._http.post(this.baseUrl + '/api/loggedIn', '', this.options)
+      .map(
+        (res: Response) => {
+          const user = res.json();
+          if (user !== 0) {
+            this.sharedService.user = user;
+          }
+          return true;
+        }
+      );
+  }
+
   canAccessUser(userId: number) {
     this.options.withCredentials = true;
     return this._http.post(this.baseUrl + '/api/loggedIn', '', this.options)
@@ -217,6 +231,16 @@ export class UserService {
 
   deleteUser(userId: number) {
     return this._http.delete(this.baseUrl + '/api/user/' + userId)
+      .map(
+        (res: Response) => {
+          const data = res.json();
+          return data;
+        }
+      );
+  }
+
+  thank(fromId: number, toId: number) {
+    return this._http.put(this.baseUrl + '/api/user/' + toId + '/thank', {fromId: fromId})
       .map(
         (res: Response) => {
           const data = res.json();

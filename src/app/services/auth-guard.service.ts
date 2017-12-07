@@ -15,9 +15,9 @@ export class AuthGuard implements CanActivate {
     } else if (route.data.roles.indexOf('owner') !== -1) {
       const locId = route.params.locId;
       return this.userService.canAccessLocation(locId);
+    } else {
+      return this.userService.checkLogin();
     }
-    this.router.navigate(['/login']);
-    return false;
   }
 
 }

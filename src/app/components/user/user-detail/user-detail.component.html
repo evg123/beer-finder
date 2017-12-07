@@ -6,10 +6,39 @@
   <h3>{{user.firstName}}</h3>
   <h3>{{user.lastName}}</h3>
   <h3>{{user.email}}</h3>
+  <p>-----</p>
+  <h3>Reports: {{user.reportCount}}</h3>
+  <a (click)="toggleThankers()">
+    <h3>Thanks: {{user.thanks.length}}</h3>
+  </a>
 
-  <app-location-list [locationList]="user.locations"></app-location-list>
+  <div *ngIf="showThankers">
+    <div>
+      <ul class="list-group">
+
+        <div *ngFor="let thanker of user.thanks">
+          <li class="list-group-item">
+            <div class="row">
+              <a routerLink="/user/{{thanker._id}}">
+                {{thanker.username}}
+              </a>
+            </div>
+          </li>
+        </div>
+
+      </ul>
+    </div>
+  </div>
+
 
 </div>
+
+<div *ngIf="canThank">
+  <button class="btn btn-success btn-block"
+          type="button"
+          (click)="thank()">Thank this user</button>
+</div>
+
 
 <div *ngIf="editPermission">
   <button class="btn btn-danger btn-block"
@@ -21,4 +50,9 @@
   <button class="btn btn-danger btn-block"
           type="button"
           (click)="logout()">Logout</button>
+</div>
+
+<div *ngIf="user && user.locations.length > 0">
+  <h3>Locations:</h3>
+  <app-location-list [locationList]="user.locations"></app-location-list>
 </div>

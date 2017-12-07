@@ -1,5 +1,5 @@
 
-<app-site-header [showProfile]=true></app-site-header>
+<app-site-header [showProfile]=false></app-site-header>
 
 <div class="container-fluid">
 
@@ -43,5 +43,11 @@
     <button class="btn btn-success btn-block"
             type="submit"
             [routerLink]="['/register']">Register</button>
+
+    <a [href]="googleLoginUrl" class="btn btn-primary btn-block">
+      <span class="fa fa-google"></span>
+      Login with Google
+    </a>
+
   </form>
 </div>

@@ -4,11 +4,15 @@ const UserSchema = mongoose.Schema({
   admin: {type: Boolean, default: false},
   username: String,
   password: String,
+  google: {
+    id:    String,
+    token: String
+  },
   firstName: String,
   lastName: String,
   email: String,
-  thanks: Number,
-  reportCount: Number,
+  thanks: [{type: mongoose.Schema.Types.ObjectId, ref: 'UserModel'}],
+  reportCount: {type: Number, default: 0},
   locations: [{type: mongoose.Schema.Types.ObjectId, ref: 'LocationModel'}],
   dateCreated: {type: Date, default: Date.now}
 }, {collection: 'user'});

@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BeerService} from '../../../services/beer.service.client';
 import {LocationService} from '../../../services/location.service.client';
 import {NgForm} from '@angular/forms';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-report-beer',
@@ -28,6 +29,7 @@ export class ReportBeerComponent implements OnInit {
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
+              private sharedSvc: SharedService,
               private beerSvc: BeerService,
               private locSvc: LocationService) { }
 
@@ -78,8 +80,9 @@ export class ReportBeerComponent implements OnInit {
     stock.lid = this.lid;
     stock.bid = this.bid;
     stock.count = this.repForm.value.count;
+    const userId = this.sharedSvc.user._id;
 
-    this.beerSvc.reportBeer(stock)
+    this.beerSvc.reportBeer(userId, stock)
       .subscribe(
         (data: any) => {
           this.goBack();

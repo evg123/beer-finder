@@ -16,25 +16,26 @@ import {NewLocationComponent} from './components/location/new-location/new-locat
 import {UserSearchComponent} from './components/user/user-search/user-search.component';
 import {UserDetailComponent} from './components/user/user-detail/user-detail.component';
 import {LocationEditComponent} from './components/location/location-edit/location-edit.component';
+import {NotFoundComponent} from './components/site/not-found/not-found.component';
 
 
 const APP_ROUTES: Routes = [
-  {path: '', component : HomeComponent},
+  {path: '', component : HomeComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
   {path: 'login', component : LoginComponent},
   {path: 'register', component : RegisterComponent},
-  {path: 'user/search', component : UserSearchComponent},
-  {path: 'user/:userId', component: UserDetailComponent},
+  {path: 'user/search', component : UserSearchComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: 'user/:userId', component: UserDetailComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
   {path: 'user/:userId/edit', component: UserEditComponent, canActivate: [AuthGuard], data: {roles: ['user']}},
   // {path: 'user/:userId/locations', component: ManageLocationsComponent, canActivate: [AuthGuard], data: {roles: ['user']}},
-  {path: 'beer/search', component : BeerSearchComponent},
-  {path: 'beer/:bid', component : BeerDetailComponent},
-  {path: 'beer/:bid/report', component : ReportBeerComponent},
-  {path: 'location/search', component : LocationSearchComponent},
-  {path: 'location/new', component : NewLocationComponent},
-  {path: 'location/:lid', component : LocationDetailComponent},
+  {path: 'beer/search', component : BeerSearchComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: 'beer/:bid', component : BeerDetailComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: 'beer/:bid/report', component : ReportBeerComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: 'location/search', component : LocationSearchComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: 'location/new', component : NewLocationComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: 'location/:lid', component : LocationDetailComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
   {path: 'location/:lid/edit', component : LocationEditComponent, canActivate: [AuthGuard], data: {roles: ['owner']}},
-  {path: 'location/:lid/report', component : ReportBeerComponent},
-  {path: '**', component : HomeComponent}, // TODO replace with 404 component
+  {path: 'location/:lid/report', component : ReportBeerComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
+  {path: '**', component : NotFoundComponent, canActivate: [AuthGuard], data: {roles: ['all']}},
 ];
 
 // Export the routes as module providers

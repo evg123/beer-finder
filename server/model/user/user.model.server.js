@@ -4,10 +4,12 @@ const UserModel = mongoose.model("UserModel", UserSchema);
 
 UserModel.createUser = createUser;
 UserModel.findUserById = findUserById;
+UserModel.findUserByGoogleId = findUserByGoogleId;
 UserModel.findUserByUsername = findUserByUsername;
 UserModel.findUserByCredentials = findUserByCredentials;
 UserModel.updateUser = updateUser;
 UserModel.deleteUser = deleteUser;
+UserModel.thankUser = thankUser;
 
 module.exports = UserModel;
 
@@ -16,7 +18,17 @@ function createUser(user) {
 }
 
 function findUserById(userId) {
-  return UserModel.findById(userId);
+  return UserModel.findById(userId)
+    .populate('thanks')
+    .populate('locations')
+    .exec();
+}
+
+function findUserByGoogleId(googleId) {
+  return UserModel.findOne({'google.id': googleId})
+    .populate('thanks')
+    .populate('locations')
+    .exec();
 }
 
 function findUserByUsername(username) {
@@ -33,4 +45,8 @@ function updateUser(userId, user) {
 
 function deleteUser(userId) {
   return UserModel.findByIdAndRemove(userId);
+}
+
+function thankUser(fromId, toId) {
+  return UserModel.update({_id: toId}, {$addToSet: {thanks: fromId}});
 }

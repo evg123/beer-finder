@@ -16,7 +16,7 @@ export class SiteHeaderComponent implements OnInit {
   errorMsg = '';
 
   profileLink: string;
-  tags: string;
+  tags = '';
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,

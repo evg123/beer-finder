@@ -71,7 +71,9 @@ export class BeerService {
       );
   }
 
-  reportBeer(stock: any) {
+  reportBeer(userId: number, stock: any) {
+    stock.userId = userId;
+
     return this._http.post(this.baseUrl + '/api/beer/' + stock.lid + '/report', stock)
       .map(
         (res: Response) => {

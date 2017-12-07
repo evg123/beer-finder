@@ -100,12 +100,14 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_user_user_detail_user_detail_component__ = __webpack_require__("../../../../../src/app/components/user/user-detail/user-detail.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_location_location_edit_location_edit_component__ = __webpack_require__("../../../../../src/app/components/location/location-edit/location-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_site_site_header_site_header_component__ = __webpack_require__("../../../../../src/app/components/site/site-header/site-header.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_site_not_found_not_found_component__ = __webpack_require__("../../../../../src/app/components/site/not-found/not-found.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -161,7 +163,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_5__components_user_user_edit_user_edit_component__["a" /* UserEditComponent */],
             __WEBPACK_IMPORTED_MODULE_26__components_user_user_detail_user_detail_component__["a" /* UserDetailComponent */],
             __WEBPACK_IMPORTED_MODULE_27__components_location_location_edit_location_edit_component__["a" /* LocationEditComponent */],
-            __WEBPACK_IMPORTED_MODULE_28__components_site_site_header_site_header_component__["a" /* SiteHeaderComponent */]
+            __WEBPACK_IMPORTED_MODULE_28__components_site_site_header_site_header_component__["a" /* SiteHeaderComponent */],
+            __WEBPACK_IMPORTED_MODULE_29__components_site_not_found_not_found_component__["a" /* NotFoundComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -198,6 +201,8 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_user_user_search_user_search_component__ = __webpack_require__("../../../../../src/app/components/user/user-search/user-search.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_user_user_detail_user_detail_component__ = __webpack_require__("../../../../../src/app/components/user/user-detail/user-detail.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_location_location_edit_location_edit_component__ = __webpack_require__("../../../../../src/app/components/location/location-edit/location-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_site_not_found_not_found_component__ = __webpack_require__("../../../../../src/app/components/site/not-found/not-found.component.ts");
+
 
 
 
@@ -214,22 +219,22 @@ AppModule = __decorate([
 
 
 var APP_ROUTES = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_8__components_home_home_component__["a" /* HomeComponent */] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_8__components_home_home_component__["a" /* HomeComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_1__components_user_login_login_component__["a" /* LoginComponent */] },
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_3__components_user_register_register_component__["a" /* RegisterComponent */] },
-    { path: 'user/search', component: __WEBPACK_IMPORTED_MODULE_12__components_user_user_search_user_search_component__["a" /* UserSearchComponent */] },
-    { path: 'user/:userId', component: __WEBPACK_IMPORTED_MODULE_13__components_user_user_detail_user_detail_component__["a" /* UserDetailComponent */] },
+    { path: 'user/search', component: __WEBPACK_IMPORTED_MODULE_12__components_user_user_search_user_search_component__["a" /* UserSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: 'user/:userId', component: __WEBPACK_IMPORTED_MODULE_13__components_user_user_detail_user_detail_component__["a" /* UserDetailComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'user/:userId/edit', component: __WEBPACK_IMPORTED_MODULE_2__components_user_user_edit_user_edit_component__["a" /* UserEditComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['user'] } },
     // {path: 'user/:userId/locations', component: ManageLocationsComponent, canActivate: [AuthGuard], data: {roles: ['user']}},
-    { path: 'beer/search', component: __WEBPACK_IMPORTED_MODULE_6__components_beer_beer_search_beer_search_component__["a" /* BeerSearchComponent */] },
-    { path: 'beer/:bid', component: __WEBPACK_IMPORTED_MODULE_4__components_beer_beer_detail_beer_detail_component__["a" /* BeerDetailComponent */] },
-    { path: 'beer/:bid/report', component: __WEBPACK_IMPORTED_MODULE_10__components_beer_report_beer_report_beer_component__["a" /* ReportBeerComponent */] },
-    { path: 'location/search', component: __WEBPACK_IMPORTED_MODULE_9__components_location_location_search_location_search_component__["a" /* LocationSearchComponent */] },
-    { path: 'location/new', component: __WEBPACK_IMPORTED_MODULE_11__components_location_new_location_new_location_component__["a" /* NewLocationComponent */] },
-    { path: 'location/:lid', component: __WEBPACK_IMPORTED_MODULE_5__components_location_location_detail_location_detail_component__["a" /* LocationDetailComponent */] },
+    { path: 'beer/search', component: __WEBPACK_IMPORTED_MODULE_6__components_beer_beer_search_beer_search_component__["a" /* BeerSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: 'beer/:bid', component: __WEBPACK_IMPORTED_MODULE_4__components_beer_beer_detail_beer_detail_component__["a" /* BeerDetailComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: 'beer/:bid/report', component: __WEBPACK_IMPORTED_MODULE_10__components_beer_report_beer_report_beer_component__["a" /* ReportBeerComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: 'location/search', component: __WEBPACK_IMPORTED_MODULE_9__components_location_location_search_location_search_component__["a" /* LocationSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: 'location/new', component: __WEBPACK_IMPORTED_MODULE_11__components_location_new_location_new_location_component__["a" /* NewLocationComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: 'location/:lid', component: __WEBPACK_IMPORTED_MODULE_5__components_location_location_detail_location_detail_component__["a" /* LocationDetailComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'location/:lid/edit', component: __WEBPACK_IMPORTED_MODULE_14__components_location_location_edit_location_edit_component__["a" /* LocationEditComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['owner'] } },
-    { path: 'location/:lid/report', component: __WEBPACK_IMPORTED_MODULE_10__components_beer_report_beer_report_beer_component__["a" /* ReportBeerComponent */] },
-    { path: '**', component: __WEBPACK_IMPORTED_MODULE_8__components_home_home_component__["a" /* HomeComponent */] },
+    { path: 'location/:lid/report', component: __WEBPACK_IMPORTED_MODULE_10__components_beer_report_beer_report_beer_component__["a" /* ReportBeerComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
+    { path: '**', component: __WEBPACK_IMPORTED_MODULE_15__components_site_not_found_not_found_component__["a" /* NotFoundComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
 ];
 // Export the routes as module providers
 var Routing = __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* RouterModule */].forRoot(APP_ROUTES);
@@ -507,7 +512,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/report-beer/report-beer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <input   placeholder=\"Beer\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n    <span class=\"help-block alert-danger\" *ngIf=\"!beerQuery.valid && beerQuery.touched\">\n      Please select a beer\n    </span>\n\n    <input   placeholder=\"Location\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n    <span class=\"help-block alert-danger\" *ngIf=\"!locationQuery.valid && locationQuery.touched\">\n      Please select a location\n    </span>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord.beer.bid)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location._id)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Beer\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n    <span class=\"help-block alert-danger\" *ngIf=\"!beerQuery.valid && beerQuery.touched\">\n      Please select a beer\n    </span>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Location\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n    <span class=\"help-block alert-danger\" *ngIf=\"!locationQuery.valid && locationQuery.touched\">\n      Please select a location\n    </span>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord.beer.bid)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location._id)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -521,6 +526,7 @@ module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__ = __webpack_require__("../../../../../src/app/services/beer.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_location_service_client__ = __webpack_require__("../../../../../src/app/services/location.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -535,16 +541,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ReportBeerComponent = (function () {
-    function ReportBeerComponent(router, activatedRoute, beerSvc, locSvc) {
+    function ReportBeerComponent(router, activatedRoute, sharedSvc, beerSvc, locSvc) {
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.sharedSvc = sharedSvc;
         this.beerSvc = beerSvc;
         this.locSvc = locSvc;
         this.errorFlag = false;
         this.errorMsg = '';
         this.bid = null;
+        this.beerData = null;
+        this.beerName = '';
         this.lid = null;
+        this.locationData = null;
+        this.locationName = '';
         this.beerList = [];
         this.locationList = [];
     }
@@ -557,9 +569,26 @@ var ReportBeerComponent = (function () {
             // remember where we should return to after we are done
             if (_this.bid) {
                 _this.backRoute = '/beer/' + _this.bid;
+                _this.beerSvc.findBeerById(_this.bid)
+                    .subscribe(function (data) {
+                    _this.beerData = data;
+                    console.log(data);
+                    _this.beerName = _this.beerData.beer_name;
+                }, function (error) {
+                    _this.errorMsg = 'Failed to find beer';
+                    _this.errorFlag = true;
+                });
             }
             else if (_this.lid) {
                 _this.backRoute = '/location/' + _this.lid;
+                _this.locSvc.findLocationById(_this.lid)
+                    .subscribe(function (data) {
+                    _this.locationData = data;
+                    _this.locationName = _this.locationData.name;
+                }, function (error) {
+                    _this.errorMsg = 'Failed to find location';
+                    _this.errorFlag = true;
+                });
             }
             else {
                 _this.backRoute = '/';
@@ -572,7 +601,8 @@ var ReportBeerComponent = (function () {
         stock.lid = this.lid;
         stock.bid = this.bid;
         stock.count = this.repForm.value.count;
-        this.beerSvc.reportBeer(stock)
+        var userId = this.sharedSvc.user._id;
+        this.beerSvc.reportBeer(userId, stock)
             .subscribe(function (data) {
             _this.goBack();
         }, function (error) {
@@ -606,15 +636,33 @@ var ReportBeerComponent = (function () {
     };
     ReportBeerComponent.prototype.setBeer = function (bid) {
         this.bid = bid;
+        for (var idx = 0; idx < this.beerList.length; idx++) {
+            if (this.beerList[idx]._id === this.bid) {
+                this.beerData = this.beerList[idx];
+                this.beerName = this.beerData.beer_name;
+                break;
+            }
+        }
     };
     ReportBeerComponent.prototype.setLocation = function (lid) {
         this.lid = lid;
+        for (var idx = 0; idx < this.locationList.length; idx++) {
+            if (this.locationList[idx]._id === this.lid) {
+                this.locationData = this.locationList[idx];
+                this.locationName = this.locationData.name;
+                break;
+            }
+        }
     };
     ReportBeerComponent.prototype.clearBeer = function () {
         this.bid = null;
+        this.beerData = null;
+        this.beerName = '';
     };
     ReportBeerComponent.prototype.clearLocation = function () {
         this.lid = null;
+        this.locationData = null;
+        this.locationName = '';
     };
     ReportBeerComponent.prototype.goBack = function () {
         this.router.navigate([this.backRoute]);
@@ -631,10 +679,10 @@ ReportBeerComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/beer/report-beer/report-beer.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/beer/report-beer/report-beer.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_location_service_client__["a" /* LocationService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_shared_service__["a" /* SharedService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_location_service_client__["a" /* LocationService */]) === "function" && _f || Object])
 ], ReportBeerComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=report-beer.component.js.map
 
 /***/ }),
@@ -1203,6 +1251,67 @@ var _a, _b, _c, _d;
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/site/not-found/not-found.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/site/not-found/not-found.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<h1>Sorry this page was not found!</h1>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/site/not-found/not-found.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotFoundComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var NotFoundComponent = (function () {
+    function NotFoundComponent() {
+    }
+    NotFoundComponent.prototype.ngOnInit = function () {
+    };
+    return NotFoundComponent;
+}());
+NotFoundComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-not-found',
+        template: __webpack_require__("../../../../../src/app/components/site/not-found/not-found.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/site/not-found/not-found.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], NotFoundComponent);
+
+//# sourceMappingURL=not-found.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/site/site-header/site-header.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1224,7 +1333,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/site/site-header/site-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n\n    <!--heading on the nav bar-->\n    <p class=\"navbar-header pull-left\">\n      <a routerLink=\"/\" class=\"navbar-brand thick\">\n        <b>Beer Finder</b>\n      </a>\n    </p>\n\n    <p class=\"navbar-header pull-right\">\n      <a class=\"navbar-brand thin\">\n        {{tags}}\n      </a>\n    </p>\n\n    <p class=\"navbar-text pull-right\">\n      <button [routerLink]=profileLink\n              class=\"navbar-link icon-button\">\n        <span class=\"glyphicon glyphicon-user\"></span>\n      </button>\n    </p>\n\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n\n    <!--heading on the nav bar-->\n    <p class=\"navbar-header pull-left\">\n      <a routerLink=\"/\" class=\"navbar-brand thick\">\n        <b>Beer Finder</b>\n      </a>\n    </p>\n\n    <div *ngIf=\"showProfile\">\n      <p class=\"navbar-text pull-right\">\n        <button [routerLink]=profileLink\n                class=\"navbar-link icon-button\">\n          <span class=\"glyphicon glyphicon-user\"></span>\n        </button>\n      </p>\n    </div>\n\n    <div class=\"container-fluid\">\n    <p class=\"navbar-header pull-right\">\n      <a class=\"navbar-brand thin\">\n        {{tags}}\n      </a>\n    </p>\n    </div>\n\n\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1255,6 +1364,7 @@ var SiteHeaderComponent = (function () {
         this.sharedService = sharedService;
         this.errorFlag = false;
         this.errorMsg = '';
+        this.tags = '';
     }
     SiteHeaderComponent.prototype.ngOnInit = function () {
         var userId;
@@ -1263,7 +1373,6 @@ var SiteHeaderComponent = (function () {
             userId = params['userId'];
         });
         var user = this.sharedService.user;
-        console.log(user);
         if (user) {
             this.profileLink = '/user/' + user._id;
             if (user.admin) {
@@ -1271,6 +1380,7 @@ var SiteHeaderComponent = (function () {
             }
         }
         else {
+            // not logged in
             this.profileLink = '/login';
         }
     };
@@ -1315,7 +1425,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Login</h1>\n\n  <form (ngSubmit) = \"login()\" #f=\"ngForm\">\n\n    <input   placeholder=\"username\"\n             name=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             #username=\"ngModel\"\n             autocomplete=\"off\"\n             autocapitalize=\"none\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username\n    </span>\n\n    <input   placeholder=\"password\"\n             name=\"password\"\n             type=\"password\"\n             class=\"form-control\"\n             ngModel\n             required\n             #password=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Login</button>\n\n    <button class=\"btn btn-success btn-block\"\n            type=\"submit\"\n            [routerLink]=\"['/register']\">Register</button>\n  </form>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=false></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Login</h1>\n\n  <form (ngSubmit) = \"login()\" #f=\"ngForm\">\n\n    <input   placeholder=\"username\"\n             name=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             #username=\"ngModel\"\n             autocomplete=\"off\"\n             autocapitalize=\"none\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!username.valid && username.touched\">\n      Please enter username\n    </span>\n\n    <input   placeholder=\"password\"\n             name=\"password\"\n             type=\"password\"\n             class=\"form-control\"\n             ngModel\n             required\n             #password=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!password.valid && password.touched\">\n      Please enter password\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!f.valid\">Login</button>\n\n    <button class=\"btn btn-success btn-block\"\n            type=\"submit\"\n            [routerLink]=\"['/register']\">Register</button>\n\n    <a [href]=\"googleLoginUrl\" class=\"btn btn-primary btn-block\">\n      <span class=\"fa fa-google\"></span>\n      Login with Google\n    </a>\n\n  </form>\n</div>\n"
 
 /***/ }),
 
@@ -1329,6 +1439,7 @@ module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1343,6 +1454,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function () {
     function LoginComponent(userService, sharedService, router) {
         this.userService = userService;
@@ -1351,6 +1463,7 @@ var LoginComponent = (function () {
         // properties
         this.errorFlag = false;
         this.errorMsg = '';
+        this.googleLoginUrl = __WEBPACK_IMPORTED_MODULE_5__environments_environment__["a" /* environment */].serverBaseUrl + '/google/login';
     }
     LoginComponent.prototype.ngOnInit = function () { };
     LoginComponent.prototype.login = function () {
@@ -1414,7 +1527,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Register</h1>\n\n  <form (ngSubmit) = \"register()\" #f=\"ngForm\">\n\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           class=\"form-control\"\n           ngModel\n           #username=\"ngModel\"\n           required\n           autocomplete=\"off\"\n           autocapitalize=\"none\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!username.valid && username.touched\">\n      Please enter a username\n    </span>\n\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!password.valid && password.touched\">\n      Please enter a password\n    </span>\n\n    <input placeholder=\"verify password\"\n           name=\"verifyPassword\"\n           type=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #verifyPassword=\"ngModel\"/>\n    <span class=\"help-block alert-danger\"\n          *ngIf=\"(!verifyPassword.valid || password.value !== verifyPassword.value) && verifyPassword.touched\">\n      Please enter matching password\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!f.valid || password.value !== verifyPassword.value\">Register</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            type=\"submit\"\n            [routerLink]=\"['/login']\">Cancel</button>\n  </form>\n\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=false></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Register</h1>\n\n  <form (ngSubmit) = \"register()\" #f=\"ngForm\">\n\n    <input placeholder=\"username\"\n           name=\"username\"\n           type=\"text\"\n           class=\"form-control\"\n           ngModel\n           #username=\"ngModel\"\n           required\n           autocomplete=\"off\"\n           autocapitalize=\"none\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!username.valid && username.touched\">\n      Please enter a username\n    </span>\n\n    <input placeholder=\"password\"\n           name=\"password\"\n           type=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #password=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!password.valid && password.touched\">\n      Please enter a password\n    </span>\n\n    <input placeholder=\"verify password\"\n           name=\"verifyPassword\"\n           type=\"password\"\n           class=\"form-control\"\n           ngModel\n           required\n           #verifyPassword=\"ngModel\"/>\n    <span class=\"help-block alert-danger\"\n          *ngIf=\"(!verifyPassword.valid || password.value !== verifyPassword.value) && verifyPassword.touched\">\n      Please enter matching password\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!f.valid || password.value !== verifyPassword.value\">Register</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            type=\"submit\"\n            [routerLink]=\"['/login']\">Cancel</button>\n  </form>\n\n</div>\n"
 
 /***/ }),
 
@@ -1522,7 +1635,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-detail/user-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"user\">\n  <h1>{{user.username}}</h1>\n  <h3>{{user.firstName}}</h3>\n  <h3>{{user.lastName}}</h3>\n  <h3>{{user.email}}</h3>\n\n  <app-location-list [locationList]=\"user.locations\"></app-location-list>\n\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"user\">\n  <h1>{{user.username}}</h1>\n  <h3>{{user.firstName}}</h3>\n  <h3>{{user.lastName}}</h3>\n  <h3>{{user.email}}</h3>\n  <p>-----</p>\n  <h3>Reports: {{user.reportCount}}</h3>\n  <a (click)=\"toggleThankers()\">\n    <h3>Thanks: {{user.thanks.length}}</h3>\n  </a>\n\n  <div *ngIf=\"showThankers\">\n    <div>\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let thanker of user.thanks\">\n          <li class=\"list-group-item\">\n            <div class=\"row\">\n              <a routerLink=\"/user/{{thanker._id}}\">\n                {{thanker.username}}\n              </a>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n\n\n</div>\n\n<div *ngIf=\"canThank\">\n  <button class=\"btn btn-success btn-block\"\n          type=\"button\"\n          (click)=\"thank()\">Thank this user</button>\n</div>\n\n\n<div *ngIf=\"editPermission\">\n  <button class=\"btn btn-danger btn-block\"\n          type=\"button\"\n          [routerLink]=\"['/user/' + userId + '/edit']\">Edit User Profile</button>\n</div>\n\n<div *ngIf=\"canLogout\">\n  <button class=\"btn btn-danger btn-block\"\n          type=\"button\"\n          (click)=\"logout()\">Logout</button>\n</div>\n\n<div *ngIf=\"user && user.locations.length > 0\">\n  <h3>Locations:</h3>\n  <app-location-list [locationList]=\"user.locations\"></app-location-list>\n</div>\n"
 
 /***/ }),
 
@@ -1534,6 +1647,7 @@ module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1546,28 +1660,64 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UserDetailComponent = (function () {
-    function UserDetailComponent(router, activatedRoute, userSvc) {
+    function UserDetailComponent(router, sharedSvc, activatedRoute, userSvc) {
         this.router = router;
+        this.sharedSvc = sharedSvc;
         this.activatedRoute = activatedRoute;
         this.userSvc = userSvc;
         this.errorFlag = false;
         this.errorMsg = '';
+        this.editPermission = false;
+        this.canLogout = false;
+        this.canThank = false;
+        this.showThankers = false;
+        this.isOwner = false;
     }
     UserDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var userId;
         this.activatedRoute.params
             .subscribe(function (params) {
-            userId = params['userId'];
+            _this.userId = params['userId'];
+            if (_this.sharedSvc.user._id === _this.userId) {
+                _this.canLogout = true;
+                _this.editPermission = true;
+            }
+            if (_this.sharedSvc.user.admin) {
+                _this.editPermission = true;
+            }
+            if (_this.sharedSvc.user._id && _this.sharedSvc.user._id !== _this.userId) {
+                _this.canThank = true;
+            }
+            if (_this.sharedSvc.user.locations) {
+                _this.isOwner = true;
+            }
+            _this.readUserData();
         });
-        this.userSvc.findUserById(userId)
+    };
+    UserDetailComponent.prototype.readUserData = function () {
+        var _this = this;
+        this.userSvc.findUserById(this.userId)
             .subscribe(function (data) {
             _this.user = data;
         }, function (error) {
-            _this.errorMsg = 'Failed to find location';
+            _this.errorMsg = 'Failed to find user';
             _this.errorFlag = true;
         });
+    };
+    UserDetailComponent.prototype.logout = function () {
+        var _this = this;
+        this.userSvc.logout()
+            .subscribe(function (data) { return _this.router.navigate(['/login']); });
+    };
+    UserDetailComponent.prototype.thank = function () {
+        var _this = this;
+        this.userSvc.thank(this.sharedSvc.user._id, this.userId)
+            .subscribe(function (data) { return _this.readUserData(); });
+    };
+    UserDetailComponent.prototype.toggleThankers = function () {
+        this.showThankers = !this.showThankers;
     };
     return UserDetailComponent;
 }());
@@ -1577,10 +1727,10 @@ UserDetailComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/user/user-detail/user-detail.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/user/user-detail/user-detail.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service_client__["a" /* UserService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_user_service_client__["a" /* UserService */]) === "function" && _d || Object])
 ], UserDetailComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=user-detail.component.js.map
 
 /***/ }),
@@ -1606,7 +1756,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-edit/user-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <form #f=\"ngForm\">\n\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input name=\"username\"\n             [(ngModel)]=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"username\"\n             placeholder=\"walice\"\n             readonly\n             required\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"email\">Email address</label>\n      <input name=\"email\"\n             [(ngModel)]=\"email\"\n             #emailLocal=\"ngModel\"\n             type=\"email\"\n             class=\"form-control\"\n             id=\"email\"\n             [email]=\"email !== ''\"\n             placeholder=\"alice.wonderland@unicorn.com\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!emailLocal.valid && emailLocal.touched\">\n      Please enter a valid email address\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"first-name\">First Name</label>\n      <input name=\"firstName\"\n             [(ngModel)]=\"firstName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"first-name\"\n             placeholder=\"Alice\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last-name\">Last Name</label>\n      <input name=\"lastName\"\n             [(ngModel)]=\"lastName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"last-name\"\n             placeholder=\"Wonderland\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            routerLink=\"/locations\">Manage Locations</button>\n\n    <a class=\"btn btn-danger btn-block \"\n       (click)=\"logout()\">Logout</a>\n  </form>\n\n  <div *ngIf=\"updated\"\n       class=\"alert alert-success\">\n    Update Saved\n  </div>\n</div>\n\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <form #f=\"ngForm\">\n\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input name=\"username\"\n             [(ngModel)]=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"username\"\n             placeholder=\"walice\"\n             [readonly]=\"admin\"\n             required\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"email\">Email address</label>\n      <input name=\"email\"\n             [(ngModel)]=\"email\"\n             #emailLocal=\"ngModel\"\n             type=\"email\"\n             class=\"form-control\"\n             id=\"email\"\n             [email]=\"email !== ''\"\n             placeholder=\"alice.wonderland@unicorn.com\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!emailLocal.valid && emailLocal.touched\">\n      Please enter a valid email address\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"first-name\">First Name</label>\n      <input name=\"firstName\"\n             [(ngModel)]=\"firstName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"first-name\"\n             placeholder=\"Alice\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last-name\">Last Name</label>\n      <input name=\"lastName\"\n             [(ngModel)]=\"lastName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"last-name\"\n             placeholder=\"Wonderland\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            (click)=\"update()\">Save</button>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            routerLink=\"/locations\">Manage Locations</button>\n\n    <a class=\"btn btn-danger btn-block\"\n       (click)=\"logout()\">Logout</a>\n\n    <a class=\"btn btn-danger btn-block \"\n       (click)=\"deleteUser()\">Delete User Profile</a>\n  </form>\n\n  <div *ngIf=\"updated\"\n       class=\"alert alert-success\">\n    Update Saved\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1642,14 +1792,27 @@ var UserEditComponent = (function () {
         this.activatedRoute = activatedRoute;
         // properties
         this.errorFlag = false;
+        this.admin = false;
     }
     UserEditComponent.prototype.ngOnInit = function () {
-        this.user = this.sharedService.user;
-        this.userId = this.user._id;
-        this.username = this.user.username;
-        this.email = this.user.email ? this.user.email : '';
-        this.firstName = this.user.firstName;
-        this.lastName = this.user.lastName;
+        var _this = this;
+        this.activatedRoute.params
+            .subscribe(function (params) {
+            _this.userId = params['userId'];
+        });
+        this.admin = this.sharedService.user.admin;
+        this.userService.findUserById(this.userId)
+            .subscribe(function (data) {
+            _this.user = data;
+            _this.userId = _this.user._id;
+            _this.username = _this.user.username;
+            _this.email = _this.user.email ? _this.user.email : '';
+            _this.firstName = _this.user.firstName;
+            _this.lastName = _this.user.lastName;
+        }, function (error) {
+            _this.errorMsg = 'Failed to find user';
+            _this.errorFlag = true;
+        });
         this.updated = false;
     };
     UserEditComponent.prototype.logout = function () {
@@ -1663,6 +1826,7 @@ var UserEditComponent = (function () {
         updatedUser.firstName = this.loginForm.value.firstName;
         updatedUser.lastName = this.loginForm.value.lastName;
         updatedUser.email = this.loginForm.value.email;
+        updatedUser.username = this.loginForm.value.username;
         this.userService.updateUser(this.userId, updatedUser)
             .subscribe(function (data) {
             _this.router.navigate(['/user/' + _this.userId]);
@@ -1674,6 +1838,19 @@ var UserEditComponent = (function () {
     };
     UserEditComponent.prototype.setUpdated = function (value) {
         this.updated = value;
+    };
+    UserEditComponent.prototype.deleteUser = function () {
+        var _this = this;
+        this.userService.deleteUser(this.userId)
+            .subscribe(function (data) {
+            if (_this.sharedService.user._id === _this.userId) {
+                _this.userService.logout()
+                    .subscribe(function (data2) { return _this.router.navigate(['/']); });
+            }
+            else {
+                _this.router.navigate(['/user/search']);
+            }
+        });
     };
     return UserEditComponent;
 }());
@@ -1794,7 +1971,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-search/user-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>User Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n\n<div *ngIf=\"userList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let user of userList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/user/{{user._id}}\">\n              {{user.username}}\n            </a>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>User Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n\n<div *ngIf=\"admin\">\n  <button class=\"btn btn-danger btn-block\" type=button (click)=\"listAll()\">List All Users</button>\n</div>\n\n<div *ngIf=\"userList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let user of userList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/user/{{user._id}}\">\n              {{user.username}}\n            </a>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1806,6 +1983,7 @@ module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1818,22 +1996,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UserSearchComponent = (function () {
-    function UserSearchComponent(router, activatedRoute, userSvc) {
+    function UserSearchComponent(router, activatedRoute, sharedSvc, userSvc) {
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.sharedSvc = sharedSvc;
         this.userSvc = userSvc;
         this.errorFlag = false;
         this.errorMsg = '';
+        this.admin = false;
     }
     UserSearchComponent.prototype.ngOnInit = function () {
         this.activatedRoute.params
             .subscribe(function (params) {
         });
+        this.admin = this.sharedSvc.user.admin;
     };
     UserSearchComponent.prototype.search = function () {
         var _this = this;
         this.userSvc.searchUsers(this.query)
+            .subscribe(function (data) {
+            _this.userList = data;
+        }, function (error) {
+            _this.errorMsg = 'Search failed';
+            _this.errorFlag = true;
+        });
+    };
+    UserSearchComponent.prototype.listAll = function () {
+        var _this = this;
+        this.userSvc.getAllUsers()
             .subscribe(function (data) {
             _this.userList = data;
         }, function (error) {
@@ -1849,10 +2041,10 @@ UserSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/user/user-search/user-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/user/user-search/user-search.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_user_service_client__["a" /* UserService */]) === "function" && _d || Object])
 ], UserSearchComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=user-search.component.js.map
 
 /***/ }),
@@ -1883,16 +2075,17 @@ var AuthGuard = (function () {
         this.router = router;
     }
     AuthGuard.prototype.canActivate = function (route) {
-        if ('user' in route.data.roles) {
+        if (route.data.roles.indexOf('user') !== -1) {
             var userId = route.params.userId;
             return this.userService.canAccessUser(userId);
         }
-        else if ('owner' in route.data.roles) {
+        else if (route.data.roles.indexOf('owner') !== -1) {
             var locId = route.params.locId;
             return this.userService.canAccessLocation(locId);
         }
-        this.router.navigate(['/login']);
-        return false;
+        else {
+            return this.userService.checkLogin();
+        }
     };
     return AuthGuard;
 }());
@@ -1977,7 +2170,8 @@ var BeerService = (function () {
             return data;
         });
     };
-    BeerService.prototype.reportBeer = function (stock) {
+    BeerService.prototype.reportBeer = function (userId, stock) {
+        stock.userId = userId;
         return this._http.post(this.baseUrl + '/api/beer/' + stock.lid + '/report', stock)
             .map(function (res) {
             var data = res.json();
@@ -2157,6 +2351,18 @@ var UserService = (function () {
             'register': this.register,
         };
     }
+    UserService.prototype.checkLogin = function () {
+        var _this = this;
+        this.options.withCredentials = true;
+        return this._http.post(this.baseUrl + '/api/loggedIn', '', this.options)
+            .map(function (res) {
+            var user = res.json();
+            if (user !== 0) {
+                _this.sharedService.user = user;
+            }
+            return true;
+        });
+    };
     UserService.prototype.canAccessUser = function (userId) {
         var _this = this;
         this.options.withCredentials = true;
@@ -2164,10 +2370,14 @@ var UserService = (function () {
             .map(function (res) {
             var user = res.json();
             if (user !== 0) {
-                _this.sharedService.user = user; // setting user so as to share with all components
-            }
-            else if (user.admin || user._id === userId) {
-                return true;
+                _this.sharedService.user = user;
+                if (user.admin || user._id === userId) {
+                    return true;
+                }
+                else {
+                    _this.router.navigate(['/']);
+                    return false;
+                }
             }
             else {
                 _this.router.navigate(['/login']);
@@ -2182,10 +2392,14 @@ var UserService = (function () {
             .map(function (res) {
             var user = res.json();
             if (user !== 0) {
-                _this.sharedService.user = user; // setting user so as to share with all components
-            }
-            else if (user.admin || locId in user.locations) {
-                return true;
+                _this.sharedService.user = user;
+                if (user.admin || user.locations.indexOf(locId) !== -1) {
+                    return true;
+                }
+                else {
+                    _this.router.navigate(['/']);
+                    return false;
+                }
             }
             else {
                 _this.router.navigate(['/login']);
@@ -2194,6 +2408,7 @@ var UserService = (function () {
         });
     };
     UserService.prototype.login = function (username, password) {
+        var _this = this;
         this.options.withCredentials = true;
         var body = {
             username: username,
@@ -2201,8 +2416,9 @@ var UserService = (function () {
         };
         return this._http.post(this.baseUrl + '/api/login', body, this.options)
             .map(function (res) {
-            var data = res.json();
-            return data;
+            var user = res.json();
+            _this.sharedService.user = user;
+            return user;
         });
     };
     UserService.prototype.logout = function () {
@@ -2210,18 +2426,21 @@ var UserService = (function () {
         return this._http.post(this.baseUrl + '/api/logout', '', this.options)
             .map(function (res) {
             var data = res;
+            return data;
         });
     };
     UserService.prototype.register = function (username, password) {
+        var _this = this;
         this.options.withCredentials = true;
-        var user = {
+        var userCred = {
             username: username,
             password: password
         };
-        return this._http.post(this.baseUrl + '/api/register', user, this.options)
+        return this._http.post(this.baseUrl + '/api/register', userCred, this.options)
             .map(function (res) {
-            var data = res.json();
-            return data;
+            var user = res.json();
+            _this.sharedService.user = user;
+            return user;
         });
     };
     UserService.prototype.createUser = function (user) {
@@ -2255,6 +2474,13 @@ var UserService = (function () {
             return data;
         });
     };
+    UserService.prototype.getAllUsers = function () {
+        return this._http.get(this.baseUrl + '/api/user/search')
+            .map(function (res) {
+            var data = res.json();
+            return data;
+        });
+    };
     UserService.prototype.findUserByCredentials = function (username, password) {
         var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* URLSearchParams */]();
         params.set('username', username);
@@ -2283,6 +2509,13 @@ var UserService = (function () {
     };
     UserService.prototype.deleteUser = function (userId) {
         return this._http.delete(this.baseUrl + '/api/user/' + userId)
+            .map(function (res) {
+            var data = res.json();
+            return data;
+        });
+    };
+    UserService.prototype.thank = function (fromId, toId) {
+        return this._http.put(this.baseUrl + '/api/user/' + toId + '/thank', { fromId: fromId })
             .map(function (res) {
             var data = res.json();
             return data;

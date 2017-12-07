@@ -3,7 +3,6 @@ import {UserService} from '../../../services/user.service.client';
 import {SharedService} from '../../../services/shared.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-user-edit',
@@ -24,6 +23,7 @@ export class UserEditComponent implements OnInit {
   firstName: string;
   lastName: string;
   updated: boolean;
+  admin = false;
 
   constructor(private userService: UserService,
               private sharedService: SharedService,
@@ -37,6 +37,8 @@ export class UserEditComponent implements OnInit {
           this.userId = params['userId'];
         }
       );
+
+    this.admin = this.sharedService.user.admin;
 
     this.userService.findUserById(this.userId)
       .subscribe(
@@ -69,6 +71,7 @@ export class UserEditComponent implements OnInit {
     updatedUser.firstName = this.loginForm.value.firstName;
     updatedUser.lastName = this.loginForm.value.lastName;
     updatedUser.email = this.loginForm.value.email;
+    updatedUser.username = this.loginForm.value.username;
 
     this.userService.updateUser(this.userId, updatedUser)
       .subscribe(

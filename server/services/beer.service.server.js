@@ -85,6 +85,7 @@ module.exports = function (app) {
     const obj = req.body;
     const bid = obj.bid;
     const lid = obj.lid;
+    const userId = obj.userId;
 
     // make sure location exists
     LocationModel.findLocationById(lid)
@@ -106,6 +107,9 @@ module.exports = function (app) {
         obj.beerName = data.data.response.beer.beer_name;
         obj.beerStyle = data.data.response.beer.beer_style;
 
+        return UserModel.findOneAndUpdate({_id: userId}, { $inc: {reportCount: 1}});
+      })
+      .then(function (data) {
         return StockModel.createStock(obj);
       })
       .then(function (data) {

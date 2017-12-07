@@ -28,6 +28,7 @@ import {UserListComponent} from './components/user/user-list/user-list.component
 import {UserDetailComponent} from './components/user/user-detail/user-detail.component';
 import { LocationEditComponent } from './components/location/location-edit/location-edit.component';
 import { SiteHeaderComponent } from './components/site/site-header/site-header.component';
+import { NotFoundComponent } from './components/site/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SiteHeaderComponent } from './components/site/site-header/site-header.c
     UserEditComponent,
     UserDetailComponent,
     LocationEditComponent,
-    SiteHeaderComponent
+    SiteHeaderComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -4,19 +4,40 @@ module.exports = function (app) {
   var UserModel = require("../model/user/user.model.server");
   var passport = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
+  var GoogleStrategy = require('passport-google-oauth20').Strategy;
   var bcrypt = require("bcrypt-nodejs");
+
+  var googleConfig = {
+    clientID     : process.env.GOOGLE_CLIENT_ID,
+    clientSecret : process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL  : process.env.GOOGLE_CALLBACK_URL,
+    //profileFields: ['id', 'first_name', 'last_name', 'email']
+  };
 
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
   passport.use(new LocalStrategy(localStrategy));
+  passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+
+  var redirectBase = '';
+  if (process.env.WEBSERVER_URL) {
+    redirectBase = 'http://localhost:4200';
+  }
 
   app.post('/api/user', createUser);
   app.get('/api/user', findUserCredRouter);
   app.get('/api/user/search', searchUsers);
+  app.put('/api/user/:userId/thank', thankUser);
   app.get('/api/user/:userId', findUserById);
   app.put('/api/user/:userId', updateUser);
   app.delete('/api/user/:userId', deleteUser);
   app.post('/api/login', passport.authenticate('local'), login);
+  app.get ('/google/login', passport.authenticate('google', { scope : ['profile', 'email'] }));
+  app.get('/auth/google/callback',
+    passport.authenticate('google', {
+      successRedirect: redirectBase + '/',
+      failureRedirect: redirectBase + '/login'
+    }));
   app.post('/api/logout', logout);
   app.post('/api/register', register);
   app.post('/api/loggedIn', loggedIn);
@@ -55,6 +76,46 @@ module.exports = function (app) {
           }
         }
       );
+  }
+
+  function googleStrategy(accessToken, refreshToken, profile, cb) {
+    UserModel
+      .findUserByGoogleId(profile.id)
+      .then(function(user) {
+          if(user) {
+            return user;
+          } else {
+            // user does not exist, create a new one
+            const newUser = {};
+            newUser.google = {
+              id: profile.id,
+              token: accessToken
+            };
+
+            newUser.username = profile.displayName;
+            newUser.firstName = profile.name.givenName;
+            newUser.lastName = profile.name.familyName;
+            if (profile.emails.length > 0) {
+              newUser.email = profile.emails[0].value;
+            }
+
+            return UserModel.createUser(newUser);
+          }
+        },
+        function(err) {
+          if (err) {
+            return null;
+          }
+        })
+      .then(
+        function (user) {
+          return cb(null, user);
+        },
+        function(err) {
+          if (err) {
+            return cb(err, false);
+          }
+        });
   }
 
   function loggedIn(req, res) {
@@ -162,6 +223,16 @@ module.exports = function (app) {
     const userId = req.params.userId;
 
     UserModel.deleteUser(userId)
+      .then(function (data) {
+        res.json(data);
+      });
+  }
+
+  function thankUser(req, res) {
+    const toId = req.params.userId;
+    const fromId = req.body.fromId;
+
+    UserModel.thankUser(fromId, toId)
       .then(function (data) {
         res.json(data);
       });

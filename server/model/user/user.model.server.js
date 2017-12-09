@@ -11,6 +11,7 @@ UserModel.updateUser = updateUser;
 UserModel.deleteUser = deleteUser;
 UserModel.thankUser = thankUser;
 UserModel.updateReportCount = updateReportCount;
+UserModel.addLocation = addLocation;
 
 module.exports = UserModel;
 
@@ -20,15 +21,15 @@ function createUser(user) {
 
 function findUserById(userId) {
   return UserModel.findById(userId)
-    .populate('thanks')
     .populate('locations')
+    .populate('thanks')
     .exec();
 }
 
 function findUserByGoogleId(googleId) {
   return UserModel.findOne({'google.id': googleId})
-    .populate('thanks')
     .populate('locations')
+    .populate('thanks')
     .exec();
 }
 
@@ -54,4 +55,8 @@ function thankUser(fromId, toId) {
 
 function updateReportCount(userId, countMod) {
   return UserModel.findOneAndUpdate({_id: userId}, { $inc: {reportCount: countMod}});
+}
+
+function addLocation(userId, lid) {
+  return UserModel.findOneAndUpdate({_id: userId}, { $push: {locations: lid}});
 }

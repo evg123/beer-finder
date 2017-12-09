@@ -28,6 +28,7 @@ module.exports = function (app) {
   app.get('/api/user', findUserCredRouter);
   app.get('/api/user/search', searchUsers);
   app.put('/api/user/:userId/thank', thankUser);
+  app.put('/api/user/:userId/claim/:lid', addLocation);
   app.get('/api/user/:userId', findUserById);
   app.put('/api/user/:userId', updateUser);
   app.delete('/api/user/:userId', deleteUser);
@@ -129,7 +130,7 @@ module.exports = function (app) {
 
   function logout(req, res) {
     req.logOut();
-    res.send(200);
+    res.sendStatus(200);
   }
 
   function register (req, res) {
@@ -233,6 +234,16 @@ module.exports = function (app) {
     const fromId = req.body.fromId;
 
     UserModel.thankUser(fromId, toId)
+      .then(function (data) {
+        res.json(data);
+      });
+  }
+
+  function addLocation(req, res) {
+    const userId = req.params.userId;
+    const lid = req.params.lid;
+
+    UserModel.addLocation(userId, lid)
       .then(function (data) {
         res.json(data);
       });

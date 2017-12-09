@@ -15,11 +15,15 @@ function createLocation(obj) {
 }
 
 function findLocationById(locId) {
-  return LocationModel.findById(locId);
+  return LocationModel.findById(locId)
+    .populate('owner')
+    .exec();
 }
 
 function findLocationsByName(query) {
-  return LocationModel.find({name: query});
+  return LocationModel.find({name: query})
+    .populate('owner')
+    .exec();
 }
 
 function updateLocation(locId, obj) {

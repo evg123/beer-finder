@@ -12,6 +12,7 @@
              placeholder="Name"
              type="text"
              required
+             [value]="name"
              #nameLocal="ngModel"
              class="form-control"/>
     </div>
@@ -22,14 +23,14 @@
     <div class="form-group">
       <label for="description">Description</label>
       <textarea name="description"
-                ngModel
+                [(ngModel)]="description"
                 id="description"
                 placeholder="Description"
                 rows="5"
                 class="form-control"></textarea>
     </div>
 
-    <button class="btn btn-block btn-primary" type="submit">Create</button>
+    <button class="btn btn-block btn-primary" type="submit">Update</button>
   </form>
 
 </div>

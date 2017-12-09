@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
       const userId = route.params.userId;
       return this.userService.canAccessUser(userId);
     } else if (route.data.roles.indexOf('owner') !== -1) {
-      const locId = route.params.locId;
+      const locId = route.params.lid;
       return this.userService.canAccessLocation(locId);
     } else {
       return this.userService.checkLogin();

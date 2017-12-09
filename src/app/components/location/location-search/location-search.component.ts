@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocationService} from '../../../services/location.service.client';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-location-search',
@@ -15,15 +16,25 @@ export class LocationSearchComponent implements OnInit {
   results: any;
   locationList: any[];
   query: string;
+  loggedIn = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
+              private sharedService: SharedService,
               private locSvc: LocationService) { }
 
   ngOnInit() {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
+        }
+      );
+
+    this.loggedIn = this.sharedService.user;
+    this.sharedService.loggedIn
+      .subscribe(
+        (value: any) => {
+          this.loggedIn = this.sharedService.user;
         }
       );
   }

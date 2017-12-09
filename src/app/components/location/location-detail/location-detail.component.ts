@@ -17,6 +17,8 @@ export class LocationDetailComponent implements OnInit {
   location: any;
   stockList: any;
   loggedIn = false;
+  isOwner = false;
+  isAdmin = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -28,31 +30,48 @@ export class LocationDetailComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.lid = params['lid'];
-          this.loggedIn = this.sharedSvc.user;
+
+          this.locationSvc.findLocationById(this.lid)
+            .subscribe(
+              (data: any) => {
+                this.location = data;
+                this.updateOnUser();
+              },
+              (error: any) => {
+                this.errorMsg = 'Failed to find location';
+                this.errorFlag = true;
+              }
+            );
+
+          this.locationSvc.findStockByLocation(this.lid)
+            .subscribe(
+              (data: any) => {
+                this.stockList = data;
+              },
+              (error: any) => {
+                this.errorMsg = 'Failed to find location stock';
+                this.errorFlag = true;
+              }
+            );
         }
       );
 
-    this.locationSvc.findLocationById(this.lid)
+    this.sharedSvc.loggedIn
       .subscribe(
-        (data: any) => {
-          this.location = data;
-        },
-        (error: any) => {
-          this.errorMsg = 'Failed to find location';
-          this.errorFlag = true;
+        (value: any) => {
+          this.updateOnUser();
         }
       );
+  }
 
-    this.locationSvc.findStockByLocation(this.lid)
-      .subscribe(
-        (data: any) => {
-          this.stockList = data;
-        },
-        (error: any) => {
-          this.errorMsg = 'Failed to find location stock';
-          this.errorFlag = true;
-        }
-      );
+  updateOnUser() {
+    this.loggedIn = this.sharedSvc.user;
+    if (this.sharedSvc.user) {
+      this.isAdmin = this.sharedSvc.user.admin;
+      if (this.location && this.location.owner) {
+        this.isOwner = this.sharedSvc.user._id === this.location.owner._id;
+      }
+    }
   }
 
 }

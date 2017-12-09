@@ -11,9 +11,16 @@
     <Button class="btn btn-block btn-primary"
             routerLink="/location/{{location._id}}/report">Report a beer at this location</Button>
   </div>
+
+  <div *ngIf="loggedIn && !location.owner">
+    <button routerLink="/location/{{location._id}}/claim"
+            class="btn btn-primary btn-block">Claim this location as the owner</button>
+  </div>
+  <div *ngIf="isOwner || isAdmin">
+    <button routerLink="/location/{{location._id}}/edit"
+            class="btn btn-danger btn-block">Edit Location</button>
+  </div>
 </div>
-
-
 <div *ngIf="stockList">
   <div>
     <ul class="list-group">

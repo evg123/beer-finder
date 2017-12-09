@@ -76,7 +76,11 @@ export class UserService {
           const user = res.json();
           if (user !== 0) {
             this.sharedService.setUser(user);
-            if (user.admin || user.locations.indexOf(locId) !== -1) {
+            let isOwner = false;
+            for (const loc of user.locations) {
+              isOwner = isOwner || loc._id === locId;
+            }
+            if (user.admin || isOwner) {
               return true;
             } else {
               this.router.navigate(['/']);
@@ -245,6 +249,15 @@ export class UserService {
         (res: Response) => {
           const data = res.json();
           return data;
+        }
+      );
+  }
+
+  addLocation(userId: number, lid: number) {
+    return this._http.put(this.baseUrl + '/api/user/' + userId + '/claim/' + lid, {})
+      .map(
+        (res: Response) => {
+          return res.json();
         }
       );
   }

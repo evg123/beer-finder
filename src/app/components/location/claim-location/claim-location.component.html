@@ -1,3 +1,23 @@
-<p>
-  claim-location works!
-</p>
+
+<app-site-header [showProfile]=true></app-site-header>
+
+<div class="container-fluid row">
+
+  <form #locForm="ngForm" (submit)="fileClaim()">
+
+    <div class="form-group">
+      <label for="description">Please describe your relationship to this location</label>
+      <textarea name="description"
+                ngModel
+                id="description"
+                placeholder="Description"
+                rows="5"
+                class="form-control"></textarea>
+    </div>
+
+    <h4>We will review your application and respond within 2 weeks</h4>
+
+    <button class="btn btn-block btn-primary" type="submit">Submit Claim</button>
+  </form>
+
+</div>

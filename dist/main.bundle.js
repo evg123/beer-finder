@@ -205,6 +205,8 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_user_user_detail_user_detail_component__ = __webpack_require__("../../../../../src/app/components/user/user-detail/user-detail.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_location_location_edit_location_edit_component__ = __webpack_require__("../../../../../src/app/components/location/location-edit/location-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_site_not_found_not_found_component__ = __webpack_require__("../../../../../src/app/components/site/not-found/not-found.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_location_claim_location_claim_location_component__ = __webpack_require__("../../../../../src/app/components/location/claim-location/claim-location.component.ts");
+
 
 
 
@@ -228,7 +230,6 @@ var APP_ROUTES = [
     { path: 'user/search', component: __WEBPACK_IMPORTED_MODULE_12__components_user_user_search_user_search_component__["a" /* UserSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'user/:userId', component: __WEBPACK_IMPORTED_MODULE_13__components_user_user_detail_user_detail_component__["a" /* UserDetailComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'user/:userId/edit', component: __WEBPACK_IMPORTED_MODULE_2__components_user_user_edit_user_edit_component__["a" /* UserEditComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['user'] } },
-    // {path: 'user/:userId/locations', component: ManageLocationsComponent, canActivate: [AuthGuard], data: {roles: ['user']}},
     { path: 'beer/search', component: __WEBPACK_IMPORTED_MODULE_6__components_beer_beer_search_beer_search_component__["a" /* BeerSearchComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'beer/:bid', component: __WEBPACK_IMPORTED_MODULE_4__components_beer_beer_detail_beer_detail_component__["a" /* BeerDetailComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'beer/:bid/report', component: __WEBPACK_IMPORTED_MODULE_10__components_beer_report_beer_report_beer_component__["a" /* ReportBeerComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
@@ -236,6 +237,7 @@ var APP_ROUTES = [
     { path: 'location/new', component: __WEBPACK_IMPORTED_MODULE_11__components_location_new_location_new_location_component__["a" /* NewLocationComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'location/:lid', component: __WEBPACK_IMPORTED_MODULE_5__components_location_location_detail_location_detail_component__["a" /* LocationDetailComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'location/:lid/edit', component: __WEBPACK_IMPORTED_MODULE_14__components_location_location_edit_location_edit_component__["a" /* LocationEditComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['owner'] } },
+    { path: 'location/:lid/claim', component: __WEBPACK_IMPORTED_MODULE_16__components_location_claim_location_claim_location_component__["a" /* ClaimLocationComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: 'location/:lid/report', component: __WEBPACK_IMPORTED_MODULE_10__components_beer_report_beer_report_beer_component__["a" /* ReportBeerComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
     { path: '**', component: __WEBPACK_IMPORTED_MODULE_15__components_site_not_found_not_found_component__["a" /* NotFoundComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_7__services_auth_guard_service__["a" /* AuthGuard */]], data: { roles: ['all'] } },
 ];
@@ -766,7 +768,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/claim-location/claim-location.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  claim-location works!\n</p>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n\n  <form #locForm=\"ngForm\" (submit)=\"fileClaim()\">\n\n    <div class=\"form-group\">\n      <label for=\"description\">Please describe your relationship to this location</label>\n      <textarea name=\"description\"\n                ngModel\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <h4>We will review your application and respond within 2 weeks</h4>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Submit Claim</button>\n  </form>\n\n</div>\n"
 
 /***/ }),
 
@@ -776,6 +778,10 @@ module.exports = "<p>\n  claim-location works!\n</p>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimLocationComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_location_service_client__ = __webpack_require__("../../../../../src/app/services/location.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_user_service_client__ = __webpack_require__("../../../../../src/app/services/user.service.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -786,10 +792,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
+
 var ClaimLocationComponent = (function () {
-    function ClaimLocationComponent() {
+    function ClaimLocationComponent(locationSvc, userSvc, sharedSvc, router, activatedRoute) {
+        this.locationSvc = locationSvc;
+        this.userSvc = userSvc;
+        this.sharedSvc = sharedSvc;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
     }
     ClaimLocationComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params
+            .subscribe(function (params) {
+            _this.lid = params['lid'];
+        });
+    };
+    ClaimLocationComponent.prototype.fileClaim = function () {
+        var _this = this;
+        var location = { owner: this.sharedSvc.user._id };
+        this.locationSvc.updateLocation(this.lid, location)
+            .subscribe(function (data) {
+            _this.userSvc.addLocation(_this.sharedSvc.user._id, _this.lid)
+                .subscribe(function (data2) {
+                _this.router.navigate(['location', _this.lid]);
+            }, function (error) {
+                _this.errorMsg = 'Failed to update user';
+                _this.errorFlag = true;
+            });
+        }, function (error) {
+            _this.errorMsg = 'Failed to file claim';
+            _this.errorFlag = true;
+        });
     };
     return ClaimLocationComponent;
 }());
@@ -799,9 +836,10 @@ ClaimLocationComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/location/claim-location/claim-location.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/location/claim-location/claim-location.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_location_service_client__["a" /* LocationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services_user_service_client__["a" /* UserService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_user_service_client__["a" /* UserService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _e || Object])
 ], ClaimLocationComponent);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=claim-location.component.js.map
 
 /***/ }),
@@ -827,7 +865,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-detail/location-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n</div>\n\n\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n\n  <div *ngIf=\"loggedIn && !location.owner\">\n    <button routerLink=\"/location/{{location._id}}/claim\"\n            class=\"btn btn-primary btn-block\">Claim this location as the owner</button>\n  </div>\n  <div *ngIf=\"isOwner || isAdmin\">\n    <button routerLink=\"/location/{{location._id}}/edit\"\n            class=\"btn btn-danger btn-block\">Edit Location</button>\n  </div>\n</div>\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -862,28 +900,43 @@ var LocationDetailComponent = (function () {
         this.errorFlag = false;
         this.errorMsg = '';
         this.loggedIn = false;
+        this.isOwner = false;
+        this.isAdmin = false;
     }
     LocationDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.lid = params['lid'];
-            _this.loggedIn = _this.sharedSvc.user;
+            _this.locationSvc.findLocationById(_this.lid)
+                .subscribe(function (data) {
+                _this.location = data;
+                _this.updateOnUser();
+            }, function (error) {
+                _this.errorMsg = 'Failed to find location';
+                _this.errorFlag = true;
+            });
+            _this.locationSvc.findStockByLocation(_this.lid)
+                .subscribe(function (data) {
+                _this.stockList = data;
+            }, function (error) {
+                _this.errorMsg = 'Failed to find location stock';
+                _this.errorFlag = true;
+            });
         });
-        this.locationSvc.findLocationById(this.lid)
-            .subscribe(function (data) {
-            _this.location = data;
-        }, function (error) {
-            _this.errorMsg = 'Failed to find location';
-            _this.errorFlag = true;
+        this.sharedSvc.loggedIn
+            .subscribe(function (value) {
+            _this.updateOnUser();
         });
-        this.locationSvc.findStockByLocation(this.lid)
-            .subscribe(function (data) {
-            _this.stockList = data;
-        }, function (error) {
-            _this.errorMsg = 'Failed to find location stock';
-            _this.errorFlag = true;
-        });
+    };
+    LocationDetailComponent.prototype.updateOnUser = function () {
+        this.loggedIn = this.sharedSvc.user;
+        if (this.sharedSvc.user) {
+            this.isAdmin = this.sharedSvc.user.admin;
+            if (this.location && this.location.owner) {
+                this.isOwner = this.sharedSvc.user._id === this.location.owner._id;
+            }
+        }
     };
     return LocationDetailComponent;
 }());
@@ -922,7 +975,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-edit/location-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n\n  <form #locForm=\"ngForm\" (submit)=\"update()\">\n    <div class=\"form-group\">\n      <label for=\"name\">Name</label>\n      <input name=\"name\"\n             ngModel\n             id=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             required\n             #nameLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!nameLocal.valid && nameLocal.touched\">\n      Please enter a name\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"description\">Description</label>\n      <textarea name=\"description\"\n                ngModel\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Create</button>\n  </form>\n\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n\n  <form #locForm=\"ngForm\" (submit)=\"update()\">\n    <div class=\"form-group\">\n      <label for=\"name\">Name</label>\n      <input name=\"name\"\n             ngModel\n             id=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             required\n             [value]=\"name\"\n             #nameLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!nameLocal.valid && nameLocal.touched\">\n      Please enter a name\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"description\">Description</label>\n      <textarea name=\"description\"\n                [(ngModel)]=\"description\"\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Update</button>\n  </form>\n\n</div>\n"
 
 /***/ }),
 
@@ -959,14 +1012,15 @@ var LocationEditComponent = (function () {
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.lid = params['lid'];
-        });
-        this.locationSvc.findLocationById(this.lid)
-            .subscribe(function (data) {
-            _this.location = data;
-            _this.locForm.value.name = _this.location.name;
-        }, function (error) {
-            _this.errorMsg = 'Failed to find location';
-            _this.errorFlag = true;
+            _this.locationSvc.findLocationById(_this.lid)
+                .subscribe(function (data) {
+                _this.location = data;
+                _this.name = _this.location.name;
+                _this.description = _this.location.description;
+            }, function (error) {
+                _this.errorMsg = 'Failed to find location';
+                _this.errorFlag = true;
+            });
         });
     };
     LocationEditComponent.prototype.update = function () {
@@ -976,7 +1030,7 @@ var LocationEditComponent = (function () {
         location.description = this.locForm.value.description;
         this.locationSvc.updateLocation(this.lid, location)
             .subscribe(function (data) {
-            _this.router.navigate(['location', data._id]);
+            _this.router.navigate(['location', _this.lid]);
         }, function (error) {
             _this.errorMsg = 'Failed to create new location';
             _this.errorFlag = true;
@@ -1098,7 +1152,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-search/location-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<button routerLink=\"/location/new\" class=\"btn btn-primary btn-block\">Register New Location</button>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>Location Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n<app-location-list [locationList]=\"locationList\"></app-location-list>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>Location Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n\n<div *ngIf=\"loggedIn\">\n  <button routerLink=\"/location/new\" class=\"btn btn-primary btn-block\">Register New Location</button>\n</div>\n\n<app-location-list [locationList]=\"locationList\"></app-location-list>\n"
 
 /***/ }),
 
@@ -1110,6 +1164,7 @@ module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<b
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__ = __webpack_require__("../../../../../src/app/services/location.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1122,17 +1177,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LocationSearchComponent = (function () {
-    function LocationSearchComponent(router, activatedRoute, locSvc) {
+    function LocationSearchComponent(router, activatedRoute, sharedService, locSvc) {
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.sharedService = sharedService;
         this.locSvc = locSvc;
         this.errorFlag = false;
         this.errorMsg = '';
+        this.loggedIn = false;
     }
     LocationSearchComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
+        });
+        this.loggedIn = this.sharedService.user;
+        this.sharedService.loggedIn
+            .subscribe(function (value) {
+            _this.loggedIn = _this.sharedService.user;
         });
     };
     LocationSearchComponent.prototype.search = function () {
@@ -1154,10 +1218,10 @@ LocationSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/location/location-search/location-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/location/location-search/location-search.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */]) === "function" && _d || Object])
 ], LocationSearchComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=location-search.component.js.map
 
 /***/ }),
@@ -2142,7 +2206,7 @@ var AuthGuard = (function () {
             return this.userService.canAccessUser(userId);
         }
         else if (route.data.roles.indexOf('owner') !== -1) {
-            var locId = route.params.locId;
+            var locId = route.params.lid;
             return this.userService.canAccessLocation(locId);
         }
         else {
@@ -2467,7 +2531,12 @@ var UserService = (function () {
             var user = res.json();
             if (user !== 0) {
                 _this.sharedService.setUser(user);
-                if (user.admin || user.locations.indexOf(locId) !== -1) {
+                var isOwner = false;
+                for (var _i = 0, _a = user.locations; _i < _a.length; _i++) {
+                    var loc = _a[_i];
+                    isOwner = isOwner || loc._id === locId;
+                }
+                if (user.admin || isOwner) {
                     return true;
                 }
                 else {
@@ -2594,6 +2663,12 @@ var UserService = (function () {
             .map(function (res) {
             var data = res.json();
             return data;
+        });
+    };
+    UserService.prototype.addLocation = function (userId, lid) {
+        return this._http.put(this.baseUrl + '/api/user/' + userId + '/claim/' + lid, {})
+            .map(function (res) {
+            return res.json();
         });
     };
     return UserService;

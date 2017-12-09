@@ -18,6 +18,8 @@ export class LocationEditComponent implements OnInit {
 
   lid: number;
   location: any;
+  description: string;
+  name: string;
 
   constructor(private locationSvc: LocationService,
               private router: Router,
@@ -29,18 +31,19 @@ export class LocationEditComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.lid = params['lid'];
-        }
-      );
 
-    this.locationSvc.findLocationById(this.lid)
-      .subscribe(
-        (data: any) => {
-          this.location = data;
-          this.locForm.value.name = this.location.name;
-        },
-        (error: any) => {
-          this.errorMsg = 'Failed to find location';
-          this.errorFlag = true;
+          this.locationSvc.findLocationById(this.lid)
+            .subscribe(
+              (data: any) => {
+                this.location = data;
+                this.name = this.location.name;
+                this.description = this.location.description;
+              },
+              (error: any) => {
+                this.errorMsg = 'Failed to find location';
+                this.errorFlag = true;
+              }
+            );
         }
       );
   }
@@ -53,7 +56,7 @@ export class LocationEditComponent implements OnInit {
     this.locationSvc.updateLocation(this.lid, location)
       .subscribe(
         (data: any) => {
-          this.router.navigate(['location', data._id]);
+          this.router.navigate(['location', this.lid]);
         },
         (error: any) => {
           this.errorMsg = 'Failed to create new location';

@@ -29,6 +29,7 @@ import {UserDetailComponent} from './components/user/user-detail/user-detail.com
 import { LocationEditComponent } from './components/location/location-edit/location-edit.component';
 import { SiteHeaderComponent } from './components/site/site-header/site-header.component';
 import { NotFoundComponent } from './components/site/not-found/not-found.component';
+import { ClaimLocationComponent } from './components/location/claim-location/claim-location.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NotFoundComponent } from './components/site/not-found/not-found.compone
     UserDetailComponent,
     LocationEditComponent,
     SiteHeaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ClaimLocationComponent
   ],
   imports: [
     BrowserModule,

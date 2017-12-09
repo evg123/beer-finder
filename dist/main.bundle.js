@@ -101,12 +101,14 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_location_location_edit_location_edit_component__ = __webpack_require__("../../../../../src/app/components/location/location-edit/location-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_site_site_header_site_header_component__ = __webpack_require__("../../../../../src/app/components/site/site-header/site-header.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_site_not_found_not_found_component__ = __webpack_require__("../../../../../src/app/components/site/not-found/not-found.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_location_claim_location_claim_location_component__ = __webpack_require__("../../../../../src/app/components/location/claim-location/claim-location.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -164,7 +166,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_26__components_user_user_detail_user_detail_component__["a" /* UserDetailComponent */],
             __WEBPACK_IMPORTED_MODULE_27__components_location_location_edit_location_edit_component__["a" /* LocationEditComponent */],
             __WEBPACK_IMPORTED_MODULE_28__components_site_site_header_site_header_component__["a" /* SiteHeaderComponent */],
-            __WEBPACK_IMPORTED_MODULE_29__components_site_not_found_not_found_component__["a" /* NotFoundComponent */]
+            __WEBPACK_IMPORTED_MODULE_29__components_site_not_found_not_found_component__["a" /* NotFoundComponent */],
+            __WEBPACK_IMPORTED_MODULE_30__components_location_claim_location_claim_location_component__["a" /* ClaimLocationComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -263,7 +266,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/beer-detail/beer-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"beer\">\n  <div class=\"container-fluid\">\n    <h1>{{beer.beer_name}}</h1>\n    <h3> by {{beer.brewery.brewery_name}}</h3>\n    <h3>is a {{beer.beer_style}}</h3>\n  </div>\n</div>\n\n<Button class=\"btn btn-block btn-primary\"\n        routerLink=\"/beer/{{bid}}/report\">Report this beer at a location</Button>\n\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/location/{{stock.location._id}}\">\n              {{stock.location.name}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"beer\">\n  <div class=\"container-fluid\">\n    <img [src]=\"beer.beer_label\">\n    <h1>{{beer.beer_name}}</h1>\n    <h3> by {{beer.brewery.brewery_name}}</h3>\n    <h3>is a {{beer.beer_style}}</h3>\n  </div>\n</div>\n\n<div *ngIf=\"loggedIn\">\n  <Button class=\"btn btn-block btn-primary\"\n          routerLink=\"/beer/{{bid}}/report\">Report this beer at a location</Button>\n</div>\n\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/location/{{stock.location._id}}\">\n              {{stock.location.name}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n            <span>\n              Since: {{stock.asOf}}\n            </span>\n            <span>\n              Updated: {{stock.updateDate}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -275,6 +278,7 @@ module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__ = __webpack_require__("../../../../../src/app/services/beer.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -287,23 +291,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var BeerDetailComponent = (function () {
-    function BeerDetailComponent(router, activatedRoute, beerSvc) {
+    function BeerDetailComponent(router, activatedRoute, sharedSvc, beerSvc) {
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.sharedSvc = sharedSvc;
         this.beerSvc = beerSvc;
         this.errorFlag = false;
         this.errorMsg = '';
+        this.loggedIn = false;
     }
     BeerDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.bid = params['bid'];
+            _this.loggedIn = _this.sharedSvc.user;
         });
         this.beerSvc.findBeerById(this.bid)
             .subscribe(function (data) {
-            _this.beer = data.response.beer;
+            _this.beer = data;
         }, function (error) {
             _this.errorMsg = 'Failed to find beer';
             _this.errorFlag = true;
@@ -324,10 +332,10 @@ BeerDetailComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/beer/beer-detail/beer-detail.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/beer/beer-detail/beer-detail.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_beer_service_client__["a" /* BeerService */]) === "function" && _d || Object])
 ], BeerDetailComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=beer-detail.component.js.map
 
 /***/ }),
@@ -512,7 +520,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/report-beer/report-beer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Beer\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n    <span class=\"help-block alert-danger\" *ngIf=\"!beerQuery.valid && beerQuery.touched\">\n      Please select a beer\n    </span>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Location\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n    <span class=\"help-block alert-danger\" *ngIf=\"!locationQuery.valid && locationQuery.touched\">\n      Please select a location\n    </span>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord.beer.bid)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location._id)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Search for beers\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Search locations\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -572,7 +580,6 @@ var ReportBeerComponent = (function () {
                 _this.beerSvc.findBeerById(_this.bid)
                     .subscribe(function (data) {
                     _this.beerData = data;
-                    console.log(data);
                     _this.beerName = _this.beerData.beer_name;
                 }, function (error) {
                     _this.errorMsg = 'Failed to find beer';
@@ -606,7 +613,7 @@ var ReportBeerComponent = (function () {
             .subscribe(function (data) {
             _this.goBack();
         }, function (error) {
-            _this.errorMsg = 'Failed to find beer';
+            _this.errorMsg = 'Failed to report beer in stock';
             _this.errorFlag = true;
         });
     };
@@ -634,25 +641,15 @@ var ReportBeerComponent = (function () {
             _this.errorFlag = true;
         });
     };
-    ReportBeerComponent.prototype.setBeer = function (bid) {
-        this.bid = bid;
-        for (var idx = 0; idx < this.beerList.length; idx++) {
-            if (this.beerList[idx]._id === this.bid) {
-                this.beerData = this.beerList[idx];
-                this.beerName = this.beerData.beer_name;
-                break;
-            }
-        }
+    ReportBeerComponent.prototype.setBeer = function (beerRecord) {
+        this.bid = beerRecord.beer.bid;
+        this.beerData = beerRecord;
+        this.beerName = this.beerData.beer.beer_name;
     };
-    ReportBeerComponent.prototype.setLocation = function (lid) {
-        this.lid = lid;
-        for (var idx = 0; idx < this.locationList.length; idx++) {
-            if (this.locationList[idx]._id === this.lid) {
-                this.locationData = this.locationList[idx];
-                this.locationName = this.locationData.name;
-                break;
-            }
-        }
+    ReportBeerComponent.prototype.setLocation = function (location) {
+        this.lid = location._id;
+        this.locationData = location;
+        this.locationName = this.locationData.name;
     };
     ReportBeerComponent.prototype.clearBeer = function () {
         this.bid = null;
@@ -748,6 +745,67 @@ HomeComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/location/claim-location/claim-location.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/location/claim-location/claim-location.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  claim-location works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/location/claim-location/claim-location.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClaimLocationComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ClaimLocationComponent = (function () {
+    function ClaimLocationComponent() {
+    }
+    ClaimLocationComponent.prototype.ngOnInit = function () {
+    };
+    return ClaimLocationComponent;
+}());
+ClaimLocationComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-claim-location',
+        template: __webpack_require__("../../../../../src/app/components/location/claim-location/claim-location.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/location/claim-location/claim-location.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], ClaimLocationComponent);
+
+//# sourceMappingURL=claim-location.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/location/location-detail/location-detail.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -769,7 +827,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-detail/location-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n  <Button class=\"btn btn-block btn-primary\"\n          routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n</div>\n\n\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n</div>\n\n\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -781,6 +839,7 @@ module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<d
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__ = __webpack_require__("../../../../../src/app/services/location.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -793,19 +852,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LocationDetailComponent = (function () {
-    function LocationDetailComponent(router, activatedRoute, locationSvc) {
+    function LocationDetailComponent(router, activatedRoute, sharedSvc, locationSvc) {
         this.router = router;
         this.activatedRoute = activatedRoute;
+        this.sharedSvc = sharedSvc;
         this.locationSvc = locationSvc;
         this.errorFlag = false;
         this.errorMsg = '';
+        this.loggedIn = false;
     }
     LocationDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.lid = params['lid'];
+            _this.loggedIn = _this.sharedSvc.user;
         });
         this.locationSvc.findLocationById(this.lid)
             .subscribe(function (data) {
@@ -830,10 +893,10 @@ LocationDetailComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/location/location-detail/location-detail.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/location/location-detail/location-detail.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_shared_service__["a" /* SharedService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_location_service_client__["a" /* LocationService */]) === "function" && _d || Object])
 ], LocationDetailComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=location-detail.component.js.map
 
 /***/ }),
@@ -1343,8 +1406,7 @@ module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SiteHeaderComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1356,27 +1418,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
 var SiteHeaderComponent = (function () {
-    function SiteHeaderComponent(router, activatedRoute, sharedService) {
-        this.router = router;
-        this.activatedRoute = activatedRoute;
+    function SiteHeaderComponent(sharedService) {
         this.sharedService = sharedService;
         this.errorFlag = false;
         this.errorMsg = '';
         this.tags = '';
     }
     SiteHeaderComponent.prototype.ngOnInit = function () {
-        var userId;
-        this.activatedRoute.params
-            .subscribe(function (params) {
-            userId = params['userId'];
+        var _this = this;
+        this.update();
+        this.sharedService.loggedIn
+            .subscribe(function (value) {
+            _this.update();
         });
+    };
+    SiteHeaderComponent.prototype.update = function () {
         var user = this.sharedService.user;
         if (user) {
             this.profileLink = '/user/' + user._id;
+            this.tags = user.username;
             if (user.admin) {
-                this.tags += '*ADMIN*';
+                this.tags += ' *ADMIN*';
             }
         }
         else {
@@ -1396,10 +1459,10 @@ SiteHeaderComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/site/site-header/site-header.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/site/site-header/site-header.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_shared_service__["a" /* SharedService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_shared_service__["a" /* SharedService */]) === "function" && _a || Object])
 ], SiteHeaderComponent);
 
-var _a, _b, _c;
+var _a;
 //# sourceMappingURL=site-header.component.js.map
 
 /***/ }),
@@ -1478,7 +1541,6 @@ var LoginComponent = (function () {
                 _this.errorFlag = true;
                 return;
             }
-            _this.sharedService.user = data;
             _this.user = _this.sharedService.user;
             _this.router.navigate(['/user/' + _this.user._id]);
         }, function (error) {
@@ -2280,6 +2342,8 @@ var _a;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SharedService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__ = __webpack_require__("../../../../rxjs/Subject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2287,10 +2351,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
+
 var SharedService = (function () {
     function SharedService() {
+        this.loggedIn = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subject__["Subject"]();
         this.user = '';
     }
+    SharedService.prototype.setUser = function (user) {
+        this.user = user;
+        this.loggedIn.next(true);
+    };
+    SharedService.prototype.clearUser = function () {
+        this.user = '';
+        this.loggedIn.next(false);
+    };
     return SharedService;
 }());
 SharedService = __decorate([
@@ -2358,7 +2432,7 @@ var UserService = (function () {
             .map(function (res) {
             var user = res.json();
             if (user !== 0) {
-                _this.sharedService.user = user;
+                _this.sharedService.setUser(user);
             }
             return true;
         });
@@ -2370,7 +2444,7 @@ var UserService = (function () {
             .map(function (res) {
             var user = res.json();
             if (user !== 0) {
-                _this.sharedService.user = user;
+                _this.sharedService.setUser(user);
                 if (user.admin || user._id === userId) {
                     return true;
                 }
@@ -2392,7 +2466,7 @@ var UserService = (function () {
             .map(function (res) {
             var user = res.json();
             if (user !== 0) {
-                _this.sharedService.user = user;
+                _this.sharedService.setUser(user);
                 if (user.admin || user.locations.indexOf(locId) !== -1) {
                     return true;
                 }
@@ -2417,16 +2491,17 @@ var UserService = (function () {
         return this._http.post(this.baseUrl + '/api/login', body, this.options)
             .map(function (res) {
             var user = res.json();
-            _this.sharedService.user = user;
+            _this.sharedService.setUser(user);
             return user;
         });
     };
     UserService.prototype.logout = function () {
+        var _this = this;
         this.options.withCredentials = true;
         return this._http.post(this.baseUrl + '/api/logout', '', this.options)
             .map(function (res) {
-            var data = res;
-            return data;
+            _this.sharedService.clearUser();
+            return res;
         });
     };
     UserService.prototype.register = function (username, password) {
@@ -2439,7 +2514,7 @@ var UserService = (function () {
         return this._http.post(this.baseUrl + '/api/register', userCred, this.options)
             .map(function (res) {
             var user = res.json();
-            _this.sharedService.user = user;
+            _this.sharedService.setUser(user);
             return user;
         });
     };

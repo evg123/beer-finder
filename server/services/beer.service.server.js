@@ -6,6 +6,7 @@ module.exports = function (app) {
   const BeerModel = require("../model/beer/beer.model.server");
   const StockModel = require("../model/stock/stock.model.server");
   const LocationModel = require("../model/location/location.model.server");
+  const UserModel = require("../model/user/user.model.server");
 
   const untappdSecret = process.env.UNTAPPD_SECRET;
   const untappdId = process.env.UNTAPPD_ID;
@@ -107,7 +108,7 @@ module.exports = function (app) {
         obj.beerName = data.data.response.beer.beer_name;
         obj.beerStyle = data.data.response.beer.beer_style;
 
-        return UserModel.findOneAndUpdate({_id: userId}, { $inc: {reportCount: 1}});
+        return UserModel.updateReportCount(userId, 1);
       })
       .then(function (data) {
         return StockModel.createStock(obj);

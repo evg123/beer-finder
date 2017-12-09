@@ -28,6 +28,7 @@ function findStockByLocation(locId) {
 }
 
 function updateStock(stockId, obj) {
+  obj.updateDate = Date.now;
   return StockModel.update({_id: stockId}, obj);
 }
 

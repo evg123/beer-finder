@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
             this.errorFlag = true;
             return;
           }
-          this.sharedService.user = data;
           this.user = this.sharedService.user;
           this.router.navigate(['/user/' + this.user._id]);
         },

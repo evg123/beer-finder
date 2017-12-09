@@ -10,6 +10,7 @@ UserModel.findUserByCredentials = findUserByCredentials;
 UserModel.updateUser = updateUser;
 UserModel.deleteUser = deleteUser;
 UserModel.thankUser = thankUser;
+UserModel.updateReportCount = updateReportCount;
 
 module.exports = UserModel;
 
@@ -49,4 +50,8 @@ function deleteUser(userId) {
 
 function thankUser(fromId, toId) {
   return UserModel.update({_id: toId}, {$addToSet: {thanks: fromId}});
+}
+
+function updateReportCount(userId, countMod) {
+  return UserModel.findOneAndUpdate({_id: userId}, { $inc: {reportCount: countMod}});
 }

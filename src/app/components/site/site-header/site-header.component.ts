@@ -1,6 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../../services/user.service.client';
 import {SharedService} from '../../../services/shared.service';
 
 @Component({
@@ -18,30 +16,30 @@ export class SiteHeaderComponent implements OnInit {
   profileLink: string;
   tags = '';
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService) { }
 
   ngOnInit() {
-    let userId;
+    this.update();
 
-    this.activatedRoute.params
+    this.sharedService.loggedIn
       .subscribe(
-        (params: any) => {
-          userId = params['userId'];
+        (value: any) => {
+          this.update();
         }
       );
+  }
 
+  update() {
     const user = this.sharedService.user;
     if (user) {
       this.profileLink = '/user/' + user._id;
+      this.tags = user.username;
       if (user.admin) {
-        this.tags += '*ADMIN*';
+        this.tags += ' *ADMIN*';
       }
     } else {
       // not logged in
       this.profileLink = '/login';
     }
   }
-
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocationService} from '../../../services/location.service.client';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-location-detail',
@@ -15,9 +16,11 @@ export class LocationDetailComponent implements OnInit {
   lid: number;
   location: any;
   stockList: any;
+  loggedIn = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
+              private sharedSvc: SharedService,
               private locationSvc: LocationService) { }
 
   ngOnInit() {
@@ -25,6 +28,7 @@ export class LocationDetailComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.lid = params['lid'];
+          this.loggedIn = this.sharedSvc.user;
         }
       );
 

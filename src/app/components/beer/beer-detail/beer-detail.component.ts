@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BeerService} from '../../../services/beer.service.client';
 import {NgForm} from '@angular/forms';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-beer-detail',
@@ -16,9 +17,11 @@ export class BeerDetailComponent implements OnInit {
   bid: number;
   beer: any;
   stockList: any;
+  loggedIn = false;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
+              private sharedSvc: SharedService,
               private beerSvc: BeerService) { }
 
   ngOnInit() {
@@ -26,13 +29,14 @@ export class BeerDetailComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.bid = params['bid'];
+          this.loggedIn = this.sharedSvc.user;
         }
       );
 
     this.beerSvc.findBeerById(this.bid)
       .subscribe(
         (data: any) => {
-          this.beer = data.response.beer;
+          this.beer = data;
         },
         (error: any) => {
           this.errorMsg = 'Failed to find beer';

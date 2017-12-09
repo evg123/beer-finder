@@ -39,7 +39,7 @@ export class UserService {
         (res: Response) => {
           const user = res.json();
           if (user !== 0) {
-            this.sharedService.user = user;
+            this.sharedService.setUser(user);
           }
           return true;
         }
@@ -53,7 +53,7 @@ export class UserService {
         (res: Response) => {
           const user = res.json();
           if (user !== 0) {
-            this.sharedService.user = user;
+            this.sharedService.setUser(user);
             if (user.admin || user._id === userId) {
               return true;
             } else {
@@ -75,7 +75,7 @@ export class UserService {
         (res: Response) => {
           const user = res.json();
           if (user !== 0) {
-            this.sharedService.user = user;
+            this.sharedService.setUser(user);
             if (user.admin || user.locations.indexOf(locId) !== -1) {
               return true;
             } else {
@@ -102,7 +102,7 @@ export class UserService {
       .map(
         (res: Response) => {
           const user = res.json();
-          this.sharedService.user = user;
+          this.sharedService.setUser(user);
           return user;
         }
       );
@@ -114,8 +114,8 @@ export class UserService {
     return this._http.post(this.baseUrl + '/api/logout', '', this.options)
       .map(
         (res: Response) => {
-          const data = res;
-          return data;
+          this.sharedService.clearUser();
+          return res;
         }
       );
   }
@@ -132,7 +132,7 @@ export class UserService {
       .map(
         (res: Response) => {
           const user = res.json();
-          this.sharedService.user = user;
+          this.sharedService.setUser(user);
           return user;
         }
       );

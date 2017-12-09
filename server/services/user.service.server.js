@@ -21,7 +21,7 @@ module.exports = function (app) {
 
   var redirectBase = '';
   if (process.env.WEBSERVER_URL) {
-    redirectBase = 'http://localhost:4200';
+    redirectBase = process.env.WEBSERVER_URL;
   }
 
   app.post('/api/user', createUser);

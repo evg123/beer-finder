@@ -6,8 +6,11 @@
     <h1>{{location.name}}</h1>
     <h3>{{location.description}}</h3>
   </div>
-  <Button class="btn btn-block btn-primary"
-          routerLink="/location/{{location._id}}/report">Report a beer at this location</Button>
+
+  <div *ngIf="loggedIn">
+    <Button class="btn btn-block btn-primary"
+            routerLink="/location/{{location._id}}/report">Report a beer at this location</Button>
+  </div>
 </div>
 
 

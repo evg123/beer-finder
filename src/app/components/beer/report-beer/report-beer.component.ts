@@ -47,7 +47,6 @@ export class ReportBeerComponent implements OnInit {
               .subscribe(
                 (data: any) => {
                   this.beerData = data;
-                  console.log(data);
                   this.beerName = this.beerData.beer_name;
                 },
                 (error: any) => {
@@ -88,7 +87,7 @@ export class ReportBeerComponent implements OnInit {
           this.goBack();
         },
         (error: any) => {
-          this.errorMsg = 'Failed to find beer';
+          this.errorMsg = 'Failed to report beer in stock';
           this.errorFlag = true;
         }
       );
@@ -124,26 +123,16 @@ export class ReportBeerComponent implements OnInit {
       );
   }
 
-  setBeer(bid: number) {
-    this.bid = bid;
-    for (let idx = 0; idx < this.beerList.length; idx++) {
-      if (this.beerList[idx]._id === this.bid) {
-        this.beerData = this.beerList[idx];
-        this.beerName = this.beerData.beer_name;
-        break;
-      }
-    }
+  setBeer(beerRecord: any) {
+    this.bid = beerRecord.beer.bid;
+    this.beerData = beerRecord;
+    this.beerName = this.beerData.beer.beer_name;
   }
 
-  setLocation(lid: number) {
-    this.lid = lid;
-    for (let idx = 0; idx < this.locationList.length; idx++) {
-      if (this.locationList[idx]._id === this.lid) {
-        this.locationData = this.locationList[idx];
-        this.locationName = this.locationData.name;
-        break;
-      }
-    }
+  setLocation(location: any) {
+    this.lid = location._id;
+    this.locationData = location;
+    this.locationName = this.locationData.name;
   }
 
   clearBeer() {

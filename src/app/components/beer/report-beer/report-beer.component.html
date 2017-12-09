@@ -12,7 +12,7 @@
   <form (ngSubmit) = "report()" #form="ngForm">
 
     <label for="beerQuery">Beer</label>
-    <input   placeholder="Beer"
+    <input   placeholder="Search for beers"
              id="beerQuery"
              name="beerQuery"
              type="text"
@@ -28,12 +28,9 @@
     <a (click)="clearBeer()" class="navbar-link">
       <span class="glyphicon glyphicon-remove"></span>
     </a>
-    <span class="help-block alert-danger" *ngIf="!beerQuery.valid && beerQuery.touched">
-      Please select a beer
-    </span>
 
     <label for="locationQuery">Location</label>
-    <input   placeholder="Location"
+    <input   placeholder="Search locations"
              id="locationQuery"
              name="locationQuery"
              type="text"
@@ -49,9 +46,6 @@
     <a (click)="clearLocation()" class="navbar-link">
       <span class="glyphicon glyphicon-remove"></span>
     </a>
-    <span class="help-block alert-danger" *ngIf="!locationQuery.valid && locationQuery.touched">
-      Please select a location
-    </span>
 
     <input   placeholder="Count available at this location"
              name="count"
@@ -79,7 +73,7 @@
     <div *ngFor="let beerRecord of beerList">
       <li class="list-group-item">
         <div class="row">
-          <a (click)="setBeer(beerRecord.beer.bid)">
+          <a (click)="setBeer(beerRecord)">
             {{beerRecord.beer.beer_name}}
           </a>
         </div>
@@ -95,7 +89,7 @@
     <div *ngFor="let location of locationList">
       <li class="list-group-item">
         <div class="row">
-          <a (click)="setLocation(location._id)">
+          <a (click)="setLocation(location)">
             {{location.name}}
           </a>
         </div>

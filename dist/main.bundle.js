@@ -268,7 +268,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/beer-detail/beer-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"beer\">\n  <div class=\"container-fluid\">\n    <img [src]=\"beer.beer_label\">\n    <h1>{{beer.beer_name}}</h1>\n    <h3> by {{beer.brewery.brewery_name}}</h3>\n    <h3>is a {{beer.beer_style}}</h3>\n  </div>\n</div>\n\n<div *ngIf=\"loggedIn\">\n  <Button class=\"btn btn-block btn-primary\"\n          routerLink=\"/beer/{{bid}}/report\">Report this beer at a location</Button>\n</div>\n\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/location/{{stock.location._id}}\">\n              {{stock.location.name}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n            <span>\n              Since: {{stock.asOf}}\n            </span>\n            <span>\n              Updated: {{stock.updateDate}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div *ngIf=\"beer\">\n    <div class=\"col-xs-4\">\n      <img [src]=\"beer.beer_label_hd\" class=\"bf-detail-img\">\n    </div>\n    <div class=\"col-xs-8\">\n      <div class=\"bf-text-1\">{{beer.beer_name}}</div>\n      <div class=\"bf-text-2\"> a {{beer.beer_style}}</div>\n      <div class=\"bf-text-2\"> by {{beer.brewery.brewery_name}}</div>\n      <div class=\"bf-text-3\">ABV: {{beer.beer_abv}}   IBU: {{beer.beer_ibu}}</div>\n      <hr/>\n      <div class=\"bf-text-3\">\n        {{beer.beer_description}}\n      </div>\n      <hr/>\n    </div>\n\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary bf-button\"\n            routerLink=\"/beer/{{bid}}/report\">Report this beer at a location</Button>\n    <hr/>\n  </div>\n\n</div>\n<div class=\"container\">\n  <div *ngIf=\"stockList\">\n    <div class=\"container-fluid\">\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let stock of stockList\">\n          <li routerLink=\"/location/{{stock.location._id}}\" class=\"list-group-item\">\n            <div class=\"row bf-list-item-thin\">\n              <span>\n                {{stock.location.name}} -\n              </span>\n              <span>\n                In stock: {{stock.count}} -\n              </span>\n              <span>\n                Since: {{stock.asOf}} -\n              </span>\n              <span>\n                Updated: {{stock.updateDate}}\n              </span>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -321,6 +321,7 @@ var BeerDetailComponent = (function () {
         this.beerSvc.findStockByBeer(this.bid)
             .subscribe(function (data) {
             _this.stockList = data;
+            console.log(new Date(_this.stockList[0].asOf).toDateString());
         }, function (error) {
             _this.errorMsg = 'Failed to find beer stock';
             _this.errorFlag = true;
@@ -363,7 +364,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/beer-list/beer-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a routerLink=\"/beer/{{beerRecord.beer.bid}}\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div routerLink=\"/beer/{{beerRecord.beer.bid}}\" class=\"row container-fluid\">\n          <img src=\"{{beerRecord.beer.beer_label}}\" class=\"bf-list-label\">\n          <span class=\"bf-list-item\">\n            <span class=\"bf-text-2\">{{beerRecord.brewery.brewery_name}} - {{beerRecord.beer.beer_name}}</span>\n          </span>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -438,7 +439,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/beer-search/beer-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>Beer Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n<app-beer-list [beerList]=\"beerList\"></app-beer-list>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n  <div>\n    <h2>Beer Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n<app-beer-list [beerList]=\"beerList\"></app-beer-list>\n"
 
 /***/ }),
 
@@ -522,7 +523,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/report-beer/report-beer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Search for beers\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Search locations\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"stockCount\"\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Search for beers\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Search locations\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"stockCount\"\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n<div class=\"container\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let beerRecord of beerList\">\n        <li class=\"list-group-item\">\n          <div (click)=\"setBeer(beerRecord)\" class=\"row\">\n            <div class=\"bf-list-item-thin\">\n              {{beerRecord.beer.beer_name}}\n            </div>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let location of locationList\">\n        <li class=\"list-group-item\">\n          <div (click)=\"setLocation(location)\" class=\"row\">\n            <div class=\"bf-list-item-thin\">\n              {{location.name}}\n            </div>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -732,7 +733,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n  <p>\n    <a routerLink=\"/beer/search\">Search Beers</a>\n  </p>\n  <p>\n  <a routerLink=\"/location/search\">Browse Locations</a>\n  </p>\n  <p>\n    <a routerLink=\"/user/search\">Search Users</a>\n  </p>\n  <p>\n  <a routerLink=\"/login\">Login</a>\n  </p>\n  <p>\n  <a routerLink=\"/register\">Register</a>\n  </p>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div class=\"jumbotron text-center\">\n    <h2>Welcome to Beer Finder!</h2>\n  </div>\n\n  <div>\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/beer/search\">Search Beers\n      </button>\n    </div>\n\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/location/search\">Browse Locations\n      </button>\n    </div>\n\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/user/search\">Search Users\n      </button>\n    </div>\n\n    <div *ngIf=\"!loggedIn\">\n      <div class=\"container-fluid\">\n        <button class=\"btn-primary btn-lg btn-block\"\n                routerLink=\"/login\">Login\n        </button>\n      </div>\n\n      <div class=\"container-fluid\">\n        <button class=\"btn-primary btn-lg btn-block\"\n                routerLink=\"/register\">Register\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -742,6 +743,7 @@ module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<d
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_shared_service__ = __webpack_require__("../../../../../src/app/services/shared.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -752,10 +754,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var HomeComponent = (function () {
-    function HomeComponent() {
+    function HomeComponent(sharedSvc) {
+        this.sharedSvc = sharedSvc;
+        this.loggedIn = false;
     }
     HomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.updateOnUser();
+        this.sharedSvc.loggedIn
+            .subscribe(function (value) {
+            _this.updateOnUser();
+        });
+    };
+    HomeComponent.prototype.updateOnUser = function () {
+        this.loggedIn = this.sharedSvc.user;
     };
     return HomeComponent;
 }());
@@ -765,9 +779,10 @@ HomeComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/home/home.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/home/home.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_shared_service__["a" /* SharedService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_shared_service__["a" /* SharedService */]) === "function" && _a || Object])
 ], HomeComponent);
 
+var _a;
 //# sourceMappingURL=home.component.js.map
 
 /***/ }),
@@ -793,7 +808,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/claim-location/claim-location.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n\n  <form #locForm=\"ngForm\" (submit)=\"fileClaim()\">\n\n    <div class=\"form-group\">\n      <label for=\"description\">Please describe your relationship to this location</label>\n      <textarea name=\"description\"\n                ngModel\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <h4>We will review your application and respond within 2 weeks</h4>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Submit Claim</button>\n  </form>\n\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <form #locForm=\"ngForm\" (submit)=\"fileClaim()\">\n\n    <div class=\"form-group\">\n      <label for=\"description\">Please describe your relationship to this location</label>\n      <textarea name=\"description\"\n                ngModel\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <h4>We will review your application and respond within 2 weeks</h4>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Submit Claim</button>\n  </form>\n\n</div>\n"
 
 /***/ }),
 
@@ -890,7 +905,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-detail/location-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n\n  <div *ngIf=\"loggedIn && !location.owner\">\n    <button routerLink=\"/location/{{location._id}}/claim\"\n            class=\"btn btn-primary btn-block\">Claim this location as the owner</button>\n  </div>\n  <div *ngIf=\"isOwner || isAdmin\">\n    <button routerLink=\"/location/{{location._id}}/edit\"\n            class=\"btn btn-danger btn-block\">Edit Location</button>\n  </div>\n</div>\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n            <span>\n              Since: {{stock.asOf}}\n            </span>\n            <span>\n              Updated: {{stock.updateDate}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div *ngIf=\"location\">\n    <div class=\"col-xs-4\">\n      <img *ngIf=\"location.image\" [src]=\"location.image\" class=\"bf-detail-img\">\n    </div>\n    <div class=\"col-xs-8\">\n      <div class=\"bf-text-1\">{{location.name}}</div>\n      <div class=\"bf-text-2\"> Located at {{location.address}}</div>\n      <div class=\"bf-text-3\">\n        <pre class=\"bf-pre\">{{location.description}}</pre>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary bf-button\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n\n  <div *ngIf=\"loggedIn && !location.owner\">\n    <button routerLink=\"/location/{{location._id}}/claim\"\n            class=\"btn btn-primary btn-block bf-button\">Claim this location as the owner</button>\n  </div>\n  <div *ngIf=\"isOwner || isAdmin\"> <!-- || !location.owner -->\n    <button routerLink=\"/location/{{location._id}}/edit\"\n            class=\"btn btn-danger btn-block bf-button\">Edit Location</button>\n  </div>\n  <hr/>\n</div>\n\n<div class=\"container\">\n  <div *ngIf=\"stockList\">\n    <div>\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let stock of stockList\">\n          <li routerLink=\"/beer/{{stock.bid}}\" class=\"list-group-item\">\n            <div class=\"row bf-list-item-thin\">\n              <span>\n                {{stock.beerName}}\n              </span>\n              <span>\n                {{stock.count}}\n              </span>\n              <span>\n                Since: {{stock.asOf}}\n              </span>\n              <span>\n                Updated: {{stock.updateDate}}\n              </span>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1000,7 +1015,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-edit/location-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n\n  <form #locForm=\"ngForm\" (submit)=\"update()\">\n    <div class=\"form-group\">\n      <label for=\"name\">Name</label>\n      <input name=\"name\"\n             ngModel\n             id=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             required\n             [value]=\"name\"\n             #nameLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!nameLocal.valid && nameLocal.touched\">\n      Please enter a name\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"description\">Description</label>\n      <textarea name=\"description\"\n                [(ngModel)]=\"description\"\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Update</button>\n  </form>\n\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <form #locForm=\"ngForm\" (submit)=\"update()\">\n    <div class=\"form-group\">\n      <label for=\"name\">Name</label>\n      <input name=\"name\"\n             ngModel\n             id=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             required\n             [value]=\"name\"\n             #nameLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!nameLocal.valid && nameLocal.touched\">\n      Please enter a name\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"address\">Address</label>\n      <input name=\"address\"\n             ngModel\n             id=\"address\"\n             placeholder=\"Address\"\n             type=\"text\"\n             [value]=\"address\"\n             #addressLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"image\">Image</label>\n      <input name=\"image\"\n             ngModel\n             id=\"image\"\n             placeholder=\"Image\"\n             type=\"text\"\n             required\n             [value]=\"image\"\n             #imageLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"description\">Description</label>\n      <textarea name=\"description\"\n                [(ngModel)]=\"description\"\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <button class=\"btn btn-block btn-primary bf-button\" type=\"submit\">Update</button>\n  </form>\n\n  <button class=\"btn btn-block btn-danger bf-button\" (click)=\"deleteLocation()\">Delete</button>\n\n</div>\n"
 
 /***/ }),
 
@@ -1042,6 +1057,8 @@ var LocationEditComponent = (function () {
                 _this.location = data;
                 _this.name = _this.location.name;
                 _this.description = _this.location.description;
+                _this.address = _this.location.address;
+                _this.image = _this.location.image;
             }, function (error) {
                 _this.errorMsg = 'Failed to find location';
                 _this.errorFlag = true;
@@ -1051,13 +1068,25 @@ var LocationEditComponent = (function () {
     LocationEditComponent.prototype.update = function () {
         var _this = this;
         var location = {};
-        location.name = this.locForm.value.name;
-        location.description = this.locForm.value.description;
+        location.name = this.locForm.value.name || this.location.name;
+        location.description = this.locForm.value.description || this.location.description;
+        location.address = this.locForm.value.address || this.location.address;
+        location.image = this.locForm.value.image || this.location.image;
         this.locationSvc.updateLocation(this.lid, location)
             .subscribe(function (data) {
             _this.router.navigate(['location', _this.lid]);
         }, function (error) {
-            _this.errorMsg = 'Failed to create new location';
+            _this.errorMsg = 'Failed to update location';
+            _this.errorFlag = true;
+        });
+    };
+    LocationEditComponent.prototype.deleteLocation = function () {
+        var _this = this;
+        this.locationSvc.deleteLocation(this.lid)
+            .subscribe(function (data) {
+            _this.router.navigate(['location', 'search']);
+        }, function (error) {
+            _this.errorMsg = 'Failed to delete location';
             _this.errorFlag = true;
         });
     };
@@ -1102,7 +1131,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-list/location-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a routerLink=\"/location/{{location._id}}\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li routerLink=\"/location/{{location._id}}\" class=\"list-group-item\">\n        <div class=\"row bf-list-item-thin\">\n          <span>\n            {{location.name}}\n          </span>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -1177,7 +1206,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-search/location-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>Location Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n\n<div *ngIf=\"loggedIn\">\n  <button routerLink=\"/location/new\" class=\"btn btn-primary btn-block\">Register New Location</button>\n</div>\n\n<app-location-list [locationList]=\"locationList\"></app-location-list>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n  <div>\n    <h2>Location Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block bf-button\" type=submit>Search</button>\n    </form>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <button routerLink=\"/location/new\" class=\"btn btn-primary btn-block bf-button\">Register New Location</button>\n  </div>\n\n  <app-location-list [locationList]=\"locationList\"></app-location-list>\n\n</div>\n"
 
 /***/ }),
 
@@ -1333,7 +1362,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/new-location/new-location.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n\n  <form #locForm=\"ngForm\" (submit)=\"create()\">\n    <div class=\"form-group\">\n      <label for=\"name\">Name</label>\n      <input name=\"name\"\n             ngModel\n             id=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             required\n             #nameLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!nameLocal.valid && nameLocal.touched\">\n      Please enter a name\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"description\">Description</label>\n      <textarea name=\"description\"\n                ngModel\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Create</button>\n  </form>\n\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <form #locForm=\"ngForm\" (submit)=\"create()\">\n    <div class=\"form-group\">\n      <label for=\"name\">Name</label>\n      <input name=\"name\"\n             ngModel\n             id=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             required\n             #nameLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!nameLocal.valid && nameLocal.touched\">\n      Please enter a name\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"address\">Address</label>\n      <input name=\"address\"\n             ngModel\n             id=\"address\"\n             placeholder=\"Address of this location\"\n             type=\"text\"\n             #addressLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"image\">Image</label>\n      <input name=\"image\"\n             ngModel\n             id=\"image\"\n             placeholder=\"Image of this location\"\n             type=\"text\"\n             #imageLocal=\"ngModel\"\n             class=\"form-control\"/>\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"description\">Description</label>\n      <textarea name=\"description\"\n                ngModel\n                id=\"description\"\n                placeholder=\"Description\"\n                rows=\"5\"\n                class=\"form-control\"></textarea>\n    </div>\n\n    <button class=\"btn btn-block btn-primary\" type=\"submit\">Create</button>\n  </form>\n\n</div>\n"
 
 /***/ }),
 
@@ -1374,7 +1403,9 @@ var NewLocationComponent = (function () {
         var _this = this;
         var location = {};
         location.name = this.locForm.value.name;
+        location.address = this.locForm.value.address;
         location.description = this.locForm.value.description;
+        location.image = this.locForm.value.image;
         this.locationService.createLocation(location)
             .subscribe(function (data) {
             _this.router.navigate(['location', data._id]);
@@ -1485,7 +1516,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/site/site-header/site-header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n\n    <!--heading on the nav bar-->\n    <p class=\"navbar-header pull-left\">\n      <a routerLink=\"/\" class=\"navbar-brand thick\">\n        <b>Beer Finder</b>\n      </a>\n    </p>\n\n    <div *ngIf=\"showProfile\">\n      <p class=\"navbar-text pull-right\">\n        <button [routerLink]=profileLink\n                class=\"navbar-link icon-button\">\n          <span class=\"glyphicon glyphicon-user\"></span>\n        </button>\n      </p>\n    </div>\n\n    <div class=\"container-fluid\">\n    <p class=\"navbar-header pull-right\">\n      <a class=\"navbar-brand thin\">\n        {{tags}}\n      </a>\n    </p>\n    </div>\n\n\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n\n    <!--heading on the nav bar-->\n    <p class=\"navbar-header pull-left\">\n      <a routerLink=\"/\" class=\"navbar-brand thick\">\n        <b>Beer Finder</b>\n      </a>\n    </p>\n\n    <div *ngIf=\"showProfile\">\n      <p class=\"navbar-text pull-right bf-profile-btn\">\n        <button [routerLink]=profileLink\n                class=\"navbar-link icon-button\">\n          <span class=\"glyphicon glyphicon-user\"></span>\n        </button>\n      </p>\n    </div>\n\n    <div class=\"container-fluid\">\n    <p class=\"navbar-header pull-right\">\n      <a class=\"navbar-brand thin\">\n        {{tags}}\n      </a>\n    </p>\n    </div>\n\n\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1786,7 +1817,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-detail/user-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"user\">\n  <h1>{{user.username}}</h1>\n  <h3>{{user.firstName}}</h3>\n  <h3>{{user.lastName}}</h3>\n  <h3>{{user.email}}</h3>\n  <p>-----</p>\n  <h3>Reports: {{user.reportCount}}</h3>\n  <a (click)=\"toggleThankers()\">\n    <h3>Thanks: {{user.thanks.length}}</h3>\n  </a>\n\n  <div *ngIf=\"showThankers\">\n    <div>\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let thanker of user.thanks\">\n          <li class=\"list-group-item\">\n            <div class=\"row\">\n              <a routerLink=\"/user/{{thanker._id}}\">\n                {{thanker.username}}\n              </a>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n\n\n</div>\n\n<div *ngIf=\"canThank\">\n  <button class=\"btn btn-success btn-block\"\n          type=\"button\"\n          (click)=\"thank()\">Thank this user</button>\n</div>\n\n\n<div *ngIf=\"editPermission\">\n  <button class=\"btn btn-danger btn-block\"\n          type=\"button\"\n          [routerLink]=\"['/user/' + userId + '/edit']\">Edit User Profile</button>\n</div>\n\n<div *ngIf=\"canLogout\">\n  <button class=\"btn btn-danger btn-block\"\n          type=\"button\"\n          (click)=\"logout()\">Logout</button>\n</div>\n\n<div *ngIf=\"user && user.locations.length > 0\">\n  <h3>Locations:</h3>\n  <app-location-list [locationList]=\"user.locations\"></app-location-list>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"user\" class=\"container\">\n  <h1>{{user.username}}</h1>\n  <h3>{{user.firstName}}</h3>\n  <h3>{{user.lastName}}</h3>\n  <h3>{{user.email}}</h3>\n  <p>-----</p>\n  <h3>Reports: {{user.reportCount}}</h3>\n  <a (click)=\"toggleThankers()\">\n    <h3>Thanks: {{user.thanks.length}}</h3>\n  </a>\n\n  <div *ngIf=\"showThankers\">\n    <div>\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let thanker of user.thanks\">\n          <li class=\"list-group-item\">\n            <div class=\"row\">\n              <a routerLink=\"/user/{{thanker._id}}\">\n                {{thanker.username}}\n              </a>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n\n\n</div>\n\n<div class=\"container\">\n  <div *ngIf=\"canThank\">\n    <button class=\"btn btn-success btn-block bf-button\"\n            type=\"button\"\n            (click)=\"thank()\">Thank this user</button>\n  </div>\n\n\n  <div *ngIf=\"editPermission\">\n    <button class=\"btn btn-danger btn-block bf-button\"\n            type=\"button\"\n            [routerLink]=\"['/user/' + userId + '/edit']\">Edit User Profile</button>\n  </div>\n\n  <div *ngIf=\"canLogout\">\n    <button class=\"btn btn-danger btn-block bf-button\"\n            type=\"button\"\n            (click)=\"logout()\">Logout</button>\n  </div>\n\n  <div *ngIf=\"user && user.locations.length > 0\">\n    <h3>Locations:</h3>\n    <app-location-list [locationList]=\"user.locations\"></app-location-list>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1907,7 +1938,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-edit/user-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <form #f=\"ngForm\">\n\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input name=\"username\"\n             [(ngModel)]=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"username\"\n             placeholder=\"walice\"\n             [readonly]=\"admin\"\n             required\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"email\">Email address</label>\n      <input name=\"email\"\n             [(ngModel)]=\"email\"\n             #emailLocal=\"ngModel\"\n             type=\"email\"\n             class=\"form-control\"\n             id=\"email\"\n             [email]=\"email !== ''\"\n             placeholder=\"alice.wonderland@unicorn.com\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!emailLocal.valid && emailLocal.touched\">\n      Please enter a valid email address\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"first-name\">First Name</label>\n      <input name=\"firstName\"\n             [(ngModel)]=\"firstName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"first-name\"\n             placeholder=\"Alice\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last-name\">Last Name</label>\n      <input name=\"lastName\"\n             [(ngModel)]=\"lastName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"last-name\"\n             placeholder=\"Wonderland\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            (click)=\"update()\">Save</button>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            routerLink=\"/locations\">Manage Locations</button>\n\n    <a class=\"btn btn-danger btn-block\"\n       (click)=\"logout()\">Logout</a>\n\n    <a class=\"btn btn-danger btn-block \"\n       (click)=\"deleteUser()\">Delete User Profile</a>\n  </form>\n\n  <div *ngIf=\"updated\"\n       class=\"alert alert-success\">\n    Update Saved\n  </div>\n</div>\n\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <form #f=\"ngForm\">\n\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input name=\"username\"\n             [(ngModel)]=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"username\"\n             placeholder=\"username\"\n             [readonly]=\"admin\"\n             required\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"email\">Email address</label>\n      <input name=\"email\"\n             [(ngModel)]=\"email\"\n             #emailLocal=\"ngModel\"\n             type=\"email\"\n             class=\"form-control\"\n             id=\"email\"\n             [email]=\"email !== ''\"\n             placeholder=\"email\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!emailLocal.valid && emailLocal.touched\">\n      Please enter a valid email address\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"first-name\">First Name</label>\n      <input name=\"firstName\"\n             [(ngModel)]=\"firstName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"first-name\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last-name\">Last Name</label>\n      <input name=\"lastName\"\n             [(ngModel)]=\"lastName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"last-name\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            (click)=\"update()\">Save</button>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            routerLink=\"/locations\">Manage Locations</button>\n\n    <a class=\"btn btn-danger btn-block\"\n       (click)=\"logout()\">Logout</a>\n\n    <a class=\"btn btn-danger btn-block \"\n       (click)=\"deleteUser()\">Delete User Profile</a>\n  </form>\n\n  <div *ngIf=\"updated\"\n       class=\"alert alert-success\">\n    Update Saved\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -2122,7 +2153,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-search/user-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid row\">\n  <div>\n    <h2>User Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n\n<div *ngIf=\"admin\">\n  <button class=\"btn btn-danger btn-block\" type=button (click)=\"listAll()\">List All Users</button>\n</div>\n\n<div *ngIf=\"userList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let user of userList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/user/{{user._id}}\">\n              {{user.username}}\n            </a>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n  <div>\n    <h2>User Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n</div>\n\n<div *ngIf=\"admin\">\n  <button class=\"btn btn-danger btn-block\" type=button (click)=\"listAll()\">List All Users</button>\n</div>\n\n<div *ngIf=\"userList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let user of userList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/user/{{user._id}}\">\n              {{user.username}}\n            </a>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 

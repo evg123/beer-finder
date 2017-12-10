@@ -1,7 +1,7 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div class="container-fluid row">
+<div class="container-fluid">
 
   <form #locForm="ngForm" (submit)="create()">
     <div class="form-group">
@@ -18,6 +18,28 @@
     <span class="help-block alert-danger" *ngIf="!nameLocal.valid && nameLocal.touched">
       Please enter a name
     </span>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input name="address"
+             ngModel
+             id="address"
+             placeholder="Address of this location"
+             type="text"
+             #addressLocal="ngModel"
+             class="form-control"/>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input name="image"
+             ngModel
+             id="image"
+             placeholder="Image of this location"
+             type="text"
+             #imageLocal="ngModel"
+             class="form-control"/>
+    </div>
 
     <div class="form-group">
       <label for="description">Description</label>

@@ -1,6 +1,6 @@
 <app-site-header [showProfile]=true></app-site-header>
 
-<div class="container-fluid">
+<div class="container">
 
   <div *ngIf="errorFlag"
        class="alert alert-danger">
@@ -67,35 +67,36 @@
             (click)="goBack()">Cancel</button>
   </form>
 </div>
+<div class="container">
+  <div>
+    <ul class="list-group">
 
-<div>
-  <ul class="list-group">
+      <div *ngFor="let beerRecord of beerList">
+        <li class="list-group-item">
+          <div (click)="setBeer(beerRecord)" class="row">
+            <div class="bf-list-item-thin">
+              {{beerRecord.beer.beer_name}}
+            </div>
+          </div>
+        </li>
+      </div>
 
-    <div *ngFor="let beerRecord of beerList">
-      <li class="list-group-item">
-        <div class="row">
-          <a (click)="setBeer(beerRecord)">
-            {{beerRecord.beer.beer_name}}
-          </a>
-        </div>
-      </li>
-    </div>
+    </ul>
+  </div>
 
-  </ul>
-</div>
+  <div>
+    <ul class="list-group">
 
-<div>
-  <ul class="list-group">
+      <div *ngFor="let location of locationList">
+        <li class="list-group-item">
+          <div (click)="setLocation(location)" class="row">
+            <div class="bf-list-item-thin">
+              {{location.name}}
+            </div>
+          </div>
+        </li>
+      </div>
 
-    <div *ngFor="let location of locationList">
-      <li class="list-group-item">
-        <div class="row">
-          <a (click)="setLocation(location)">
-            {{location.name}}
-          </a>
-        </div>
-      </li>
-    </div>
-
-  </ul>
+    </ul>
+  </div>
 </div>

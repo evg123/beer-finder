@@ -25,16 +25,18 @@
       </button>
     </div>
 
-    <div class="container-fluid">
-      <button class="btn-primary btn-lg btn-block"
-              routerLink="/login">Login
-      </button>
-    </div>
+    <div *ngIf="!loggedIn">
+      <div class="container-fluid">
+        <button class="btn-primary btn-lg btn-block"
+                routerLink="/login">Login
+        </button>
+      </div>
 
-    <div class="container-fluid">
-      <button class="btn-primary btn-lg btn-block"
-              routerLink="/register">Register
-      </button>
+      <div class="container-fluid">
+        <button class="btn-primary btn-lg btn-block"
+                routerLink="/register">Register
+        </button>
+      </div>
     </div>
   </div>
 </div>

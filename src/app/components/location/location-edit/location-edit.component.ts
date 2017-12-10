@@ -20,6 +20,8 @@ export class LocationEditComponent implements OnInit {
   location: any;
   description: string;
   name: string;
+  address: string;
+  image: string;
 
   constructor(private locationSvc: LocationService,
               private router: Router,
@@ -38,6 +40,8 @@ export class LocationEditComponent implements OnInit {
                 this.location = data;
                 this.name = this.location.name;
                 this.description = this.location.description;
+                this.address = this.location.address;
+                this.image = this.location.image;
               },
               (error: any) => {
                 this.errorMsg = 'Failed to find location';
@@ -50,8 +54,10 @@ export class LocationEditComponent implements OnInit {
 
   update() {
     const location: any = {};
-    location.name = this.locForm.value.name;
-    location.description = this.locForm.value.description;
+    location.name = this.locForm.value.name || this.location.name;
+    location.description = this.locForm.value.description || this.location.description;
+    location.address = this.locForm.value.address || this.location.address;
+    location.image = this.locForm.value.image || this.location.image;
 
     this.locationSvc.updateLocation(this.lid, location)
       .subscribe(
@@ -59,7 +65,20 @@ export class LocationEditComponent implements OnInit {
           this.router.navigate(['location', this.lid]);
         },
         (error: any) => {
-          this.errorMsg = 'Failed to create new location';
+          this.errorMsg = 'Failed to update location';
+          this.errorFlag = true;
+        }
+      );
+  }
+
+  deleteLocation() {
+    this.locationSvc.deleteLocation(this.lid)
+      .subscribe(
+        (data: any) => {
+          this.router.navigate(['location', 'search']);
+        },
+        (error: any) => {
+          this.errorMsg = 'Failed to delete location';
           this.errorFlag = true;
         }
       );

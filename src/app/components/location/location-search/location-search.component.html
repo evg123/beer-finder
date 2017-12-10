@@ -1,7 +1,7 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div class="container-fluid row">
+<div class="container-fluid">
   <div>
     <h2>Location Search</h2>
     <form #f="ngForm" (ngSubmit)="search()">
@@ -17,13 +17,14 @@
                class="form-control"/>
       </div>
 
-      <button class="btn btn-primary btn-block" type=submit>Search</button>
+      <button class="btn btn-primary btn-block bf-button" type=submit>Search</button>
     </form>
   </div>
-</div>
 
-<div *ngIf="loggedIn">
-  <button routerLink="/location/new" class="btn btn-primary btn-block">Register New Location</button>
-</div>
+  <div *ngIf="loggedIn">
+    <button routerLink="/location/new" class="btn btn-primary btn-block bf-button">Register New Location</button>
+  </div>
 
-<app-location-list [locationList]="locationList"></app-location-list>
+  <app-location-list [locationList]="locationList"></app-location-list>
+
+</div>

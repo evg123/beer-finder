@@ -1,49 +1,61 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div *ngIf="location">
-  <div class="container-fluid">
-    <h1>{{location.name}}</h1>
-    <h3>{{location.description}}</h3>
+<div class="container">
+  <div *ngIf="location">
+    <div class="col-xs-4">
+      <img *ngIf="location.image" [src]="location.image" class="bf-detail-img">
+    </div>
+    <div class="col-xs-8">
+      <div class="bf-text-1">{{location.name}}</div>
+      <div class="bf-text-2"> Located at {{location.address}}</div>
+      <div class="bf-text-3">
+        <pre class="bf-pre">{{location.description}}</pre>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="loggedIn">
-    <Button class="btn btn-block btn-primary"
+    <Button class="btn btn-block btn-primary bf-button"
             routerLink="/location/{{location._id}}/report">Report a beer at this location</Button>
   </div>
 
   <div *ngIf="loggedIn && !location.owner">
     <button routerLink="/location/{{location._id}}/claim"
-            class="btn btn-primary btn-block">Claim this location as the owner</button>
+            class="btn btn-primary btn-block bf-button">Claim this location as the owner</button>
   </div>
-  <div *ngIf="isOwner || isAdmin">
+  <div *ngIf="isOwner || isAdmin"> <!-- || !location.owner -->
     <button routerLink="/location/{{location._id}}/edit"
-            class="btn btn-danger btn-block">Edit Location</button>
+            class="btn btn-danger btn-block bf-button">Edit Location</button>
   </div>
+  <hr/>
 </div>
-<div *ngIf="stockList">
-  <div>
-    <ul class="list-group">
 
-      <div *ngFor="let stock of stockList">
-        <li class="list-group-item">
-          <div class="row">
-            <a routerLink="/beer/{{stock.bid}}">
-              {{stock.beerName}}
-            </a>
-            <span>
-              {{stock.count}}
-            </span>
-            <span>
-              Since: {{stock.asOf}}
-            </span>
-            <span>
-              Updated: {{stock.updateDate}}
-            </span>
-          </div>
-        </li>
-      </div>
+<div class="container">
+  <div *ngIf="stockList">
+    <div>
+      <ul class="list-group">
 
-    </ul>
+        <div *ngFor="let stock of stockList">
+          <li routerLink="/beer/{{stock.bid}}" class="list-group-item">
+            <div class="row bf-list-item-thin">
+              <span>
+                {{stock.beerName}}
+              </span>
+              <span>
+                {{stock.count}}
+              </span>
+              <span>
+                Since: {{stock.asOf}}
+              </span>
+              <span>
+                Updated: {{stock.updateDate}}
+              </span>
+            </div>
+          </li>
+        </div>
+
+      </ul>
+    </div>
   </div>
 </div>

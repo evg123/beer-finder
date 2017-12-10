@@ -4,11 +4,11 @@
 
     <div *ngFor="let beerRecord of beerList">
       <li class="list-group-item">
-        <div class="row">
-          <img src="{{beerRecord.beer.beer_label}}" class="list-label">
-          <a routerLink="/beer/{{beerRecord.beer.bid}}">
-            {{beerRecord.beer.beer_name}}
-          </a>
+        <div routerLink="/beer/{{beerRecord.beer.bid}}" class="row container-fluid">
+          <img src="{{beerRecord.beer.beer_label}}" class="bf-list-label">
+          <span class="bf-list-item">
+            <span class="bf-text-2">{{beerRecord.brewery.brewery_name}} - {{beerRecord.beer.beer_name}}</span>
+          </span>
         </div>
       </li>
     </div>

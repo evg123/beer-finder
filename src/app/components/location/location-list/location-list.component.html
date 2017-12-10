@@ -2,11 +2,11 @@
   <ul class="list-group">
 
     <div *ngFor="let location of locationList">
-      <li class="list-group-item">
-        <div class="row">
-          <a routerLink="/location/{{location._id}}">
+      <li routerLink="/location/{{location._id}}" class="list-group-item">
+        <div class="row bf-list-item-thin">
+          <span>
             {{location.name}}
-          </a>
+          </span>
         </div>
       </li>
     </div>

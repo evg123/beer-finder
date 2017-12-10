@@ -48,6 +48,7 @@ export class BeerDetailComponent implements OnInit {
       .subscribe(
         (data: any) => {
           this.stockList = data;
+          console.log(new Date(this.stockList[0].asOf).toDateString());
         },
         (error: any) => {
           this.errorMsg = 'Failed to find beer stock';

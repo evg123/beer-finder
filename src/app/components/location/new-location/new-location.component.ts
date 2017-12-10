@@ -32,7 +32,9 @@ export class NewLocationComponent implements OnInit {
   create() {
     const location: any = {};
     location.name = this.locForm.value.name;
+    location.address = this.locForm.value.address;
     location.description = this.locForm.value.description;
+    location.image = this.locForm.value.image;
     this.locationService.createLocation(location)
       .subscribe(
         (data: any) => {

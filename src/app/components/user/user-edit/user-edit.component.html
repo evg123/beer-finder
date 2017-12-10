@@ -12,7 +12,7 @@
              type="text"
              class="form-control"
              id="username"
-             placeholder="walice"
+             placeholder="username"
              [readonly]="admin"
              required
              (focus)="setUpdated(false)">
@@ -27,7 +27,7 @@
              class="form-control"
              id="email"
              [email]="email !== ''"
-             placeholder="alice.wonderland@unicorn.com"
+             placeholder="email"
              (focus)="setUpdated(false)">
     </div>
     <span class="help-block alert-danger" *ngIf="!emailLocal.valid && emailLocal.touched">
@@ -41,7 +41,6 @@
              type="text"
              class="form-control"
              id="first-name"
-             placeholder="Alice"
              (focus)="setUpdated(false)">
     </div>
 
@@ -52,7 +51,6 @@
              type="text"
              class="form-control"
              id="last-name"
-             placeholder="Wonderland"
              (focus)="setUpdated(false)">
     </div>
 

@@ -1,7 +1,7 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div class="container-fluid row">
+<div class="container-fluid">
 
   <form #locForm="ngForm" (submit)="update()">
     <div class="form-group">
@@ -21,6 +21,31 @@
     </span>
 
     <div class="form-group">
+      <label for="address">Address</label>
+      <input name="address"
+             ngModel
+             id="address"
+             placeholder="Address"
+             type="text"
+             [value]="address"
+             #addressLocal="ngModel"
+             class="form-control"/>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input name="image"
+             ngModel
+             id="image"
+             placeholder="Image"
+             type="text"
+             required
+             [value]="image"
+             #imageLocal="ngModel"
+             class="form-control"/>
+    </div>
+
+    <div class="form-group">
       <label for="description">Description</label>
       <textarea name="description"
                 [(ngModel)]="description"
@@ -30,7 +55,9 @@
                 class="form-control"></textarea>
     </div>
 
-    <button class="btn btn-block btn-primary" type="submit">Update</button>
+    <button class="btn btn-block btn-primary bf-button" type="submit">Update</button>
   </form>
+
+  <button class="btn btn-block btn-danger bf-button" (click)="deleteLocation()">Delete</button>
 
 </div>

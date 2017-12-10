@@ -1,42 +1,56 @@
 <app-site-header [showProfile]=true></app-site-header>
 
-<div *ngIf="beer">
-  <div class="container-fluid">
-    <img [src]="beer.beer_label">
-    <h1>{{beer.beer_name}}</h1>
-    <h3> by {{beer.brewery.brewery_name}}</h3>
-    <h3>is a {{beer.beer_style}}</h3>
-  </div>
-</div>
-
-<div *ngIf="loggedIn">
-  <Button class="btn btn-block btn-primary"
-          routerLink="/beer/{{bid}}/report">Report this beer at a location</Button>
-</div>
-
-<div *ngIf="stockList">
-  <div>
-    <ul class="list-group">
-
-      <div *ngFor="let stock of stockList">
-        <li class="list-group-item">
-          <div class="row">
-            <a routerLink="/location/{{stock.location._id}}">
-              {{stock.location.name}}
-            </a>
-            <span>
-              {{stock.count}}
-            </span>
-            <span>
-              Since: {{stock.asOf}}
-            </span>
-            <span>
-              Updated: {{stock.updateDate}}
-            </span>
-          </div>
-        </li>
+<div class="container">
+  <div *ngIf="beer">
+    <div class="col-xs-4">
+      <img [src]="beer.beer_label_hd" class="bf-detail-img">
+    </div>
+    <div class="col-xs-8">
+      <div class="bf-text-1">{{beer.beer_name}}</div>
+      <div class="bf-text-2"> a {{beer.beer_style}}</div>
+      <div class="bf-text-2"> by {{beer.brewery.brewery_name}}</div>
+      <div class="bf-text-3">ABV: {{beer.beer_abv}}   IBU: {{beer.beer_ibu}}</div>
+      <hr/>
+      <div class="bf-text-3">
+        {{beer.beer_description}}
       </div>
+      <hr/>
+    </div>
 
-    </ul>
+  </div>
+
+  <div *ngIf="loggedIn">
+    <Button class="btn btn-block btn-primary bf-button"
+            routerLink="/beer/{{bid}}/report">Report this beer at a location</Button>
+    <hr/>
+  </div>
+
+</div>
+<div class="container">
+  <div *ngIf="stockList">
+    <div class="container-fluid">
+      <ul class="list-group">
+
+        <div *ngFor="let stock of stockList">
+          <li routerLink="/location/{{stock.location._id}}" class="list-group-item">
+            <div class="row bf-list-item-thin">
+              <span>
+                {{stock.location.name}} -
+              </span>
+              <span>
+                In stock: {{stock.count}} -
+              </span>
+              <span>
+                Since: {{stock.asOf}} -
+              </span>
+              <span>
+                Updated: {{stock.updateDate}}
+              </span>
+            </div>
+          </li>
+        </div>
+
+      </ul>
+    </div>
   </div>
 </div>

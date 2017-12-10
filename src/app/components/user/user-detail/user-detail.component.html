@@ -1,7 +1,7 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div *ngIf="user">
+<div *ngIf="user" class="container">
   <h1>{{user.username}}</h1>
   <h3>{{user.firstName}}</h3>
   <h3>{{user.lastName}}</h3>
@@ -33,26 +33,28 @@
 
 </div>
 
-<div *ngIf="canThank">
-  <button class="btn btn-success btn-block"
-          type="button"
-          (click)="thank()">Thank this user</button>
-</div>
+<div class="container">
+  <div *ngIf="canThank">
+    <button class="btn btn-success btn-block bf-button"
+            type="button"
+            (click)="thank()">Thank this user</button>
+  </div>
 
 
-<div *ngIf="editPermission">
-  <button class="btn btn-danger btn-block"
-          type="button"
-          [routerLink]="['/user/' + userId + '/edit']">Edit User Profile</button>
-</div>
+  <div *ngIf="editPermission">
+    <button class="btn btn-danger btn-block bf-button"
+            type="button"
+            [routerLink]="['/user/' + userId + '/edit']">Edit User Profile</button>
+  </div>
 
-<div *ngIf="canLogout">
-  <button class="btn btn-danger btn-block"
-          type="button"
-          (click)="logout()">Logout</button>
-</div>
+  <div *ngIf="canLogout">
+    <button class="btn btn-danger btn-block bf-button"
+            type="button"
+            (click)="logout()">Logout</button>
+  </div>
 
-<div *ngIf="user && user.locations.length > 0">
-  <h3>Locations:</h3>
-  <app-location-list [locationList]="user.locations"></app-location-list>
+  <div *ngIf="user && user.locations.length > 0">
+    <h3>Locations:</h3>
+    <app-location-list [locationList]="user.locations"></app-location-list>
+  </div>
 </div>

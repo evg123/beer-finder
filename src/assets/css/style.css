@@ -69,3 +69,7 @@ hr {
   font-weight: bold;
   padding: 5px;
 }
+
+.bf-input {
+  display: inline;
+}

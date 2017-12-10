@@ -9,8 +9,7 @@
 
   <h1>Report a Beer in Stock</h1>
 
-  <form (ngSubmit) = "report()" #form="ngForm">
-
+  <form #form="ngForm">
     <label for="beerQuery">Beer</label>
     <input   placeholder="Search for beers"
              id="beerQuery"
@@ -21,13 +20,18 @@
              required
              [value]="beerName"
              [disabled]="bid"
-             #beerQuery="ngModel"/>
-    <a (click)="searchBeers()" class="navbar-link">
-      <span class="glyphicon glyphicon-search"></span>
-    </a>
-    <a (click)="clearBeer()" class="navbar-link">
-      <span class="glyphicon glyphicon-remove"></span>
-    </a>
+             #beerQuery="ngModel">
+
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button (click)="searchBeers()" class="btn btn-default">
+          <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+        </button>
+        <button (click)="clearBeer()" class="btn btn-default">
+          <span class="glyphicon glyphicon-remove"></span>&nbsp;Clear
+        </button>
+      </div>
+    </div>
 
     <label for="locationQuery">Location</label>
     <input   placeholder="Search locations"
@@ -40,14 +44,21 @@
              [value]="locationName"
              [disabled]="lid"
              #locationQuery="ngModel"/>
-    <a (click)="searchLocations()" class="navbar-link">
-      <span class="glyphicon glyphicon-search"></span>
-    </a>
-    <a (click)="clearLocation()" class="navbar-link">
-      <span class="glyphicon glyphicon-remove"></span>
-    </a>
 
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button (click)="searchLocations()" class="btn btn-default">
+          <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+        </button>
+        <button (click)="clearLocation()" class="btn btn-default">
+          <span class="glyphicon glyphicon-remove"></span>&nbsp;Clear
+        </button>
+      </div>
+    </div>
+
+    <label for="count">Quantity</label>
     <input   placeholder="Count available at this location"
+             id="count"
              name="count"
              type="number"
              class="form-control"
@@ -60,7 +71,7 @@
     </span>
 
     <button class="btn btn-primary btn-block"
-            type="submit"
+            (click)="report()"
             [disabled]="!repForm.valid || !bid || !lid">Report</button>
 
     <button class="btn btn-danger btn-block"

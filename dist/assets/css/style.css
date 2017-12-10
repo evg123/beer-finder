@@ -64,3 +64,12 @@ hr {
   border: 0;
   background-color: transparent;
 }
+
+.bf-list-bold {
+  font-weight: bold;
+  padding: 5px;
+}
+
+.bf-input {
+  display: inline;
+}

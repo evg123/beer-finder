@@ -65,6 +65,8 @@ export class LocationDetailComponent implements OnInit {
   }
 
   updateOnUser() {
+    this.isAdmin = false;
+    this.isOwner = false;
     this.loggedIn = this.sharedSvc.user;
     if (this.sharedSvc.user) {
       this.isAdmin = this.sharedSvc.user.admin;

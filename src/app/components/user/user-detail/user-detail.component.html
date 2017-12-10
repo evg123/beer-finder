@@ -17,10 +17,10 @@
 
         <div *ngFor="let thanker of user.thanks">
           <li class="list-group-item">
-            <div class="row">
-              <a routerLink="/user/{{thanker._id}}">
+            <div routerLink="/user/{{thanker._id}}" class="row bf-list-item-thin">
+              <span class="bf-list-bold">
                 {{thanker.username}}
-              </a>
+              </span>
             </div>
           </li>
         </div>
@@ -38,7 +38,6 @@
             type="button"
             (click)="thank()">Thank this user</button>
   </div>
-
 
   <div *ngIf="editPermission">
     <button class="btn btn-danger btn-block bf-button"

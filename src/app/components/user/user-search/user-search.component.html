@@ -1,7 +1,7 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div class="container-fluid">
+<div class="container">
   <div>
     <h2>User Search</h2>
     <form #f="ngForm" (ngSubmit)="search()">
@@ -20,26 +20,28 @@
       <button class="btn btn-primary btn-block" type=submit>Search</button>
     </form>
   </div>
+
+  <div *ngIf="admin">
+    <button class="btn btn-danger btn-block" type=button (click)="listAll()">List All Users</button>
+  </div>
 </div>
 
-<div *ngIf="admin">
-  <button class="btn btn-danger btn-block" type=button (click)="listAll()">List All Users</button>
-</div>
+<div class="container">
+  <div *ngIf="userList">
+    <div>
+      <ul class="list-group">
 
-<div *ngIf="userList">
-  <div>
-    <ul class="list-group">
+        <div *ngFor="let user of userList">
+          <li class="list-group-item">
+            <div routerLink="/user/{{user._id}}" class="row bf-list-item-thin">
+              <span class="bf-list-bold">
+                {{user.username}}
+              </span>
+            </div>
+          </li>
+        </div>
 
-      <div *ngFor="let user of userList">
-        <li class="list-group-item">
-          <div class="row">
-            <a routerLink="/user/{{user._id}}">
-              {{user.username}}
-            </a>
-          </div>
-        </li>
-      </div>
-
-    </ul>
+      </ul>
+    </div>
   </div>
 </div>

@@ -86,7 +86,6 @@ export class ReportBeerComponent implements OnInit {
     stock.count = this.repForm.value.count;
     const userId = this.sharedSvc.user._id;
 
-    console.log(stock);
     this.beerSvc.reportBeer(userId, stock)
       .subscribe(
         (data: any) => {
@@ -163,7 +162,6 @@ export class ReportBeerComponent implements OnInit {
         .subscribe(
           (data: any) => {
             if (data) {
-              console.log(data);
               this.stock = data;
               this.stockCount = this.stock.count;
             }

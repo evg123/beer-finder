@@ -18,6 +18,7 @@ module.exports = function (app) {
   app.put('/api/beer/:beerId', updateBeer);
   app.delete('/api/beer/:beerId', deleteBeer);
   app.post('/api/beer/:beerId/report', reportBeer);
+  app.get('/api/beer/:beerId/:locId/stock', findStockByBeerAndLocation);
   app.get('/api/beer/:beerId/stock', findStockByBeer);
 
   function createBeer(req, res) {
@@ -111,7 +112,7 @@ module.exports = function (app) {
         return UserModel.updateReportCount(userId, 1);
       })
       .then(function (data) {
-        return StockModel.createStock(obj);
+        return StockModel.createOrUpdateStock(obj);
       })
       .then(function (data) {
         res.json(data);
@@ -125,6 +126,16 @@ module.exports = function (app) {
     const objId = req.params.beerId;
 
     StockModel.findStockByBeer(objId)
+      .then(function (data) {
+        res.json(data);
+      });
+  }
+
+  function findStockByBeerAndLocation(req, res) {
+    const beerId = req.params.beerId;
+    const locId = req.params.locId;
+
+    StockModel.findStockByBeerAndLocation(beerId, locId)
       .then(function (data) {
         res.json(data);
       });

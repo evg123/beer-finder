@@ -522,7 +522,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/beer/report-beer/report-beer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Search for beers\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Search locations\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
+module.exports = "<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container-fluid\">\n\n  <div *ngIf=\"errorFlag\"\n       class=\"alert alert-danger\">\n    {{errorMsg}}\n  </div>\n\n  <h1>Report a Beer in Stock</h1>\n\n  <form (ngSubmit) = \"report()\" #form=\"ngForm\">\n\n    <label for=\"beerQuery\">Beer</label>\n    <input   placeholder=\"Search for beers\"\n             id=\"beerQuery\"\n             name=\"beerQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"beerName\"\n             [disabled]=\"bid\"\n             #beerQuery=\"ngModel\"/>\n    <a (click)=\"searchBeers()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearBeer()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <label for=\"locationQuery\">Location</label>\n    <input   placeholder=\"Search locations\"\n             id=\"locationQuery\"\n             name=\"locationQuery\"\n             type=\"text\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"locationName\"\n             [disabled]=\"lid\"\n             #locationQuery=\"ngModel\"/>\n    <a (click)=\"searchLocations()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-search\"></span>\n    </a>\n    <a (click)=\"clearLocation()\" class=\"navbar-link\">\n      <span class=\"glyphicon glyphicon-remove\"></span>\n    </a>\n\n    <input   placeholder=\"Count available at this location\"\n             name=\"count\"\n             type=\"number\"\n             class=\"form-control\"\n             ngModel\n             required\n             [value]=\"stockCount\"\n             #count=\"ngModel\"/>\n    <span class=\"help-block alert-danger\" *ngIf=\"!count.valid && count.touched\">\n      Please enter the count available at this location\n    </span>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"submit\"\n            [disabled]=\"!repForm.valid || !bid || !lid\">Report</button>\n\n    <button class=\"btn btn-danger btn-block\"\n            (click)=\"goBack()\">Cancel</button>\n  </form>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let beerRecord of beerList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setBeer(beerRecord)\">\n            {{beerRecord.beer.beer_name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n\n<div>\n  <ul class=\"list-group\">\n\n    <div *ngFor=\"let location of locationList\">\n      <li class=\"list-group-item\">\n        <div class=\"row\">\n          <a (click)=\"setLocation(location)\">\n            {{location.name}}\n          </a>\n        </div>\n      </li>\n    </div>\n\n  </ul>\n</div>\n"
 
 /***/ }),
 
@@ -569,6 +569,7 @@ var ReportBeerComponent = (function () {
         this.locationName = '';
         this.beerList = [];
         this.locationList = [];
+        this.stock = null;
     }
     ReportBeerComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -607,10 +608,14 @@ var ReportBeerComponent = (function () {
     ReportBeerComponent.prototype.report = function () {
         var _this = this;
         var stock = {};
+        if (this.stock) {
+            stock = this.stock;
+        }
         stock.lid = this.lid;
         stock.bid = this.bid;
         stock.count = this.repForm.value.count;
         var userId = this.sharedSvc.user._id;
+        console.log(stock);
         this.beerSvc.reportBeer(userId, stock)
             .subscribe(function (data) {
             _this.goBack();
@@ -647,21 +652,41 @@ var ReportBeerComponent = (function () {
         this.bid = beerRecord.beer.bid;
         this.beerData = beerRecord;
         this.beerName = this.beerData.beer.beer_name;
+        this.checkStock();
     };
     ReportBeerComponent.prototype.setLocation = function (location) {
         this.lid = location._id;
         this.locationData = location;
         this.locationName = this.locationData.name;
+        this.checkStock();
     };
     ReportBeerComponent.prototype.clearBeer = function () {
         this.bid = null;
         this.beerData = null;
         this.beerName = '';
+        this.stock = null;
     };
     ReportBeerComponent.prototype.clearLocation = function () {
         this.lid = null;
         this.locationData = null;
         this.locationName = '';
+        this.stock = null;
+    };
+    ReportBeerComponent.prototype.checkStock = function () {
+        var _this = this;
+        if (this.lid && this.bid) {
+            this.beerSvc.findStockByBeerAndLocation(this.bid, this.lid)
+                .subscribe(function (data) {
+                if (data) {
+                    console.log(data);
+                    _this.stock = data;
+                    _this.stockCount = _this.stock.count;
+                }
+            }, function (error) {
+                _this.errorMsg = 'Stock search failed';
+                _this.errorFlag = true;
+            });
+        }
     };
     ReportBeerComponent.prototype.goBack = function () {
         this.router.navigate([this.backRoute]);
@@ -865,7 +890,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/location/location-detail/location-detail.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n\n  <div *ngIf=\"loggedIn && !location.owner\">\n    <button routerLink=\"/location/{{location._id}}/claim\"\n            class=\"btn btn-primary btn-block\">Claim this location as the owner</button>\n  </div>\n  <div *ngIf=\"isOwner || isAdmin\">\n    <button routerLink=\"/location/{{location._id}}/edit\"\n            class=\"btn btn-danger btn-block\">Edit Location</button>\n  </div>\n</div>\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div *ngIf=\"location\">\n  <div class=\"container-fluid\">\n    <h1>{{location.name}}</h1>\n    <h3>{{location.description}}</h3>\n  </div>\n\n  <div *ngIf=\"loggedIn\">\n    <Button class=\"btn btn-block btn-primary\"\n            routerLink=\"/location/{{location._id}}/report\">Report a beer at this location</Button>\n  </div>\n\n  <div *ngIf=\"loggedIn && !location.owner\">\n    <button routerLink=\"/location/{{location._id}}/claim\"\n            class=\"btn btn-primary btn-block\">Claim this location as the owner</button>\n  </div>\n  <div *ngIf=\"isOwner || isAdmin\">\n    <button routerLink=\"/location/{{location._id}}/edit\"\n            class=\"btn btn-danger btn-block\">Edit Location</button>\n  </div>\n</div>\n<div *ngIf=\"stockList\">\n  <div>\n    <ul class=\"list-group\">\n\n      <div *ngFor=\"let stock of stockList\">\n        <li class=\"list-group-item\">\n          <div class=\"row\">\n            <a routerLink=\"/beer/{{stock.bid}}\">\n              {{stock.beerName}}\n            </a>\n            <span>\n              {{stock.count}}\n            </span>\n            <span>\n              Since: {{stock.asOf}}\n            </span>\n            <span>\n              Updated: {{stock.updateDate}}\n            </span>\n          </div>\n        </li>\n      </div>\n\n    </ul>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2296,9 +2321,16 @@ var BeerService = (function () {
             return data;
         });
     };
+    BeerService.prototype.findStockByBeerAndLocation = function (bid, lid) {
+        return this._http.get(this.baseUrl + '/api/beer/' + bid + '/' + lid + '/stock')
+            .map(function (res) {
+            var data = res.json();
+            return data;
+        });
+    };
     BeerService.prototype.reportBeer = function (userId, stock) {
         stock.userId = userId;
-        return this._http.post(this.baseUrl + '/api/beer/' + stock.lid + '/report', stock)
+        return this._http.post(this.baseUrl + '/api/beer/' + stock.bid + '/report', stock)
             .map(function (res) {
             var data = res.json();
             return data;

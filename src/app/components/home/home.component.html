@@ -1,20 +1,40 @@
 
 <app-site-header [showProfile]=true></app-site-header>
 
-<div class="container-fluid">
-  <p>
-    <a routerLink="/beer/search">Search Beers</a>
-  </p>
-  <p>
-  <a routerLink="/location/search">Browse Locations</a>
-  </p>
-  <p>
-    <a routerLink="/user/search">Search Users</a>
-  </p>
-  <p>
-  <a routerLink="/login">Login</a>
-  </p>
-  <p>
-  <a routerLink="/register">Register</a>
-  </p>
+<div class="container">
+  <div class="jumbotron text-center">
+    <h2>Welcome to Beer Finder!</h2>
+  </div>
+
+  <div>
+    <div class="container-fluid">
+      <button class="btn-primary btn-lg btn-block"
+              routerLink="/beer/search">Search Beers
+      </button>
+    </div>
+
+    <div class="container-fluid">
+      <button class="btn-primary btn-lg btn-block"
+              routerLink="/location/search">Browse Locations
+      </button>
+    </div>
+
+    <div class="container-fluid">
+      <button class="btn-primary btn-lg btn-block"
+              routerLink="/user/search">Search Users
+      </button>
+    </div>
+
+    <div class="container-fluid">
+      <button class="btn-primary btn-lg btn-block"
+              routerLink="/login">Login
+      </button>
+    </div>
+
+    <div class="container-fluid">
+      <button class="btn-primary btn-lg btn-block"
+              routerLink="/register">Register
+      </button>
+    </div>
+  </div>
 </div>

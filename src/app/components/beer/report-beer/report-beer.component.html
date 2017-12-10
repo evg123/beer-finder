@@ -53,6 +53,7 @@
              class="form-control"
              ngModel
              required
+             [value]="stockCount"
              #count="ngModel"/>
     <span class="help-block alert-danger" *ngIf="!count.valid && count.touched">
       Please enter the count available at this location

@@ -26,6 +26,8 @@ export class ReportBeerComponent implements OnInit {
   backRoute: string;
   beerList: any[] = [];
   locationList: any[] = [];
+  stock: any = null;
+  stockCount: number;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -75,12 +77,16 @@ export class ReportBeerComponent implements OnInit {
   }
 
   report() {
-    const stock: any = {};
+    let stock: any = {};
+    if (this.stock) {
+      stock = this.stock;
+    }
     stock.lid = this.lid;
     stock.bid = this.bid;
     stock.count = this.repForm.value.count;
     const userId = this.sharedSvc.user._id;
 
+    console.log(stock);
     this.beerSvc.reportBeer(userId, stock)
       .subscribe(
         (data: any) => {
@@ -127,24 +133,47 @@ export class ReportBeerComponent implements OnInit {
     this.bid = beerRecord.beer.bid;
     this.beerData = beerRecord;
     this.beerName = this.beerData.beer.beer_name;
+    this.checkStock();
   }
 
   setLocation(location: any) {
     this.lid = location._id;
     this.locationData = location;
     this.locationName = this.locationData.name;
+    this.checkStock();
   }
 
   clearBeer() {
     this.bid = null;
     this.beerData = null;
     this.beerName = '';
+    this.stock = null;
   }
 
   clearLocation() {
     this.lid = null;
     this.locationData = null;
     this.locationName = '';
+    this.stock = null;
+  }
+
+  checkStock() {
+    if (this.lid && this.bid) {
+      this.beerSvc.findStockByBeerAndLocation(this.bid, this.lid)
+        .subscribe(
+          (data: any) => {
+            if (data) {
+              console.log(data);
+              this.stock = data;
+              this.stockCount = this.stock.count;
+            }
+          },
+          (error: any) => {
+            this.errorMsg = 'Stock search failed';
+            this.errorFlag = true;
+          }
+        );
+    }
   }
 
   goBack() {

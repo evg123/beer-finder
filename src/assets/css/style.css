@@ -12,3 +12,7 @@ body {
   padding-bottom: 60px;
 }
 
+.list-label {
+  width: 64px;
+  height: 64px;
+}

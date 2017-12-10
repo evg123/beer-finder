@@ -71,10 +71,20 @@ export class BeerService {
       );
   }
 
+  findStockByBeerAndLocation(bid: number, lid: number) {
+    return this._http.get(this.baseUrl + '/api/beer/' + bid + '/' + lid + '/stock')
+      .map(
+        (res: Response) => {
+          const data = res.json();
+          return data;
+        }
+      );
+  }
+
   reportBeer(userId: number, stock: any) {
     stock.userId = userId;
 
-    return this._http.post(this.baseUrl + '/api/beer/' + stock.lid + '/report', stock)
+    return this._http.post(this.baseUrl + '/api/beer/' + stock.bid + '/report', stock)
       .map(
         (res: Response) => {
           const data = res.json();

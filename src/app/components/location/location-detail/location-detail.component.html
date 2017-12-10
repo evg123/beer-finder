@@ -29,6 +29,8 @@
             class="btn btn-danger btn-block bf-button">Edit Location</button>
   </div>
   <hr/>
+
+  <div class="bf-text-3 lead">Beers available at this location:</div>
 </div>
 
 <div class="container">
@@ -39,17 +41,17 @@
         <div *ngFor="let stock of stockList">
           <li routerLink="/beer/{{stock.bid}}" class="list-group-item">
             <div class="row bf-list-item-thin">
-              <span>
+              <span class="bf-list-bold">
                 {{stock.beerName}}
               </span>
-              <span>
-                {{stock.count}}
+              <span class="bf-list-bold">
+                In stock: {{stock.count}}
               </span>
-              <span>
-                Since: {{stock.asOf}}
+              <span class="bf-list-bold">
+                Since: {{dateToString(stock.asOf)}}
               </span>
-              <span>
-                Updated: {{stock.updateDate}}
+              <span class="bf-list-bold">
+                Updated: {{dateToString(stock.updateDate)}}
               </span>
             </div>
           </li>

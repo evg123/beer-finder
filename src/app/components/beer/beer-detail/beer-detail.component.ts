@@ -56,4 +56,8 @@ export class BeerDetailComponent implements OnInit {
         }
       );
   }
+
+  dateToString(date: Date) {
+    return new Date(date).toLocaleDateString();
+  }
 }

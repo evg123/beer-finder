@@ -2,11 +2,10 @@
 <app-site-header [showProfile]=true></app-site-header>
 
 <div *ngIf="user" class="container">
-  <h1>{{user.username}}</h1>
-  <h3>{{user.firstName}}</h3>
-  <h3>{{user.lastName}}</h3>
-  <h3>{{user.email}}</h3>
-  <p>-----</p>
+  <div class="bf-text-1">User profile for {{user.username}}</div>
+  <div class="bf-text-3">Name: {{user.firstName}} {{user.lastName}}</div>
+  <div class="bf-text-3">Email: {{user.email}}</div>
+  <hr/>
   <h3>Reports: {{user.reportCount}}</h3>
   <a (click)="toggleThankers()">
     <h3>Thanks: {{user.thanks.length}}</h3>
@@ -54,7 +53,7 @@
   </div>
 
   <div *ngIf="user && user.locations.length > 0">
-    <h3>Locations:</h3>
+    <span class="bf-text-2 lead">Owner of these locations:</span>
     <app-location-list [locationList]="user.locations"></app-location-list>
   </div>
 </div>

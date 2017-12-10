@@ -25,7 +25,9 @@
     <hr/>
   </div>
 
+  <div class="bf-text-3 lead">Locations with this beer in stock:</div>
 </div>
+
 <div class="container">
   <div *ngIf="stockList">
     <div class="container-fluid">
@@ -34,17 +36,17 @@
         <div *ngFor="let stock of stockList">
           <li routerLink="/location/{{stock.location._id}}" class="list-group-item">
             <div class="row bf-list-item-thin">
-              <span>
-                {{stock.location.name}} -
+              <span class="bf-list-bold">
+                {{stock.location.name}}
               </span>
-              <span>
-                In stock: {{stock.count}} -
+              <span class="bf-list-bold">
+                In stock: {{stock.count}}
               </span>
-              <span>
-                Since: {{stock.asOf}} -
+              <span class="bf-list-bold">
+                Since: {{dateToString(stock.asOf)}}
               </span>
-              <span>
-                Updated: {{stock.updateDate}}
+              <span class="bf-list-bold">
+                Updated: {{dateToString(stock.updateDate)}}
               </span>
             </div>
           </li>

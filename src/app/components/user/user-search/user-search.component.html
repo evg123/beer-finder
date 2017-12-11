@@ -17,12 +17,18 @@
                class="form-control"/>
       </div>
 
-      <button class="btn btn-primary btn-block" type=submit>Search</button>
+      <button class="btn btn-primary btn-block bf-button" type=submit>Search</button>
     </form>
   </div>
 
   <div *ngIf="admin">
-    <button class="btn btn-danger btn-block" type=button (click)="listAll()">List All Users</button>
+    <button class="btn btn-danger btn-block bf-button" type=button
+            (click)="listAll()">List All Users</button>
+  </div>
+
+  <div *ngIf="admin">
+    <button class="btn btn-danger btn-block bf-button" type=button
+            (click)="createNewUser()">Create New User</button>
   </div>
 </div>
 

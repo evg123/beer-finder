@@ -56,4 +56,18 @@ export class UserSearchComponent implements OnInit {
         }
       );
   }
+
+  createNewUser() {
+    this.userSvc.createUser({})
+      .subscribe(
+        (data: any) => {
+          const newId = data._id;
+          this.router.navigate(['user', newId, 'edit']);
+        },
+        (error: any) => {
+          this.errorMsg = 'Search failed';
+          this.errorFlag = true;
+        }
+      );
+  }
 }

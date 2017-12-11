@@ -733,7 +733,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div class=\"jumbotron text-center\">\n    <h2>Welcome to Beer Finder!</h2>\n  </div>\n\n  <div>\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/beer/search\">Search Beers\n      </button>\n    </div>\n\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/location/search\">Browse Locations\n      </button>\n    </div>\n\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/user/search\">Search Users\n      </button>\n    </div>\n\n    <div *ngIf=\"!loggedIn\">\n      <div class=\"container-fluid\">\n        <button class=\"btn-primary btn-lg btn-block\"\n                routerLink=\"/login\">Login\n        </button>\n      </div>\n\n      <div class=\"container-fluid\">\n        <button class=\"btn-primary btn-lg btn-block\"\n                routerLink=\"/register\">Register\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div class=\"jumbotron text-center\">\n    <h1>Welcome to Beer Finder!</h1>\n    <p class=\"bf-text-3\">This site helps you find the beer you're looking for.</p>\n    <p class=\"bf-text-3\">It can also let you help fellow beer seekers in their own search.</p>\n  </div>\n\n  <div>\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/beer/search\">Search Beers\n      </button>\n    </div>\n\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/location/search\">Browse Locations\n      </button>\n    </div>\n\n    <div class=\"container-fluid\">\n      <button class=\"btn-primary btn-lg btn-block\"\n              routerLink=\"/user/search\">Search Users\n      </button>\n    </div>\n\n    <div *ngIf=\"!loggedIn\">\n      <div class=\"container-fluid\">\n        <button class=\"btn-primary btn-lg btn-block\"\n                routerLink=\"/login\">Login\n        </button>\n      </div>\n\n      <div class=\"container-fluid\">\n        <button class=\"btn-primary btn-lg btn-block\"\n                routerLink=\"/register\">Register\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1866,26 +1866,33 @@ var UserDetailComponent = (function () {
         var _this = this;
         this.activatedRoute.params
             .subscribe(function (params) {
-            _this.canThank = false;
-            _this.canLogout = false;
-            _this.editPermission = false;
-            _this.isOwner = false;
             _this.userId = params['userId'];
-            if (_this.sharedSvc.user._id === _this.userId) {
-                _this.canLogout = true;
-                _this.editPermission = true;
-            }
-            if (_this.sharedSvc.user.admin) {
-                _this.editPermission = true;
-            }
-            if (_this.sharedSvc.user._id && _this.sharedSvc.user._id !== _this.userId) {
-                _this.canThank = true;
-            }
-            if (_this.sharedSvc.user.locations) {
-                _this.isOwner = true;
-            }
+            _this.updateOnUser();
             _this.readUserData();
         });
+        this.sharedSvc.loggedIn
+            .subscribe(function (value) {
+            _this.updateOnUser();
+        });
+    };
+    UserDetailComponent.prototype.updateOnUser = function () {
+        this.canThank = false;
+        this.canLogout = false;
+        this.editPermission = false;
+        this.isOwner = false;
+        if (this.sharedSvc.user._id === this.userId) {
+            this.canLogout = true;
+            this.editPermission = true;
+        }
+        if (this.sharedSvc.user.admin) {
+            this.editPermission = true;
+        }
+        if (this.sharedSvc.user._id && this.sharedSvc.user._id !== this.userId) {
+            this.canThank = true;
+        }
+        if (this.sharedSvc.user.locations) {
+            this.isOwner = true;
+        }
     };
     UserDetailComponent.prototype.readUserData = function () {
         var _this = this;
@@ -1947,7 +1954,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-edit/user-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <form #f=\"ngForm\">\n\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input name=\"username\"\n             [(ngModel)]=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"username\"\n             placeholder=\"username\"\n             [readonly]=\"admin\"\n             required\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"email\">Email address</label>\n      <input name=\"email\"\n             [(ngModel)]=\"email\"\n             #emailLocal=\"ngModel\"\n             type=\"email\"\n             class=\"form-control\"\n             id=\"email\"\n             [email]=\"email !== ''\"\n             placeholder=\"email\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!emailLocal.valid && emailLocal.touched\">\n      Please enter a valid email address\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"first-name\">First Name</label>\n      <input name=\"firstName\"\n             [(ngModel)]=\"firstName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"first-name\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last-name\">Last Name</label>\n      <input name=\"lastName\"\n             [(ngModel)]=\"lastName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"last-name\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            (click)=\"update()\">Save</button>\n\n    <a class=\"btn btn-danger btn-block\"\n       (click)=\"logout()\">Logout</a>\n\n    <a class=\"btn btn-danger btn-block \"\n       (click)=\"deleteUser()\">Delete User Profile</a>\n  </form>\n\n  <div *ngIf=\"updated\"\n       class=\"alert alert-success\">\n    Update Saved\n  </div>\n</div>\n\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n\n  <form #f=\"ngForm\">\n\n    <div class=\"form-group\">\n      <label for=\"username\">Username</label>\n      <input name=\"username\"\n             [(ngModel)]=\"username\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"username\"\n             placeholder=\"username\"\n             [readonly]=\"!admin\"\n             required\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"email\">Email address</label>\n      <input name=\"email\"\n             [(ngModel)]=\"email\"\n             #emailLocal=\"ngModel\"\n             type=\"email\"\n             class=\"form-control\"\n             id=\"email\"\n             [email]=\"email !== ''\"\n             placeholder=\"email\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n    <span class=\"help-block alert-danger\" *ngIf=\"!emailLocal.valid && emailLocal.touched\">\n      Please enter a valid email address\n    </span>\n\n    <div class=\"form-group\">\n      <label for=\"first-name\">First Name</label>\n      <input name=\"firstName\"\n             [(ngModel)]=\"firstName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"first-name\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"last-name\">Last Name</label>\n      <input name=\"lastName\"\n             [(ngModel)]=\"lastName\"\n             type=\"text\"\n             class=\"form-control\"\n             id=\"last-name\"\n             (focus)=\"setUpdated(false)\">\n    </div>\n\n    <button class=\"btn btn-primary btn-block\"\n            type=\"button\"\n            (click)=\"update()\">Save</button>\n\n    <a class=\"btn btn-danger btn-block\"\n       (click)=\"logout()\">Logout</a>\n\n    <a class=\"btn btn-danger btn-block \"\n       (click)=\"deleteUser()\">Delete User Profile</a>\n  </form>\n\n  <div *ngIf=\"updated\"\n       class=\"alert alert-success\">\n    Update Saved\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1990,21 +1997,28 @@ var UserEditComponent = (function () {
         this.activatedRoute.params
             .subscribe(function (params) {
             _this.userId = params['userId'];
+            _this.admin = _this.sharedService.user.admin;
+            _this.updated = false;
+            _this.userService.findUserById(_this.userId)
+                .subscribe(function (data) {
+                _this.user = data;
+                _this.userId = _this.user._id;
+                _this.username = _this.user.username;
+                _this.email = _this.user.email ? _this.user.email : '';
+                _this.firstName = _this.user.firstName;
+                _this.lastName = _this.user.lastName;
+            }, function (error) {
+                _this.errorMsg = 'Failed to find user';
+                _this.errorFlag = true;
+            });
         });
+        this.sharedService.loggedIn
+            .subscribe(function (value) {
+            _this.updateOnUser();
+        });
+    };
+    UserEditComponent.prototype.updateOnUser = function () {
         this.admin = this.sharedService.user.admin;
-        this.userService.findUserById(this.userId)
-            .subscribe(function (data) {
-            _this.user = data;
-            _this.userId = _this.user._id;
-            _this.username = _this.user.username;
-            _this.email = _this.user.email ? _this.user.email : '';
-            _this.firstName = _this.user.firstName;
-            _this.lastName = _this.user.lastName;
-        }, function (error) {
-            _this.errorMsg = 'Failed to find user';
-            _this.errorFlag = true;
-        });
-        this.updated = false;
     };
     UserEditComponent.prototype.logout = function () {
         var _this = this;
@@ -2162,7 +2176,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/user/user-search/user-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div>\n    <h2>User Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block\" type=submit>Search</button>\n    </form>\n  </div>\n\n  <div *ngIf=\"admin\">\n    <button class=\"btn btn-danger btn-block\" type=button (click)=\"listAll()\">List All Users</button>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div *ngIf=\"userList\">\n    <div>\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let user of userList\">\n          <li class=\"list-group-item\">\n            <div routerLink=\"/user/{{user._id}}\" class=\"row bf-list-item-thin\">\n              <span class=\"bf-list-bold\">\n                {{user.username}}\n              </span>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n</div>\n"
+module.exports = "\n<app-site-header [showProfile]=true></app-site-header>\n\n<div class=\"container\">\n  <div>\n    <h2>User Search</h2>\n    <form #f=\"ngForm\" (ngSubmit)=\"search()\">\n\n      <div class=\"form-group\">\n        <label for=\"query\">Query</label>\n        <input name=\"query\"\n               [(ngModel)]=\"query\"\n               id=\"query\"\n               placeholder=\"query string\"\n               type=\"text\"\n               required\n               class=\"form-control\"/>\n      </div>\n\n      <button class=\"btn btn-primary btn-block bf-button\" type=submit>Search</button>\n    </form>\n  </div>\n\n  <div *ngIf=\"admin\">\n    <button class=\"btn btn-danger btn-block bf-button\" type=button\n            (click)=\"listAll()\">List All Users</button>\n  </div>\n\n  <div *ngIf=\"admin\">\n    <button class=\"btn btn-danger btn-block bf-button\" type=button\n            (click)=\"createNewUser()\">Create New User</button>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div *ngIf=\"userList\">\n    <div>\n      <ul class=\"list-group\">\n\n        <div *ngFor=\"let user of userList\">\n          <li class=\"list-group-item\">\n            <div routerLink=\"/user/{{user._id}}\" class=\"row bf-list-item-thin\">\n              <span class=\"bf-list-bold\">\n                {{user.username}}\n              </span>\n            </div>\n          </li>\n        </div>\n\n      </ul>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2219,6 +2233,17 @@ var UserSearchComponent = (function () {
         this.userSvc.getAllUsers()
             .subscribe(function (data) {
             _this.userList = data;
+        }, function (error) {
+            _this.errorMsg = 'Search failed';
+            _this.errorFlag = true;
+        });
+    };
+    UserSearchComponent.prototype.createNewUser = function () {
+        var _this = this;
+        this.userSvc.createUser({})
+            .subscribe(function (data) {
+            var newId = data._id;
+            _this.router.navigate(['user', newId, 'edit']);
         }, function (error) {
             _this.errorMsg = 'Search failed';
             _this.errorFlag = true;

@@ -30,29 +30,39 @@ export class UserDetailComponent implements OnInit {
     this.activatedRoute.params
       .subscribe(
         (params: any) => {
-          this.canThank = false;
-          this.canLogout = false;
-          this.editPermission = false;
-          this.isOwner = false;
-
           this.userId = params['userId'];
-          if (this.sharedSvc.user._id === this.userId) {
-            this.canLogout = true;
-            this.editPermission = true;
-          }
-          if (this.sharedSvc.user.admin) {
-            this.editPermission = true;
-          }
-          if (this.sharedSvc.user._id && this.sharedSvc.user._id !== this.userId) {
-            this.canThank = true;
-          }
-          if (this.sharedSvc.user.locations) {
-            this.isOwner = true;
-          }
+          this.updateOnUser();
 
           this.readUserData();
         }
       );
+
+    this.sharedSvc.loggedIn
+      .subscribe(
+        (value: any) => {
+          this.updateOnUser();
+        }
+      );
+  }
+
+  updateOnUser() {
+    this.canThank = false;
+    this.canLogout = false;
+    this.editPermission = false;
+    this.isOwner = false;
+    if (this.sharedSvc.user._id === this.userId) {
+      this.canLogout = true;
+      this.editPermission = true;
+    }
+    if (this.sharedSvc.user.admin) {
+      this.editPermission = true;
+    }
+    if (this.sharedSvc.user._id && this.sharedSvc.user._id !== this.userId) {
+      this.canThank = true;
+    }
+    if (this.sharedSvc.user.locations) {
+      this.isOwner = true;
+    }
   }
 
   readUserData() {

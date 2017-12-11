@@ -35,28 +35,37 @@ export class UserEditComponent implements OnInit {
       .subscribe(
         (params: any) => {
           this.userId = params['userId'];
+          this.admin = this.sharedService.user.admin;
+          this.updated = false;
+
+          this.userService.findUserById(this.userId)
+            .subscribe(
+              (data: any) => {
+                this.user = data;
+                this.userId = this.user._id;
+                this.username = this.user.username;
+                this.email = this.user.email ? this.user.email : '';
+                this.firstName = this.user.firstName;
+                this.lastName = this.user.lastName;
+              },
+              (error: any) => {
+                this.errorMsg = 'Failed to find user';
+                this.errorFlag = true;
+              }
+            );
         }
       );
 
-    this.admin = this.sharedService.user.admin;
-
-    this.userService.findUserById(this.userId)
+    this.sharedService.loggedIn
       .subscribe(
-        (data: any) => {
-          this.user = data;
-          this.userId = this.user._id;
-          this.username = this.user.username;
-          this.email = this.user.email ? this.user.email : '';
-          this.firstName = this.user.firstName;
-          this.lastName = this.user.lastName;
-        },
-        (error: any) => {
-          this.errorMsg = 'Failed to find user';
-          this.errorFlag = true;
+        (value: any) => {
+          this.updateOnUser();
         }
       );
+  }
 
-    this.updated = false;
+  updateOnUser() {
+    this.admin = this.sharedService.user.admin;
   }
 
   logout() {
